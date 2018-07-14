@@ -22,7 +22,6 @@ template<typename T>
 class AVLTree {	
 	int getHeight(TNode<T> *pos);
 	
-	TNode<T> *getRoot();
 	TNode<T> *RR(TNode<T> *pos);
 	TNode<T> *LL(TNode<T> *pos);
 	TNode<T> *RL(TNode<T> *pos);
@@ -35,6 +34,7 @@ public:
 #endif
 	AVLTree();
 	virtual ~AVLTree();
+	TNode<T> *getRoot();
 	TNode<T> *insert(TNode<T> *pos, const T& key); //recurson for implementation
 	void insert(const T& key);
 	void erase(TNode<T> *pos);
@@ -133,9 +133,9 @@ TNode<T> *AVLTree<T>::LR(TNode<T> *pos)
 template<typename T>
 TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
 {
-	TNode<T> *cur = new TNode<T>(key), *ret = pos;
 	if(root) {
 		if(!pos) {
+			TNode<T> *cur = new TNode<T>(key), *ret = pos;
 			ret = cur;
 		} else if(pos->key > key) {
 			pos->left = insert(pos->left, key);
@@ -158,6 +158,7 @@ TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
 		}
 		ret->height = getHeight(ret);
 	} else {
+		TNode<T> *cur = new TNode<T>(key), *ret = pos;
 		ret = root = cur;
 	}
 

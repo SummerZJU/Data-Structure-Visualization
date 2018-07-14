@@ -38,8 +38,8 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - cd View\release
   - dir
-  - windeployqt SameWorld.exe
+  - windeployqt DSV.exe
   
 
 artifacts:
-  - path: View\release
+  - path: View\release\
