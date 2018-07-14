@@ -23,23 +23,23 @@ install:
 # Run qmake
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd game
-  - qmake game.pro
+  - cd View
+  - qmake DSVision.pro
 
 
 # Build the projects
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd game
+  - cd View
   - '%make%'
   
   
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd game\release
+  - cd View\release
   - dir
   - windeployqt SameWorld.exe
   
 
 artifacts:
-  - path: game\release
+  - path: View\release
