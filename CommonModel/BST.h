@@ -1,6 +1,8 @@
 #ifndef BST_H_
 #define BST_H_
 
+#include <cassert>
+
 template<typename T>
 struct BSTNode {
 	T key;
@@ -58,10 +60,42 @@ BST<T>::~BST()
 template <typename T>
 BSTNode<T> *BST<T>::insert(BSTNode<T> *cur, const T& key)
 {
-	BSTNode<T> *work = new BSTNode<T>(key);
+	BSTNode<T> *ret = cur;
 	if(cur == nullptr) {
+		BSTNode<T> *work = new BSTNode<T>(key);
+		ret = work;
+	} else if(cur->key < key) {
+		ret->right = insert(ret->right, key);
+	} else if(cur->key > key) {
+		ret->left = insert(ret->left, key);
+	}
+	// 
+	// == key -> insert failed!
+	//
 
-	} else 
+	return ret;
+}
+
+template <typename T>
+void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
+{
+	//assert(root != nullptr && pos != nullptr);
+	if(root != nullptr && pos != nullptr) {
+		BSTNode<T> *eraseFinal = pos, *itsParent;
+		if(pos->right != nullptr && pos->left != nullptr) {
+			eraseFinal = pos->left;
+			parent = pos;
+			while(eraseFinal->right) {
+				parent = eraseFinal; 
+				eraseFinal = eraseFinal->right;
+			}
+		}
+		if(eraseFinal->right != nullptr) {
+
+		} else {
+
+		}
+	}
 }
 
 #endif

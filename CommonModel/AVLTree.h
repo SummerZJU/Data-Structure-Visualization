@@ -14,6 +14,9 @@ struct TNode {
 	TNode *right;
 	int height;
 
+	int depth;
+	int inorderIndex; // from 0 -> ...
+
 	TNode(const T& key);
 	~TNode(); // auto-recursion freeTree! hahah ==!
 };
@@ -27,6 +30,10 @@ class AVLTree {
 	TNode<T> *RL(TNode<T> *pos);
 	TNode<T> *LR(TNode<T> *pos);
 	TNode<T> *root;
+
+	void inorder(TNode<T> *cur, int *count);
+	void erase(TNode<T> *pos);
+	TNode<T> *insert(TNode<T> *pos, const T& key); //recurson for implementation
 public:
 #ifdef AVL_DEBUG
 	void print(TNode<T> *cur);
@@ -35,9 +42,7 @@ public:
 	AVLTree();
 	virtual ~AVLTree();
 	TNode<T> *getRoot();
-	TNode<T> *insert(TNode<T> *pos, const T& key); //recurson for implementation
-	void insert(const T& key);
-	void erase(TNode<T> *pos);
+	void insert(const T& key);	
 	void erase(const T& key);
 	TNode<T> *find(const T& key);
 };
@@ -49,7 +54,9 @@ TNode<T>::TNode(const T& key):
 	key(key),
 	left(nullptr),
 	right(nullptr),
-	height(0)
+	height(0),
+	depth(0),
+	inorderIndex(0)
 {
 
 }
@@ -130,12 +137,24 @@ TNode<T> *AVLTree<T>::LR(TNode<T> *pos)
 	return LL(pos);
 }
 
+template <typename T>
+void AVLTree<T>::inorder(TNode<T> *cur, int *count)
+{
+	if(cur != nullptr) {
+		inorder(cur->left, count);
+		cur->inorderIndex = (*count)++;
+		cur->depth = root->height - cur->height;
+		inorder(cur->right, count);
+	}
+}
+
 template<typename T>
 TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
 {
+	TNode<T> *ret = pos;
 	if(root) {
 		if(!pos) {
-			TNode<T> *cur = new TNode<T>(key), *ret = pos;
+			TNode<T> *cur = new TNode<T>(key);
 			ret = cur;
 		} else if(pos->key > key) {
 			pos->left = insert(pos->left, key);
@@ -158,7 +177,7 @@ TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
 		}
 		ret->height = getHeight(ret);
 	} else {
-		TNode<T> *cur = new TNode<T>(key), *ret = pos;
+		TNode<T> *cur = new TNode<T>(key);
 		ret = root = cur;
 	}
 
@@ -169,7 +188,8 @@ template <typename T>
 void AVLTree<T>::insert(const T& key)
 {
 	root = insert(root, key);
-
+	int count = 0;
+	inorder(root, &count);
 	return;
 }
 
@@ -283,6 +303,8 @@ void AVLTree<T>::erase(const T& key)
 {
 	TNode<T> *work = find(key);
 	if(work != nullptr) erase(work);
+	int count = 0;
+	inorder(root, &count);
 }
 
 
@@ -295,6 +317,7 @@ void AVLTree<T>::print(TNode<T> *cur)
 	if(cur) {
 		print(cur->left);
 		cout << "Key = " << cur->key << ", Height = " << cur->height << endl;
+		cout << "Depth = " << cur->depth << ", inorderIndex = " << cur->inorderIndex << endl;
 		cout << "left is " << (cur->left ? to_string(cur->left->key) : "nullptr") << endl;
 		cout << "right is " << (cur->right ? to_string(cur->right->key) : "nullptr") << endl;
 		print(cur->right);
