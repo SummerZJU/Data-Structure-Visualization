@@ -67,9 +67,10 @@ void DSVisual::initStartMenu()
     allLay->addWidget(backImage);
 
     startMenu = new QWidget();
-    startMenu->setWindowTitle("Welcome to Data Structure Visualization System");
+    //startMenu->setWindowTitle("Welcome to Data Structure Visualization System");
     startMenu->setLayout(allLay);
     startMenu->resize(1200, 800);
+    startMenu->setWindowFlag(Qt::FramelessWindowHint);
     startMenu->show();
 
     connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(exitSystem()));
@@ -88,7 +89,7 @@ void DSVisual::initTreeWindow()
 
     treeWindow = new QWidget();
     setMainLayOut(treeWindow);
-    treeWindow->setWindowTitle("Binary Tree Visualization");
+    //treeWindow->setWindowTitle("Binary Tree Visualization");
     treeWindow->show();
 }
 
@@ -98,7 +99,7 @@ void DSVisual::initAVLTreeWindow()
 
     avlTreeWindow = new QWidget();
     setMainLayOut(avlTreeWindow);
-    avlTreeWindow->setWindowTitle("AVL Tree Visualization");
+    //avlTreeWindow->setWindowTitle("AVL Tree Visualization");
     avlTreeWindow->show();
 }
 
@@ -138,8 +139,7 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
     QLabel * backImage;
     QPalette backPal;
     backImage = new QLabel();
-    backPal.setBrush(QPalette::Background,
-                        QBrush(QPixmap(":/images/background.png")));
+    backPal.setBrush(QPalette::Background, QBrush(QPixmap(":/images/background.png")));
     backImage->setAutoFillBackground(true);
     backImage->setPalette(backPal);
     backImage->setLayout(imageLay);
@@ -149,6 +149,7 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
 
     mainWindow->setLayout(allLay);
     mainWindow->resize(1200, 800);
+    mainWindow->setWindowFlag(Qt::FramelessWindowHint);
 
     connect(returnButton, SIGNAL(clicked(bool)), this, SLOT(returnStartMenu()));
 }
@@ -170,4 +171,7 @@ void DSVisual::setButton(QPushButton * button)
     button->setFlat(true);
     button->setPalette(buttonPal);
     button->setFont(buttonFont);
+
+    button->setStyleSheet("QPushButton{color: white;}"
+                         "QPushButton:hover{color: rbg(75, 0, 130);}");
 }
