@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
-
+#include "Common.h"
 using namespace std;
 
 #define SPT_DEBUG
@@ -16,9 +16,10 @@ struct SPTNode {
 	SPTNode *left;
 	SPTNode *right;
 	SPTNode *parent;
-
+		
 	int depth;
 	int inorderIndex;  //from 0 -> ...
+	NodeType state;
 
 	SPTNode();
 	SPTNode(const T& key, SPTNode *parent);
@@ -31,6 +32,9 @@ struct SPTNode {
 	// this == grandfa + grandma
 	SPTNode *zig_zig(SPTNode *pos); // root -> new root
 	SPTNode *zig_zag(SPTNode *pos); // grand is this; pos is child!
+	void setOTHER();
+	void setPATH();
+	void setRES();
 };
 
 template <typename T>
@@ -42,7 +46,6 @@ class SplayTree {
 	void erase(SPTNode<T> *pos);
 	void inorder(SPTNode<T> *cur, int *count);
 	void levelorder();
-
 public:
 #ifdef SPT_DEBUG
 	void print() const;
@@ -146,6 +149,25 @@ SPTNode<T> *SPTNode<T>::zig_zag(SPTNode *pos)
 	return ret;
 }
 
+template <typename T>
+void SPTNode<T>::setOTHER()
+{
+	state = OTHER;
+}
+
+template <typename T>
+void SPTNode<T>::setPATH()
+{
+	state = PATH;
+}
+
+template <typename T>
+void SPTNode<T>::setRES()
+{
+	state = RES;
+}
+
+
 //--------------------------------------------------------------------------//
 //SplayTree declaration
 
@@ -171,7 +193,7 @@ SPTNode<T> *SplayTree<T>::getRoot() const
 template <typename T>
 void SplayTree<T>::inorder(SPTNode<T> *cur, int *count)
 {
-	if(cur != nullptr) {
+	if(cur != NULL) {
 		inorder(cur->left, count);
 		cur->inorderIndex = (*count)++;
 		inorder(cur->right, count);
@@ -188,6 +210,7 @@ void SplayTree<T>::levelorder()
 		while(!myQueue.empty()) {
 			SPTNode<T> *cur = myQueue.front();
 			myQueue.pop();
+			cur->setOTHER();
 			if(cur->left) {
 				cur->left->depth = cur->depth + 1;
 				myQueue.push(cur->left);
@@ -240,12 +263,12 @@ void SplayTree<T>::fixup(SPTNode<T> *pos)
 	return;
 }
 
-
 template <typename T>
 SPTNode<T> *SplayTree<T>::find(const T& key)
 {
 	SPTNode<T> *ret = NULL, *work = root;
 	while(work) {
+		work->setPATH();
 		if(work->key == key) {
 			ret = work;
 			break;
@@ -257,10 +280,10 @@ SPTNode<T> *SplayTree<T>::find(const T& key)
 	}
 	// root->parent == NULL
 	if(ret) {
+		ret->setRES();
 		fixup(ret);
 	}
-
-	return root;
+	return ret; // NULL / has been set root
 }
 
 template <typename T>
@@ -336,22 +359,28 @@ void SplayTree<T>::erase(SPTNode<T> *pos)
 	if(pos->left) {
 		if(!parent) {
 			root = pos->left;
+			if(root) root->parent = NULL;
 		} else if(isLeft) {
 			parent->left = pos->left;
+			if(pos->left) pos->left->parent = parent;
 		} else {
 			parent->right = pos->left;
+			if(pos->left) pos->left->parent = parent;
 		}
 	} else {
 		if(!parent) {
 			root = pos->right;
+			if(root) root->parent = NULL;
 		} else if(isLeft) {
 			parent->left = pos->right;
+			if(pos->right) pos->right->parent = parent;
 		} else {
 			parent->right = pos->right;
+			if(pos->right) pos->right->parent = parent;
 		}		
 	}
-	parent->left = parent->right = NULL;
-	delete parent;
+	pos->left = pos->right = NULL;
+	delete pos;
 	return;
 }
 
@@ -377,16 +406,6 @@ void SplayTree<T>::print() const
 	Entry work = root;
 	while(true) {
 		for(; work; work = work->left) {
-			/*
-			cout << "Key: " << work->key << endl;
-			cout << "left: ";
-			if(work->left) cout << work->left->key;
-			else cout << "NULL\t";
-			cout << "right: ";
-			if(work->right) cout << work->right->key;
-			else cout << "NULL" << endl;
-			*/
-
 			myStack.push(work);
 		}
 		if(myStack.empty()) break;

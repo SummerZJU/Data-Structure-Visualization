@@ -112,6 +112,7 @@ void BST<T>::levelorder()
 		myQueue.push(root);
 		while(!myQueue.empty()) {
 			BSTNode<T> *cur = myQueue.front();
+			cur->state = OTHER;
 			myQueue.pop();
 			if(cur->left) {
 				cur->left->depth = cur->depth + 1;
@@ -262,6 +263,7 @@ BSTNode<T> *BST<T>::find(const T& key)
 {
 	BSTNode<T> *ret = nullptr, *work = root;
 	while(work) {
+		cur->state = PATH;
 		if(work->key == key) {
 			ret = work;
 			break;
@@ -271,6 +273,7 @@ BSTNode<T> *BST<T>::find(const T& key)
 			work = work->right;
 		}
 	}
+	if(ret) cur->state = RES;
 	return ret;
 }
 

@@ -4,6 +4,7 @@
 #include <stack>
 #include <queue>
 #include <string>
+#include "Common.h"
 using namespace std;
 
 #define AVL_DEBUG
@@ -17,6 +18,7 @@ struct TNode {
 
 	int depth;
 	int inorderIndex; // from 0 -> ...
+	NodeType state;
 
 	TNode(const T& key);
 	~TNode(); // auto-recursion freeTree! hahah ==!
@@ -159,6 +161,7 @@ void AVLTree<T>::levelorder()
 		while(!myQueue.empty()) {
 			TNode<T> *cur = myQueue.front();
 			myQueue.pop();
+			cur->state = OTHER;
 			if(cur->left) {
 				cur->left->depth = cur->depth + 1;
 				myQueue.push(cur->left);
@@ -310,6 +313,7 @@ TNode<T> *AVLTree<T>::find(const T& key)
 {
 	TNode<T> *ret = nullptr, *work = root;
 	while(work) {
+		work->state = PATH
 		if(work->key == key) {
 			ret = work;
 			break;
@@ -319,6 +323,7 @@ TNode<T> *AVLTree<T>::find(const T& key)
 			work = work->right;
 		}
 	}
+	if(ret) ret->state = RES;
 	return ret;
 }
 
