@@ -1,5 +1,4 @@
 #include "draw.h"
-#include "Common.h"
 
 State state;
 
