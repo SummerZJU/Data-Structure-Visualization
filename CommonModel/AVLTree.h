@@ -316,7 +316,7 @@ TNode<T> *AVLTree<T>::find(const T& key)
 	levelorder(); 
 	// reset to OTHER!
 	while(work) {
-		work->state = PATH
+		work->state = PATH;
 		if(work->key == key) {
 			ret = work;
 			break;
