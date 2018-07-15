@@ -3,8 +3,11 @@
 
 #include <cassert>
 #include <stack>
+#include <queue>
 
 using namespace std;
+
+#define AVL_DEBUG
 
 template<typename T>
 struct BSTNode {
@@ -42,16 +45,22 @@ BSTNode<T>::~BSTNode()
 
 template <typename T>
 class BST {
-
 	BSTNode<T> *root;
 	BSTNode<T> *insert(BSTNode<T> *cur, const T& key);
 	void erase(BSTNode<T> *pos, BSTNode<T> *parent);
 	void erase(BSTNode<T> *pos);
-	int getHeight(BSTNode<T> *pos)
-
+	int getHeight(BSTNode<T> *pos);
+	void inorder(BSTNode<T> *cur, int *count);
+	void levelorder();
 public:
+#ifdef AVL_DEBUG
+	void print(BSTNode<T> *cur);
+	void print();
+#endif
+
 	BST();
 	virtual ~BST();
+	BSTNode<T> *getRoot() const;
 	void insert(const T& key);
 	BSTNode<T> *find(const T& key);
 	void erase(const T& key);
@@ -83,6 +92,45 @@ int BST<T>::getHeight(BSTNode<T> *pos)
 	}
 }
 
+
+template <typename T>
+void BST<T>::inorder(BSTNode<T> *cur, int *current)
+{
+	if(cur) {
+		inorder(cur->left, current);
+		cur->inorderIndex = (*current)++;
+		inorder(cur->right, current);
+	}
+}
+
+template <typename T>
+void BST<T>::levelorder()
+{
+	queue<BSTNode<T> *> myQueue;
+	if(root) {
+		root->depth = 0;
+		myQueue.push(root);
+		while(!myQueue.empty()) {
+			BSTNode<T> *cur = myQueue.front();
+			myQueue.pop();
+			if(cur->left) {
+				cur->left->depth = cur->depth + 1;
+				myQueue.push(cur->left);
+			}
+			if(cur->right) {
+				cur->right->depth = cur->depth + 1;
+				myQueue.push(cur->right);
+			}
+		}
+	}
+}
+
+template <typename T>
+BSTNode<T> *BST<T>::getRoot() const
+{
+	return root;
+}
+
 template <typename T>
 BSTNode<T> *BST<T>::insert(BSTNode<T> *cur, const T& key)
 {
@@ -106,7 +154,9 @@ template <typename T>
 void BST<T>::insert(const T& key)
 {
 	root = insert(root, key);
-
+	int count = 0;
+	inorder(root, &count);
+	levelorder();
 }
 
 template <typename T>
@@ -206,5 +256,57 @@ void BST<T>::erase(BSTNode<T> *pos)
 	}
 	return;
 }
+
+template <typename T>
+BSTNode<T> *BST<T>::find(const T& key)
+{
+	BSTNode<T> *ret = nullptr, *work = root;
+	while(work) {
+		if(work->key == key) {
+			ret = work;
+			break;
+		} else if(work->key > key) {
+			work = work->left;
+		} else {
+			work = work->right;
+		}
+	}
+	return ret;
+}
+
+template <typename T>
+void BST<T>::erase(const T& key)
+{
+	BSTNode<T> *work = find(key);
+	if(work != nullptr) erase(work);
+	int count = 0;
+	inorder(root, &count);
+	levelorder();
+}
+
+
+// just for debug
+
+#ifdef AVL_DEBUG
+template <typename T>
+void BST<T>::print(BSTNode<T> *cur)
+{
+	if(cur) {
+		print(cur->left);
+		cout << "Key = " << cur->key << ", Height = " << cur->height << endl;
+		cout << "Depth = " << cur->depth << ", inorderIndex = " << cur->inorderIndex << endl;
+		cout << "left is " << (cur->left ? to_string(cur->left->key) : "nullptr") << endl;
+		cout << "right is " << (cur->right ? to_string(cur->right->key) : "nullptr") << endl;
+		print(cur->right);
+	}
+}
+
+template <typename T>
+void BST<T>::print()
+{
+	print(root);
+	return;
+}
+#endif
 
 #endif

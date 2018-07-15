@@ -2,6 +2,7 @@
 #define _AVL_H_
 #include <iostream>
 #include <stack>
+#include <queue>
 #include <string>
 using namespace std;
 
@@ -32,6 +33,7 @@ class AVLTree {
 	TNode<T> *root;
 
 	void inorder(TNode<T> *cur, int *count);
+	void levelorder();
 	void erase(TNode<T> *pos);
 	TNode<T> *insert(TNode<T> *pos, const T& key); //recurson for implementation
 public:
@@ -143,8 +145,29 @@ void AVLTree<T>::inorder(TNode<T> *cur, int *count)
 	if(cur != nullptr) {
 		inorder(cur->left, count);
 		cur->inorderIndex = (*count)++;
-		cur->depth = root->height - cur->height;
 		inorder(cur->right, count);
+	}
+}
+
+template <typename T>
+void AVLTree<T>::levelorder()
+{
+	queue<TNode<T> *> myQueue;
+	if(root) {
+		root->depth = 0;
+		myQueue.push(root);
+		while(!myQueue.empty()) {
+			TNode<T> *cur = myQueue.front();
+			myQueue.pop();
+			if(cur->left) {
+				cur->left->depth = cur->depth + 1;
+				myQueue.push(cur->left);
+			}
+			if(cur->right) {
+				cur->right->depth = cur->depth + 1;
+				myQueue.push(cur->right);
+			}
+		}
 	}
 }
 
@@ -190,6 +213,7 @@ void AVLTree<T>::insert(const T& key)
 	root = insert(root, key);
 	int count = 0;
 	inorder(root, &count);
+	levelorder();
 	return;
 }
 
@@ -305,6 +329,7 @@ void AVLTree<T>::erase(const T& key)
 	if(work != nullptr) erase(work);
 	int count = 0;
 	inorder(root, &count);
+	levelorder();
 }
 
 
