@@ -8,6 +8,7 @@ DSVisual::DSVisual(QObject *parent) :
    startMenu = nullptr;
    treeWindow = nullptr;
    avlTreeWindow = nullptr;
+   state = start;
 
    initStartMenu();
 }
@@ -71,6 +72,13 @@ void DSVisual::initStartMenu()
     startMenu->setLayout(allLay);
     startMenu->resize(1200, 800);
     startMenu->setWindowFlag(Qt::FramelessWindowHint);
+
+
+    QPropertyAnimation *animation = new QPropertyAnimation(startMenu, "windowOpacity");
+    animation->setDuration(500);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->start();
     startMenu->show();
 
     connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(exitSystem()));
@@ -80,13 +88,19 @@ void DSVisual::initStartMenu()
 
 void DSVisual::exitSystem()
 {
-    qApp->exit(0);
+    QPropertyAnimation *animation = new QPropertyAnimation(startMenu, "windowOpacity");
+    animation->setDuration(1000);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, SIGNAL(finished()), startMenu, SLOT(close()));
 }
 
 void DSVisual::initTreeWindow()
 {
-    startMenu->close();
+    closeWindow(startMenu);
 
+    state = tree;
     treeWindow = new QWidget();
     setMainLayOut(treeWindow);
     //treeWindow->setWindowTitle("Binary Tree Visualization");
@@ -95,8 +109,9 @@ void DSVisual::initTreeWindow()
 
 void DSVisual::initAVLTreeWindow()
 {
-    startMenu->close();
+   closeWindow(startMenu);
 
+    state = avlTree;
     avlTreeWindow = new QWidget();
     setMainLayOut(avlTreeWindow);
     //avlTreeWindow->setWindowTitle("AVL Tree Visualization");
@@ -156,9 +171,9 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
 
 void DSVisual::returnStartMenu()
 {
-    if(treeWindow) treeWindow->close();
-    if(avlTreeWindow) avlTreeWindow->close();
-
+    if(treeWindow) closeWindow(treeWindow);
+    if(avlTreeWindow) closeWindow(avlTreeWindow);
+    state = start;
     initStartMenu();
 }
 
@@ -174,4 +189,14 @@ void DSVisual::setButton(QPushButton * button)
 
     button->setStyleSheet("QPushButton{color: white;}"
                          "QPushButton:hover{color: rbg(75, 0, 130);}");
+}
+
+void DSVisual::closeWindow(QWidget * window)
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(window, "windowOpacity");
+    animation->setDuration(50);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, SIGNAL(finished()), window, SLOT(close()));
 }

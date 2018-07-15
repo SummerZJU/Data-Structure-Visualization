@@ -12,6 +12,9 @@
 #include <QPalette>
 #include <QFont>
 #include <QImage>
+#include <QPropertyAnimation>
+
+typedef int State;
 
 class DSVisual : public QObject
 {
@@ -22,7 +25,9 @@ public:
     ~DSVisual();
 
 private:
-    enum{Tree, AVLTree};
+    enum{start, tree, avlTree};
+    State state;
+
     QWidget * startMenu;
     QWidget * treeWindow;
     QWidget * avlTreeWindow;
@@ -43,6 +48,7 @@ private:
     void initStartMenu();
     void setMainLayOut(QWidget * mainWindow);
     void setButton(QPushButton * button);
+    void closeWindow(QWidget * window);
 
 private slots:
     void exitSystem();
