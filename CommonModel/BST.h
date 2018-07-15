@@ -262,6 +262,9 @@ template <typename T>
 BSTNode<T> *BST<T>::find(const T& key)
 {
 	BSTNode<T> *ret = nullptr, *work = root;
+	// reset to OTHER!
+	levelorder(); 
+	// reset to OTHER!
 	while(work) {
 		cur->state = PATH;
 		if(work->key == key) {

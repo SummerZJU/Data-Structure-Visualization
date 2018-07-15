@@ -312,6 +312,9 @@ template <typename T>
 TNode<T> *AVLTree<T>::find(const T& key)
 {
 	TNode<T> *ret = nullptr, *work = root;
+	// reset to OTHER!
+	levelorder(); 
+	// reset to OTHER!
 	while(work) {
 		work->state = PATH
 		if(work->key == key) {

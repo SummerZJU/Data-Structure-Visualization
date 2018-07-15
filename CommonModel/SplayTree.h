@@ -267,6 +267,9 @@ template <typename T>
 SPTNode<T> *SplayTree<T>::find(const T& key)
 {
 	SPTNode<T> *ret = NULL, *work = root;
+	// reset to OTHER!
+	levelorder(); 
+	// reset to OTHER!
 	while(work) {
 		work->setPATH();
 		if(work->key == key) {
