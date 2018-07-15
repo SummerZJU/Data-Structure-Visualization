@@ -4,6 +4,7 @@
 #include <cassert>
 #include <stack>
 #include <queue>
+#include "Common.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ struct BSTNode {
 	int height;
 	int depth;
 	int inorderIndex;
+	NodeType state;
 
 	BSTNode(const T& key);
 	virtual ~BSTNode(); // auto-recursion freeTree! hahah ==!
@@ -266,7 +268,7 @@ BSTNode<T> *BST<T>::find(const T& key)
 	levelorder(); 
 	// reset to OTHER!
 	while(work) {
-		cur->state = PATH;
+		work->state = PATH;
 		if(work->key == key) {
 			ret = work;
 			break;
@@ -276,7 +278,7 @@ BSTNode<T> *BST<T>::find(const T& key)
 			work = work->right;
 		}
 	}
-	if(ret) cur->state = RES;
+	if(ret) ret->state = RES;
 	return ret;
 }
 
