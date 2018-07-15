@@ -1,4 +1,6 @@
 #include "draw.h"
+#include "Common.h"
+
 State state;
 
 DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
