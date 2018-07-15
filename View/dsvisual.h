@@ -12,9 +12,9 @@
 #include <QPalette>
 #include <QFont>
 #include <QImage>
+#include <QString>
+#include "draw.h"
 #include <QPropertyAnimation>
-
-typedef int State;
 
 class DSVisual : public QObject
 {
@@ -25,9 +25,6 @@ public:
     ~DSVisual();
 
 private:
-    enum{start, tree, avlTree};
-    State state;
-
     QWidget * startMenu;
     QWidget * treeWindow;
     QWidget * avlTreeWindow;
@@ -44,7 +41,8 @@ private:
     QLineEdit * addText;
     QLineEdit * findText;
     QLineEdit * deleteText;
-
+    
+    DrawWidget * draw;
     void initStartMenu();
     void setMainLayOut(QWidget * mainWindow);
     void setButton(QPushButton * button);
@@ -55,6 +53,9 @@ private slots:
     void initTreeWindow();
     void initAVLTreeWindow();
     void returnStartMenu();
+    void insertNode();
+    void deleteNode();
+    void findNode();
 };
 
 #endif // DSVISUAL_H

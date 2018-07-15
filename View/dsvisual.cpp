@@ -1,6 +1,6 @@
 #include "dsvisual.h"
 #include "ui_dsvisual.h"
-
+extern State state;
 DSVisual::DSVisual(QObject *parent) :
     QObject(parent)
 {
@@ -21,7 +21,7 @@ void DSVisual::initStartMenu()
 {
     exitButton = new QPushButton("Exit");
     setButton(exitButton);
-    treeButton = new QPushButton("Binary Tree");
+    treeButton = new QPushButton("Binary Search Tree");
     setButton(treeButton);
     avlTreeButton = new QPushButton("AVL Tree");
     setButton(avlTreeButton);
@@ -105,17 +105,23 @@ void DSVisual::initTreeWindow()
     setMainLayOut(treeWindow);
     //treeWindow->setWindowTitle("Binary Tree Visualization");
     treeWindow->show();
+    connect(addButton, SIGNAL(clicked(bool)), this, SLOT(insertNode()));
+    connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteNode()));
+    connect(findButton, SIGNAL(clicked(bool)), this, SLOT(findNode()));
 }
 
 void DSVisual::initAVLTreeWindow()
 {
-   closeWindow(startMenu);
+    closeWindow(startMenu);
 
     state = avlTree;
     avlTreeWindow = new QWidget();
     setMainLayOut(avlTreeWindow);
     //avlTreeWindow->setWindowTitle("AVL Tree Visualization");
     avlTreeWindow->show();
+    connect(addButton, SIGNAL(clicked(bool)), this, SLOT(insertNode()));
+    connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteNode()));
+    connect(findButton, SIGNAL(clicked(bool)), this, SLOT(findNode()));
 }
 
 void DSVisual::setMainLayOut(QWidget* mainWindow)
@@ -134,6 +140,7 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
     addText = new QLineEdit();
     findText = new QLineEdit();
     deleteText = new QLineEdit();
+    draw = new DrawWidget();
 
     QHBoxLayout * buttonLay1 = new QHBoxLayout();
     buttonLay1->addWidget(addButton);
@@ -145,10 +152,12 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
     QHBoxLayout * buttonLay2 = new QHBoxLayout();
     buttonLay2->addStretch(1);
     buttonLay2->addWidget(returnButton);
+    QHBoxLayout * buttonLay3 = new QHBoxLayout();
+    buttonLay3->addWidget(draw);
 
     QVBoxLayout * imageLay = new QVBoxLayout();
     imageLay->addLayout(buttonLay1);
-    imageLay->addStretch(1);
+    imageLay->addLayout(buttonLay3);
     imageLay->addLayout(buttonLay2);
 
     QLabel * backImage;
@@ -168,6 +177,9 @@ void DSVisual::setMainLayOut(QWidget* mainWindow)
 
     connect(returnButton, SIGNAL(clicked(bool)), this, SLOT(returnStartMenu()));
 }
+
+
+
 
 void DSVisual::returnStartMenu()
 {
@@ -199,4 +211,39 @@ void DSVisual::closeWindow(QWidget * window)
     animation->setEndValue(0);
     animation->start();
     connect(animation, SIGNAL(finished()), window, SLOT(close()));
+}
+
+
+void DSVisual::insertNode()
+{
+    QString num = addText->text();
+    int key = num.toInt();
+    if(state == avlTree)
+        draw->avl->insert(key);
+    else if(state == tree)
+        draw->bst->insert(key);
+    draw->update();
+
+}
+
+void DSVisual::deleteNode()
+{
+    QString num = deleteText->text();
+    int key = num.toInt();
+    if(state == avlTree)
+        draw->avl->erase(key);
+    else if(state == tree)
+        draw->bst->erase(key);
+    draw->update();
+}
+
+void DSVisual::findNode()
+{
+    QString num = findText->text();
+    int key = num.toInt();
+    if(state == avlTree)
+        draw->avl->find(key);
+    else if(state == tree)
+        draw->bst->find(key);
+    draw->update();
 }
