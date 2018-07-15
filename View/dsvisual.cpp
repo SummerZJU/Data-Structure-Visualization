@@ -19,38 +19,62 @@ DSVisual::~DSVisual()
 void DSVisual::initStartMenu()
 {
     exitButton = new QPushButton("Exit");
-    exitButton->setFlat(true);
+    setButton(exitButton);
     treeButton = new QPushButton("Binary Tree");
-    treeButton->setFlat(true);
+    setButton(treeButton);
     avlTreeButton = new QPushButton("AVL Tree");
-    avlTreeButton->setFlat(true);
+    setButton(avlTreeButton);
 
+    QFont titleFont("Agency FB", 40);
+    QPalette titlePal;
+    titlePal.setColor(QPalette::WindowText,Qt::white);
+
+    QLabel * title1 = new QLabel("Data Structure");
+    title1->setFont(titleFont);
+    title1->setPalette(titlePal);
+    title1->setAlignment(Qt::AlignCenter);
+    QLabel * title2 = new QLabel("Visualization");
+    title2->setFont(titleFont);
+    title2->setPalette(titlePal);
+    title2->setAlignment(Qt::AlignCenter);
+
+    QHBoxLayout * titleLay1 = new QHBoxLayout();
+    titleLay1->addWidget(title1);
+    QHBoxLayout * titleLay2 = new QHBoxLayout();
+    titleLay2->addWidget(title2);
     QHBoxLayout * buttonLay = new QHBoxLayout();
     buttonLay->addWidget(treeButton);
     buttonLay->addWidget(avlTreeButton);
     buttonLay->addWidget(exitButton);
 
-    QWidget * titleImage;
-    QPalette pal;
-    pal.setBrush(QPalette::Background, QBrush(QPixmap("D:/DSVision/title.png")));
-    titleImage = new QWidget();
-    titleImage->setAutoFillBackground(true);
-    titleImage->setPalette(pal);
-    titleImage->setMinimumHeight(130);
+    QVBoxLayout * imageLay = new QVBoxLayout();
+    imageLay->addStretch(2);
+    imageLay->addLayout(titleLay1);
+    imageLay->addLayout(titleLay2);
+    imageLay->addStretch(4);
+    imageLay->addLayout(buttonLay);
+    imageLay->addStretch(1);
+
+    QLabel * backImage;
+    QPalette backPal;
+    backImage = new QLabel();
+    backPal.setBrush(QPalette::Background, QBrush(QPixmap(":/images/background.png")));
+    backImage->setAutoFillBackground(true);
+    backImage->setPalette(backPal);
+    backImage->setLayout(imageLay);
 
     QVBoxLayout * allLay = new QVBoxLayout();
-    allLay->addWidget(titleImage);
-    allLay->addLayout(buttonLay);
+    allLay->addWidget(backImage);
 
     startMenu = new QWidget();
     startMenu->setWindowTitle("Welcome to Data Structure Visualization System");
     startMenu->setLayout(allLay);
-    startMenu->resize(900, 600);
+    startMenu->resize(1200, 800);
     startMenu->show();
 
     connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(exitSystem()));
     connect(treeButton, SIGNAL(clicked(bool)), this, SLOT(initTreeWindow()));
-    connect(avlTreeButton, SIGNAL(clicked(bool)), this, SLOT(initTreeWindow()));
+    connect(avlTreeButton, SIGNAL(clicked(bool)), this, SLOT(initAVLTreeWindow()));
 }
 
 void DSVisual::exitSystem()
@@ -63,9 +87,8 @@ void DSVisual::initTreeWindow()
     startMenu->close();
 
     treeWindow = new QWidget();
-    mainLayOut(treeWindow);
+    setMainLayOut(treeWindow);
     treeWindow->setWindowTitle("Binary Tree Visualization");
-    treeWindow->resize(900, 600);
     treeWindow->show();
 }
 
@@ -74,24 +97,23 @@ void DSVisual::initAVLTreeWindow()
     startMenu->close();
 
     avlTreeWindow = new QWidget();
-    mainLayOut(treeWindow);
+    setMainLayOut(avlTreeWindow);
     avlTreeWindow->setWindowTitle("AVL Tree Visualization");
-    avlTreeWindow->resize(900, 600);
     avlTreeWindow->show();
 }
 
-void DSVisual::mainLayOut(QWidget* mainWindow)
+void DSVisual::setMainLayOut(QWidget* mainWindow)
 {
     addButton = new QPushButton("Add");
-    addButton->setFlat(true);
+    setButton(addButton);
     deleteButton = new QPushButton("Delete");
-    deleteButton->setFlat(true);
+    setButton(deleteButton);
     findButton = new QPushButton("Find");
-    findButton->setFlat(true);
+    setButton(findButton);
     clearButton = new QPushButton("Clear");
-    clearButton->setFlat(true);
+    setButton(clearButton);
     returnButton = new QPushButton("Return");
-    returnButton->setFlat(true);
+    setButton(returnButton);
 
     addText = new QLineEdit();
     findText = new QLineEdit();
@@ -105,14 +127,28 @@ void DSVisual::mainLayOut(QWidget* mainWindow)
     buttonLay1->addWidget(findButton);
     buttonLay1->addWidget(findText);
     QHBoxLayout * buttonLay2 = new QHBoxLayout();
+    buttonLay2->addStretch(1);
     buttonLay2->addWidget(returnButton);
 
+    QVBoxLayout * imageLay = new QVBoxLayout();
+    imageLay->addLayout(buttonLay1);
+    imageLay->addStretch(1);
+    imageLay->addLayout(buttonLay2);
+
+    QLabel * backImage;
+    QPalette backPal;
+    backImage = new QLabel();
+    backPal.setBrush(QPalette::Background,
+                        QBrush(QPixmap(":/images/background.png")));
+    backImage->setAutoFillBackground(true);
+    backImage->setPalette(backPal);
+    backImage->setLayout(imageLay);
+
     QVBoxLayout * allLay = new QVBoxLayout();
-    allLay->addLayout(buttonLay1);
-    allLay->addStretch(1);
-    allLay->addLayout(buttonLay2);
+    allLay->addWidget(backImage);
 
     mainWindow->setLayout(allLay);
+    mainWindow->resize(1200, 800);
 
     connect(returnButton, SIGNAL(clicked(bool)), this, SLOT(returnStartMenu()));
 }
@@ -123,4 +159,15 @@ void DSVisual::returnStartMenu()
     if(avlTreeWindow) avlTreeWindow->close();
 
     initStartMenu();
+}
+
+void DSVisual::setButton(QPushButton * button)
+{
+    QPalette buttonPal;
+    buttonPal.setColor(QPalette::ButtonText,Qt::white);
+    QFont buttonFont("Agency FB", 20);
+
+    button->setFlat(true);
+    button->setPalette(buttonPal);
+    button->setFont(buttonFont);
 }

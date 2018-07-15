@@ -32,3 +32,6 @@ HEADERS += \
 
 FORMS += \
         dsvisual.ui
+
+RESOURCES += \
+    dsvisionqrc.qrc

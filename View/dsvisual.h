@@ -9,6 +9,9 @@
 #include <QLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QPalette>
+#include <QFont>
+#include <QImage>
 
 class DSVisual : public QObject
 {
@@ -38,7 +41,8 @@ private:
     QLineEdit * deleteText;
 
     void initStartMenu();
-    void mainLayOut(QWidget* mainWindow);
+    void setMainLayOut(QWidget * mainWindow);
+    void setButton(QPushButton * button);
 
 private slots:
     void exitSystem();
