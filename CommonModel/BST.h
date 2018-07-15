@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define AVL_DEBUG
+#define BST_DEBUG
 
 template<typename T>
 struct BSTNode {
@@ -53,7 +53,7 @@ class BST {
 	void inorder(BSTNode<T> *cur, int *count);
 	void levelorder();
 public:
-#ifdef AVL_DEBUG
+#ifdef BST_DEBUG
 	void print(BSTNode<T> *cur);
 	void print();
 #endif
@@ -287,7 +287,7 @@ void BST<T>::erase(const T& key)
 
 // just for debug
 
-#ifdef AVL_DEBUG
+#ifdef BST_DEBUG
 template <typename T>
 void BST<T>::print(BSTNode<T> *cur)
 {
