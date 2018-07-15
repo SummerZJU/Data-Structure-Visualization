@@ -38,7 +38,7 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - cd View\release
   - dir
-  - windeployqt DSV.exe
+  - windeployqt DSVision.exe
   
 
 artifacts:

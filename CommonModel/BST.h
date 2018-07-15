@@ -2,6 +2,9 @@
 #define BST_H_
 
 #include <cassert>
+#include <stack>
+
+using namespace std;
 
 template<typename T>
 struct BSTNode {
@@ -137,13 +140,71 @@ void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
 				else parent->right = eraseFinal->left;
 			}
 		}
+		eraseFinal->left = eraseFinal->right = nullptr;
+		delete eraseFinal;
 	}
 }
 
 template <typename T>
 void BST<T>::erase(BSTNode<T> *pos)
 {
-	
+	stack<BSTNode<T> *> myStack;
+	BSTNode<T> *work = root;
+	while(work->key != pos->key) {
+		myStack.push(work);
+		if(work->key > pos->key) {
+			work = work->left;
+		} else {
+			work = work->right;
+		}
+	} // pos is not inStack()
+	BSTNode<T> *delPos = pos;
+	if(pos->right && pos->left) {
+		myStack.push(pos);
+		delPos = pos->left;
+		while(delPos->right) {
+			myStack.push(delPos);
+			delPos = delPos->right;
+		}
+		pos->key = delPos->key;
+	}
+	BSTNode<T> *after = delPos->right ? delPos->right : delPos->left, *level;
+	if(delPos == root) {
+		root = after; // maybe nullptr;
+	} else {
+		// at least one BSTNode in stack
+		BSTNode<T> *temp = myStack.top();
+		myStack.pop();
+
+		level = temp; // at least oldRoot!!!
+		if(temp->left == delPos) {
+			temp->left = after;
+		} else {
+			temp->right = after;
+		}
+		level->height = getHeight(level);
+		delPos->left = delPos->right = nullptr;
+		delete delPos;
+
+		// level stands for top/current !
+		// temp last top !
+		
+		while(!myStack.empty()) {
+			BSTNode<T> *top = myStack.top();
+			myStack.pop();
+			if(top->left == temp) {
+				top->left = level;
+				level = top;
+			} else {
+				top->right = level;
+				level = top;
+			}
+			temp = top;
+			level->height = getHeight(level);
+		}
+		root = level;
+	}
+	return;
 }
 
 #endif
