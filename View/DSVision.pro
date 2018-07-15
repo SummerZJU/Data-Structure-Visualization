@@ -26,8 +26,6 @@ SOURCES += \
         main.cpp \
         dsvisual.cpp \
     draw.cpp \
-    AVLTree.cpp \
-    BST.cpp
 
 HEADERS += \
         dsvisual.h \
