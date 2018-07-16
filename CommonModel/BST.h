@@ -143,7 +143,7 @@ BSTNode<T> *BST<T>::insert(BSTNode<T> *cur, const T& key)
 		ret = work;
 	} else if(cur->key < key) {
 		ret->right = insert(ret->right, key);
-	} else if(cur->key > key) {
+	} else(cur->key > key) {
 		ret->left = insert(ret->left, key);
 	}
 	// 
