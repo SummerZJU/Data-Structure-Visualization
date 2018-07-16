@@ -5,99 +5,87 @@
 #include <queue>
 #include <string>
 #include "Common.h"
+#include "../CommonBase/TreeBase.h"
 using namespace std;
 
 #define AVL_DEBUG
 
+// template inherit template(ont to one)
 template<typename T>
-struct TNode {
-	T key;
-	TNode *left;
-	TNode *right;
+struct AVLNode : public BaseNode<T>{
 	int height;
 
-	int depth;
-	int inorderIndex; // from 0 -> ...
-	NodeType state;
-
-	TNode(const T& key);
-	~TNode(); // auto-recursion freeTree! hahah ==!
+	AVLNode(const T& key);
+	~AVLNode(); // auto-recursion freeTree! hahah ==!
 };
 
-template<typename T>
-class AVLTree {	
-	int getHeight(TNode<T> *pos);
-	
-	TNode<T> *RR(TNode<T> *pos);
-	TNode<T> *LL(TNode<T> *pos);
-	TNode<T> *RL(TNode<T> *pos);
-	TNode<T> *LR(TNode<T> *pos);
-	TNode<T> *root;
-
-	void inorder(TNode<T> *cur, int *count);
-	void levelorder();
-	void erase(TNode<T> *pos);
-	TNode<T> *insert(TNode<T> *pos, const T& key); //recurson for implementation
+// template inherit template(one to one)
+template<typename T, typename S = less<T>>
+class AVLTree : public BaseTree<T, S> {	
+	// root is a BaseNode 
+	// pointer is a member of BaseTree
+	int getHeight(BaseNode<T> *_pos);
+	BaseNode<T> *RR(BaseNode<T> *pos);
+	BaseNode<T> *LL(BaseNode<T> *pos);
+	BaseNode<T> *RL(BaseNode<T> *pos);
+	BaseNode<T> *LR(BaseNode<T> *pos);
+	void erase(BaseNode<T> *pos);
+	BaseNode<T> *insert(BaseNode<T> *pos, const T& key); //recurson for implementation
 public:
 #ifdef AVL_DEBUG
-	void print(TNode<T> *cur);
+	void print(BaseNode<T> *cur);
 	void print();
 #endif
 	AVLTree();
 	virtual ~AVLTree();
-	TNode<T> *getRoot();
 	void insert(const T& key);	
 	void erase(const T& key);
-	TNode<T> *find(const T& key);
+	AVLNode<T> *find(const T& key);
 };
 
 //------------------------------------------------------------------------------//
-//TNode template declaration
+//AVLNode template declaration
 template <typename T>
-TNode<T>::TNode(const T& key):
-	key(key),
-	left(nullptr),
-	right(nullptr),
-	height(0),
-	depth(0),
-	inorderIndex(0),
-	state(OTHER)
+AVLNode<T>::AVLNode(const T& key):
+	BaseNode<T>(key),
+	height(0)
 {
 
 }
 
 // root-first recurrensive dtor!
 template <typename T>
-TNode<T>::~TNode()
+AVLNode<T>::~AVLNode()
 {
-	if(left) delete left;
-	if(right) delete right;
+	// trival is here
+	// BaseNode dtor is OK!
 }
-
+//---------------------------------------------------------------------------//
+//																			 //
+//																			 //
+//																			 //
+//																	         //
+//																			 //
 //---------------------------------------------------------------------------//
 //AVLTree template declaration
-template <typename T>
-AVLTree<T>::AVLTree(): 
-	root(nullptr)
+template <typename T, typename S>
+AVLTree<T, S>::AVLTree():
+	BaseTree<T, S>()
 {
 
 }
 
-template <typename T>
-AVLTree<T>::~AVLTree()
+template <typename T, typename S>
+AVLTree<T, S>::~AVLTree()
 {
-	if(root) delete root;
+	// here is trival 
+	// actual action is in BaseTree
 }
 
-template <typename T>
-TNode<T> *AVLTree<T>::getRoot()
-{ 
-	return root; 
-}
-
-template<typename T>
-int AVLTree<T>::getHeight(TNode<T> *pos)
+template<typename T, typename S>
+int AVLTree<T, S>::getHeight(BaseNode<T> *_pos)
 {
+	AVLNode<T> *pos = dynamic_cast<AVLNode<T> *>(_pos);
 	if(!pos) {
 		return -1;
 	} else {
@@ -108,80 +96,47 @@ int AVLTree<T>::getHeight(TNode<T> *pos)
 	}
 }
 
-template<typename T>
-TNode<T> *AVLTree<T>::RR(TNode<T> *pos)
+template<typename T, typename S>
+BaseNode<T> *AVLTree<T, S>::RR(BaseNode<T> *pos)
 {
-	TNode<T> *temp = pos->right;
+	BaseNode<T> *temp = pos->right;
 	pos->right = temp->left;
 	temp->left = pos;
 
 	return temp;
 }
 
-template<typename T>
-TNode<T> *AVLTree<T>::LL(TNode<T> *pos)
+template<typename T, typename S>
+BaseNode<T> *AVLTree<T, S>::LL(BaseNode<T> *pos)
 {
-	TNode<T> *temp = pos->left;
+	BaseNode<T> *temp = pos->left;
 	pos->left = temp->right;
 	temp->right = pos;
 
 	return temp;
 }
 
-template<typename T>
-TNode<T> *AVLTree<T>::RL(TNode<T> *pos)
+template<typename T, typename S>
+BaseNode<T> *AVLTree<T, S>::RL(BaseNode<T> *pos)
 {
 	pos->right = LL(pos->right);
 	return RR(pos);
 }
 
-template<typename T>
-TNode<T> *AVLTree<T>::LR(TNode<T> *pos)
+template<typename T, typename S>
+BaseNode<T> *AVLTree<T, S>::LR(BaseNode<T> *pos)
 {
 	pos->left = RR(pos->left);
 	return LL(pos);
 }
-
-template <typename T>
-void AVLTree<T>::inorder(TNode<T> *cur, int *count)
+// root
+template<typename T, typename S>
+BaseNode<T> *AVLTree<T, S>::insert(BaseNode<T> *pos, const T& key)
 {
-	if(cur != nullptr) {
-		inorder(cur->left, count);
-		cur->inorderIndex = (*count)++;
-		inorder(cur->right, count);
-	}
-}
-
-template <typename T>
-void AVLTree<T>::levelorder()
-{
-	queue<TNode<T> *> myQueue;
-	if(root) {
-		root->depth = 0;
-		myQueue.push(root);
-		while(!myQueue.empty()) {
-			TNode<T> *cur = myQueue.front();
-			myQueue.pop();
-			cur->state = OTHER;
-			if(cur->left) {
-				cur->left->depth = cur->depth + 1;
-				myQueue.push(cur->left);
-			}
-			if(cur->right) {
-				cur->right->depth = cur->depth + 1;
-				myQueue.push(cur->right);
-			}
-		}
-	}
-}
-
-template<typename T>
-TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
-{
-	TNode<T> *ret = pos;
-	if(root) {
+	BaseNode<T> *ret = pos;
+	if(this->root) {
 		if(!pos) {
-			TNode<T> *cur = new TNode<T>(key);
+			AVLNode<T> *cur = new AVLNode<T>(key);
 			ret = cur;
 		} else if(pos->key > key) {
 			pos->left = insert(pos->left, key);
@@ -202,31 +157,31 @@ TNode<T> *AVLTree<T>::insert(TNode<T> *pos, const T& key)
 				}
 			}
 		}
-		ret->height = getHeight(ret);
+		dynamic_cast<AVLNode<T> *>(ret)->height = getHeight(ret);
 	} else {
-		TNode<T> *cur = new TNode<T>(key);
-		ret = root = cur;
+		AVLNode<T> *cur = new AVLNode<T>(key);
+		this->root = cur;
+		ret = cur;
 	}
-
 	return ret;
 }
 
-template <typename T>
-void AVLTree<T>::insert(const T& key)
+template <typename T, typename S>
+void AVLTree<T, S>::insert(const T& key)
 {
-	root = insert(root, key);
+	this->root = insert(dynamic_cast<AVLNode<T> *>(this->root), key);
 	int count = 0;
-	inorder(root, &count);
-	levelorder();
+	this->inorder(this->root, &count);
+	this->levelorder();
 	return;
 }
 
 // assume pos != nullptr
-template <typename T>
-void AVLTree<T>::erase(TNode<T> *pos)
+template <typename T, typename S>
+void AVLTree<T, S>::erase(BaseNode<T> *pos)
 {
-	stack<TNode<T> *> myStack;
-	TNode<T> *work = root;
+	stack<BaseNode<T> *> myStack;
+	BaseNode<T> *work = this->root;
 	while(work->key != pos->key) {
 		myStack.push(work);
 		if(work->key > pos->key) {
@@ -235,7 +190,7 @@ void AVLTree<T>::erase(TNode<T> *pos)
 			work = work->right;
 		}
 	} // pos is not inStack()
-	TNode<T> *delPos = pos;
+	BaseNode<T> *delPos = pos;
 	if(pos->right && pos->left) {
 		myStack.push(pos);
 		delPos = pos->left;
@@ -245,12 +200,12 @@ void AVLTree<T>::erase(TNode<T> *pos)
 		}
 		pos->key = delPos->key;
 	}
-	TNode<T> *after = delPos->right ? delPos->right : delPos->left, *level;
-	if(delPos == root) {
-		root = after; // maybe nullptr;
+	BaseNode<T> *after = delPos->right ? delPos->right : delPos->left, *level;
+	if(delPos == this->root) {
+		this->root = after; // maybe nullptr;
 	} else {
-		// at least one TNode in stack
-		TNode<T> *temp = myStack.top();
+		// at least one AVLNode in stack
+		BaseNode<T> *temp = myStack.top();
 		myStack.pop();
 
 		level = temp; // at least oldRoot!!!
@@ -273,12 +228,12 @@ void AVLTree<T>::erase(TNode<T> *pos)
 				}
 			}
 		}
-		level->height = getHeight(level);
+		dynamic_cast<AVLNode<T> *>(level)->height = getHeight(level);
 		delPos->left = delPos->right = nullptr;
 		delete delPos;
 
 		while(!myStack.empty()) {
-			TNode<T> *top = myStack.top();
+			BaseNode<T> *top = myStack.top();
 			myStack.pop();
 			if(top->left == temp) {
 				top->left = level;
@@ -302,24 +257,25 @@ void AVLTree<T>::erase(TNode<T> *pos)
 				}
 			}
 			temp = top;
-			level->height = getHeight(level);
+			dynamic_cast<AVLNode<T> *>(level)->height = getHeight(level);
 		}
-		root = level;
+		this->root = level;
 	}
 	return;
 }
 
-template <typename T>
-TNode<T> *AVLTree<T>::find(const T& key)
+template <typename T, typename S>
+AVLNode<T> *AVLTree<T, S>::find(const T& key)
 {
-	TNode<T> *ret = nullptr, *work = root;
+	AVLNode<T> *ret = nullptr;
+	BaseNode<T> *work = this->root;
 	// reset to OTHER!
-	levelorder(); 
+	this->levelorder(); 
 	// reset to OTHER!
 	while(work) {
 		work->state = PATH;
 		if(work->key == key) {
-			ret = work;
+			ret = dynamic_cast<AVLNode<T> *>(work);
 			break;
 		} else if(work->key > key) {
 			work = work->left;
@@ -331,23 +287,24 @@ TNode<T> *AVLTree<T>::find(const T& key)
 	return ret;
 }
 
-template <typename T>
-void AVLTree<T>::erase(const T& key)
+template <typename T, typename S>
+void AVLTree<T, S>::erase(const T& key)
 {
-	TNode<T> *work = find(key);
+	AVLNode<T> *work = find(key);
 	if(work != nullptr) erase(work);
 	int count = 0;
-	inorder(root, &count);
-	levelorder();
+	this->inorder(this->root, &count);
+	this->levelorder();
 }
 
 
 // just for debug
 
 #ifdef AVL_DEBUG
-template <typename T>
-void AVLTree<T>::print(TNode<T> *cur)
+template <typename T, typename S>
+void AVLTree<T, S>::print(BaseNode<T> *_cur)
 {
+	AVLNode<T> *cur = dynamic_cast<AVLNode<T> *>(_cur);
 	if(cur) {
 		print(cur->left);
 		cout << "Key = " << cur->key << ", Height = " << cur->height << endl;
@@ -358,10 +315,10 @@ void AVLTree<T>::print(TNode<T> *cur)
 	}
 }
 
-template <typename T>
-void AVLTree<T>::print()
+template <typename T, typename S>
+void AVLTree<T, S>::print()
 {
-	print(root);
+	print(dynamic_cast<AVLNode<T> *>(this->root));
 	return;
 }
 #endif

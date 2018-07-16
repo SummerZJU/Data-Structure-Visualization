@@ -5,140 +5,77 @@
 #include <stack>
 #include <queue>
 #include "Common.h"
+#include <iostream>
+#include "../CommonBase/TreeBase.h"
 
 using namespace std;
 
 #define BST_DEBUG
 
 template<typename T>
-struct BSTNode {
-	T key;
-	BSTNode *left;
-	BSTNode *right;
-
-	int height;
-	int depth;
-	int inorderIndex;
-	NodeType state;
-
+struct BSTNode : public BaseNode<T>{
 	BSTNode(const T& key);
 	virtual ~BSTNode(); // auto-recursion freeTree! hahah ==!
 };
 
 template <typename T>
 BSTNode<T>::BSTNode(const T& key):
-	key(key),
-	left(nullptr),
-	right(nullptr),
-	height(0),
-	depth(0),
-	inorderIndex(0),
-	state(OTHER)
+	BaseNode<T>(key)
 {
-
+	// trival
 }
 
 // root-first recurrensive dtor!
 template <typename T>
 BSTNode<T>::~BSTNode()
 {
-	if(left) delete left;
-	if(right) delete right;
+	// trival
 }
 
-template <typename T>
-class BST {
-	BSTNode<T> *root;
-	BSTNode<T> *insert(BSTNode<T> *cur, const T& key);
-	void erase(BSTNode<T> *pos, BSTNode<T> *parent);
-	void erase(BSTNode<T> *pos);
-	int getHeight(BSTNode<T> *pos);
-	void inorder(BSTNode<T> *cur, int *count);
-	void levelorder();
+//---------------------------------------------------------------------------//
+//																			 //
+//																			 //
+//																			 //
+//																	         //
+//																			 //
+//---------------------------------------------------------------------------//
+
+template <typename T, typename S = less<T>>
+class BST : public BaseTree<T, S> {
+	BaseNode<T> *insert(BaseNode<T> *cur, const T& key);
+
+	void erase(BSTNode<T> *pos, BSTNode<T> *parent); // deprecated
+	
+	void erase(BaseNode<T> *pos);
 public:
 #ifdef BST_DEBUG
-	void print(BSTNode<T> *cur);
+	void print(BaseNode<T> *cur);
 	void print();
 #endif
-
 	BST();
 	virtual ~BST();
-	BSTNode<T> *getRoot() const;
 	void insert(const T& key);
 	BSTNode<T> *find(const T& key);
 	void erase(const T& key);
 };
 
-template <typename T>
-BST<T>::BST():
-	root(nullptr)
+template <typename T, typename S>
+BST<T, S>::BST():
+	BaseTree<T>()
 {
-
+	// trival
 }
 
-template <typename T>
-BST<T>::~BST()
+template <typename T, typename S>
+BST<T, S>::~BST()
 {
-	if(root) delete root;
+	//trival
 }
 
-template<typename T>
-int BST<T>::getHeight(BSTNode<T> *pos)
+template <typename T, typename S>
+BaseNode<T> *BST<T, S>::insert(BaseNode<T> *cur, const T& key)
 {
-	if(!pos) {
-		return -1;
-	} else {
-		int lHeight = getHeight(pos->left);
-		int rHeight = getHeight(pos->right);
-		pos->height = lHeight > rHeight ? lHeight + 1 : rHeight + 1;
-		return pos->height;
-	}
-}
-
-
-template <typename T>
-void BST<T>::inorder(BSTNode<T> *cur, int *current)
-{
-	if(cur) {
-		inorder(cur->left, current);
-		cur->inorderIndex = (*current)++;
-		inorder(cur->right, current);
-	}
-}
-
-template <typename T>
-void BST<T>::levelorder()
-{
-	queue<BSTNode<T> *> myQueue;
-	if(root) {
-		root->depth = 0;
-		myQueue.push(root);
-		while(!myQueue.empty()) {
-			BSTNode<T> *cur = myQueue.front();
-			cur->state = OTHER;
-			myQueue.pop();
-			if(cur->left) {
-				cur->left->depth = cur->depth + 1;
-				myQueue.push(cur->left);
-			}
-			if(cur->right) {
-				cur->right->depth = cur->depth + 1;
-				myQueue.push(cur->right);
-			}
-		}
-	}
-}
-
-template <typename T>
-BSTNode<T> *BST<T>::getRoot() const
-{
-	return root;
-}
-
-template <typename T>
-BSTNode<T> *BST<T>::insert(BSTNode<T> *cur, const T& key)
-{
-	BSTNode<T> *ret = cur;
+	BaseNode<T> *ret = cur;
 	if(cur == nullptr) {
 		BSTNode<T> *work = new BSTNode<T>(key);
 		ret = work;
@@ -150,24 +87,23 @@ BSTNode<T> *BST<T>::insert(BSTNode<T> *cur, const T& key)
 	// 
 	// == key -> insert failed!
 	//
-	ret->height = getHeight(ret);
 	return ret;
 }
 
-template <typename T>
-void BST<T>::insert(const T& key)
+template <typename T, typename S>
+void BST<T, S>::insert(const T& key)
 {
-	root = insert(root, key);
+	this->root = insert(this->root, key);
 	int count = 0;
-	inorder(root, &count);
-	levelorder();
+	this->inorder(this->root, &count);
+	this->levelorder();
 }
 
-template <typename T>
-void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
+template <typename T, typename S>
+void BST<T, S>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
 {
 	//assert(root != nullptr && pos != nullptr);
-	if(root != nullptr && pos != nullptr) {
+	if(this->root != nullptr && pos != nullptr) {
 		BSTNode<T> *eraseFinal = pos;
 		if(pos->right != nullptr && pos->left != nullptr) {
 			eraseFinal = pos->left;
@@ -179,7 +115,7 @@ void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
 		}
 		if(eraseFinal->right != nullptr) {
 			if(parent == nullptr) {
-				root = eraseFinal->right; // erase a root(sea node)
+				this->root = eraseFinal->right; // erase a root(sea node)
 			} else {
 				bool isLeft = parent->left == eraseFinal;
 				if(isLeft) parent->left = eraseFinal->right;
@@ -187,7 +123,7 @@ void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
 			}
 		} else {
 			if(parent == nullptr) {
-				root = eraseFinal->left; // erase a root(sea node)
+				this->root = eraseFinal->left; // erase a root(sea node)
 			} else {
 				bool isLeft = parent->left == eraseFinal;
 				if(isLeft) parent->left = eraseFinal->left;
@@ -199,11 +135,11 @@ void BST<T>::erase(BSTNode<T> *pos, BSTNode<T> *parent)
 	}
 }
 
-template <typename T>
-void BST<T>::erase(BSTNode<T> *pos)
+template <typename T, typename S>
+void BST<T, S>::erase(BaseNode<T> *pos)
 {
-	stack<BSTNode<T> *> myStack;
-	BSTNode<T> *work = root;
+	stack<BaseNode<T> *> myStack;
+	BaseNode<T> *work = this->root;
 	while(work->key != pos->key) {
 		myStack.push(work);
 		if(work->key > pos->key) {
@@ -212,7 +148,7 @@ void BST<T>::erase(BSTNode<T> *pos)
 			work = work->right;
 		}
 	} // pos is not inStack()
-	BSTNode<T> *delPos = pos;
+	BaseNode<T> *delPos = pos;
 	if(pos->right && pos->left) {
 		myStack.push(pos);
 		delPos = pos->left;
@@ -222,12 +158,12 @@ void BST<T>::erase(BSTNode<T> *pos)
 		}
 		pos->key = delPos->key;
 	}
-	BSTNode<T> *after = delPos->right ? delPos->right : delPos->left, *level;
-	if(delPos == root) {
-		root = after; // maybe nullptr;
+	BaseNode<T> *after = delPos->right ? delPos->right : delPos->left, *level;
+	if(delPos == this->root) {
+		this->root = after; // maybe nullptr;
 	} else {
 		// at least one BSTNode in stack
-		BSTNode<T> *temp = myStack.top();
+		BaseNode<T> *temp = myStack.top();
 		myStack.pop();
 
 		level = temp; // at least oldRoot!!!
@@ -236,7 +172,6 @@ void BST<T>::erase(BSTNode<T> *pos)
 		} else {
 			temp->right = after;
 		}
-		level->height = getHeight(level);
 		delPos->left = delPos->right = nullptr;
 		delete delPos;
 
@@ -244,7 +179,7 @@ void BST<T>::erase(BSTNode<T> *pos)
 		// temp last top !
 		
 		while(!myStack.empty()) {
-			BSTNode<T> *top = myStack.top();
+			BaseNode<T> *top = myStack.top();
 			myStack.pop();
 			if(top->left == temp) {
 				top->left = level;
@@ -254,24 +189,24 @@ void BST<T>::erase(BSTNode<T> *pos)
 				level = top;
 			}
 			temp = top;
-			level->height = getHeight(level);
 		}
-		root = level;
+		this->root = level;
 	}
 	return;
 }
 
-template <typename T>
-BSTNode<T> *BST<T>::find(const T& key)
+template <typename T, typename S>
+BSTNode<T> *BST<T, S>::find(const T& key)
 {
-	BSTNode<T> *ret = nullptr, *work = root;
+	BSTNode<T> *ret = nullptr;
+	BaseNode<T> *work = this->root;
 	// reset to OTHER!
-	levelorder(); 
+	this->levelorder(); 
 	// reset to OTHER!
 	while(work) {
 		work->state = PATH;
 		if(work->key == key) {
-			ret = work;
+			ret = dynamic_cast<BSTNode<T> *>(work);
 			break;
 		} else if(work->key > key) {
 			work = work->left;
@@ -283,26 +218,27 @@ BSTNode<T> *BST<T>::find(const T& key)
 	return ret;
 }
 
-template <typename T>
-void BST<T>::erase(const T& key)
+template <typename T, typename S>
+void BST<T, S>::erase(const T& key)
 {
 	BSTNode<T> *work = find(key);
 	if(work != nullptr) erase(work);
 	int count = 0;
-	inorder(root, &count);
-	levelorder();
+	this->inorder(this->root, &count);
+	this->levelorder();
 }
 
 
 // just for debug
 
 #ifdef BST_DEBUG
-template <typename T>
-void BST<T>::print(BSTNode<T> *cur)
+template <typename T, typename S>
+void BST<T, S>::print(BaseNode<T> *_cur)
 {
+	BSTNode<T> *cur = dynamic_cast<BSTNode<T> *>(_cur);
 	if(cur) {
 		print(cur->left);
-		cout << "Key = " << cur->key << ", Height = " << cur->height << endl;
+		cout << "Key = " << cur->key << endl;
 		cout << "Depth = " << cur->depth << ", inorderIndex = " << cur->inorderIndex << endl;
 		cout << "left is " << (cur->left ? to_string(cur->left->key) : "nullptr") << endl;
 		cout << "right is " << (cur->right ? to_string(cur->right->key) : "nullptr") << endl;
@@ -310,10 +246,10 @@ void BST<T>::print(BSTNode<T> *cur)
 	}
 }
 
-template <typename T>
-void BST<T>::print()
+template <typename T, typename S>
+void BST<T, S>::print()
 {
-	print(root);
+	print(this->root);
 	return;
 }
 #endif
