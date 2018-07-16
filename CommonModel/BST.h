@@ -32,7 +32,8 @@ BSTNode<T>::BSTNode(const T& key):
 	right(nullptr),
 	height(0),
 	depth(0),
-	inorderIndex(0)
+	inorderIndex(0),
+	state(OTHER)
 {
 
 }

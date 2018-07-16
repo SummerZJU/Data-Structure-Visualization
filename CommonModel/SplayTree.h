@@ -68,7 +68,8 @@ SPTNode<T>::SPTNode():
 	right(NULL),
 	parent(NULL),
 	depth(0),
-	inorderIndex(0)
+	inorderIndex(0),
+	state(OTHER)
 {
 
 }
