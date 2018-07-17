@@ -133,7 +133,7 @@ public:
 class StateManager
 {
 public:
-/*
+
 viud Add(int iState, const std::shared_ptr<IStateBase>& spState)
 {
 ...
@@ -143,8 +143,7 @@ void Process(unsigned int uEvent, std::any& param)
 ...
 }
 ...
-*/
-/*
+
 private:
 	int m_iCurrentState;
 	std::map<int, std::shared_ptr<IStateBase>> m_map;

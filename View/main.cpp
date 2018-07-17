@@ -1,11 +1,11 @@
-#include "dsvisual.h"
 #include <QApplication>
-
+#include "../APP/APP.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    DSVisual w;
+    // run ?
 
+    APP *ap = new APP;
     return a.exec();
 }

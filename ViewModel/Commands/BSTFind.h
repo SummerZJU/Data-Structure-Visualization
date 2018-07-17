@@ -1,5 +1,5 @@
-#ifndef BSTINSERT_H_
-#define BSTINSERT_H_
+#ifndef BSTFIND_H_
+#define BSTFIND_H_
 
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
@@ -9,16 +9,14 @@
 
 using namespace std;
 
-// typeanme V is ViewModel
-// type parameter not only container/collection
 
 template <typename T, typename V, typename S = less<T>>
-class BSTInsert : public CommandBase {
+class BSTFind : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    BSTInsert(V *pVM);
-	virtual ~BSTInsert();
+    BSTFind(V *pVM);
+	virtual ~BSTFind();
 
 	virtual void Exec() override;
 };
@@ -27,7 +25,7 @@ public:
 // viewmodel bind model
 // just couple model in viewmodel
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::BSTInsert(V *pVM):
+BSTFind<T, V, S>::BSTFind(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
@@ -35,21 +33,25 @@ BSTInsert<T, V, S>::BSTInsert(V *pVM):
 }
 
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::~BSTInsert()
+BSTFind<T, V, S>::~BSTFind()
 {
 	// trival
 }
 
 template <typename T, typename V, typename S>
-void BSTInsert<T, V, S>::Exec()
+void BSTFind<T, V, S>::Exec()
 {
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
+
+    // here is primitive pointer !!!
+    // isn't smart pointer       !!!
     auto work = dynamic_pointer_cast<BST<T, S>>(spVM->getBST());
-	work->insert(para);
+	work->find(para);
 
 	return;
 }
 
-#endif // BSTINSERT_H_
+
+#endif

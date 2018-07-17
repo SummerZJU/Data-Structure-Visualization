@@ -1,3 +1,4 @@
 test*.cpp
 test*.exe
 *.o
+*.pro.user

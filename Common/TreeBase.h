@@ -2,7 +2,7 @@
 #define TREEBASE_H_
 
 #include <functional>
-#include "../CommonModel/Common.h"
+#include "../Model/Common.h"
 #include <queue>
 using namespace std;
 
