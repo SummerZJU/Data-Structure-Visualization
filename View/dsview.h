@@ -6,6 +6,8 @@
 #include "drawwindow.h"
 #include "startcommand.h"
 #include "returncommand.h"
+#include "Sinks/TreeCommandNotification.h"
+#include "Sinks/TreePropertyNotification.h"
 
 class DSView
 {
@@ -15,6 +17,9 @@ private:
     std::shared_ptr<StartCommand> startCommand;
     std::shared_ptr<ReturnCommand> returnCommand;
 
+    shared_ptr<ICommandNotification> spTCN;
+    shared_ptr<IPropertyNotification> spTPN;
+
 public:
     DSView();
     ~DSView();
@@ -22,6 +27,8 @@ public:
     StartMenu * getStartMenu();
     DrawWindow * getDrawWindow();
 
+    std::shared_ptr<ICommandNotification> getTreeCommandNotification();
+    std::shared_ptr<IPropertyNotification> getTreePropertyNotification();
 };
 
 #endif // DSVIEW_H

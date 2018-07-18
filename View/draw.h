@@ -18,7 +18,7 @@ class DrawWidget : public QWidget
     Q_OBJECT
 public:
     DrawWidget(QWidget *parent = 0);
-    ~DrawWidget();
+    virtual ~DrawWidget();
     void paintEvent(QPaintEvent *);
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);

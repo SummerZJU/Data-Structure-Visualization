@@ -44,7 +44,14 @@ HEADERS += \
     ViewModel/Commands/BSTErase.h \
     ViewModel/Commands/BSTFind.h \
     ViewModel/Commands/BSTInsert.h \
-    ViewModel/Sinks/InsertError.h
+    View/Sinks/TreeCommandNotification.h \
+    View/Sinks/TreePropertyNotification.h \
+    View/ErrorView/DeleteError.h \
+    View/ErrorView/Error.h \
+    View/ErrorView/FindError.h \
+    View/ErrorView/InsertError.h \
+    Common/Exception/ModelException.h \
+    ViewModel/Sinks/VMPropertySink.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -66,7 +73,14 @@ SOURCES += \
     ViewModel/Commands/BSTErase.cpp \
     ViewModel/Commands/BSTFind.cpp \
     ViewModel/Commands/BSTInsert.cpp \
-    ViewModel/Sinks/InsertError.cpp
+    View/Sinks/TreeCommandNotification.cpp \
+    View/Sinks/TreePropertyNotification.cpp \
+    View/ErrorView/DeleteError.cpp \
+    View/ErrorView/Error.cpp \
+    View/ErrorView/FindError.cpp \
+    View/ErrorView/InsertError.cpp \
+    Common/Exception/ModelException.cpp \
+    ViewModel/Sinks/VMPropertySink.cpp
 
 RESOURCES += \
     View/viewqrc.qrc

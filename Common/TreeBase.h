@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "../Model/Common.h"
+#include "etlbase.h"
 #include <queue>
 using namespace std;
 
@@ -41,7 +42,8 @@ BaseNode<T>::~BaseNode()
 }
 
 template <typename T, typename S = std::less<T>>
-class BaseTree {
+class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>>, 
+				 public Proxy_CommandNotification<BaseTree<T, S>> {
 protected:
 	BaseNode<T> *root;
 protected:
@@ -51,6 +53,7 @@ public:
 	BaseTree();
 	virtual ~BaseTree();
 	BaseNode<T> *getRoot();
+	void clear();
 };
 
 template <typename T, typename S>
@@ -103,6 +106,14 @@ void BaseTree<T, S>::levelorder()
 			}
 		}
 	}
+}
+
+template <typename T, typename S>
+void BaseTree<T, S>::clear()
+{
+	if(root) delete root;
+	root = nullptr;
+	this->Fire_OnPropertyChanged("Property Changed After Clear");
 }
 
 #endif

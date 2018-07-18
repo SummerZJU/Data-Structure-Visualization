@@ -1,5 +1,6 @@
-#ifndef BSTERASE_H_
-#define BSTERASE_H_
+#ifndef BSTCLEAR_H_
+#define BSTCLEAR_H_
+
 
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
@@ -9,13 +10,14 @@
 
 using namespace std;
 
+
 template <typename T, typename V, typename S = less<T>>
-class BSTErase : public CommandBase {
+class BSTClear : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    BSTErase(V *pVM);
-	virtual ~BSTErase();
+    BSTClear(V *pVM);
+	virtual ~BSTClear();
 
 	virtual void Exec() override;
 };
@@ -24,7 +26,7 @@ public:
 // viewmodel bind model
 // just couple model in viewmodel
 template <typename T, typename V, typename S>
-BSTErase<T, V, S>::BSTErase(V *pVM):
+BSTClear<T, V, S>::BSTClear(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
@@ -32,28 +34,29 @@ BSTErase<T, V, S>::BSTErase(V *pVM):
 }
 
 template <typename T, typename V, typename S>
-BSTErase<T, V, S>::~BSTErase()
+BSTClear<T, V, S>::~BSTClear()
 {
 	// trival
 }
 
-template <typename T, typename V,typename S>
-void BSTErase<T, V, S>::Exec()
+template <typename T, typename V, typename S>
+void BSTClear<T, V, S>::Exec()
 {
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
-	
+
+   	// parameter is useless !
+    // dynamic is useless !
+
+	// smart pointer of base template/class
 	bool res = true;
-	try {
-		spVM->execCommandBSTErase(para);
-	} catch(const exception& e) {
-		res = false;
-	}
 
-	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
-
+	spVM->execCommandBSTClear(); // no exception !!!
+	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
+	
 	return;
 }
+
 
 #endif

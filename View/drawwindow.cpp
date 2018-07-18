@@ -164,7 +164,7 @@ void DrawWindow::insertNode()
         draw->bst_insert->SetParameter(make_shared<IntParameter>(key));
         draw->bst_insert->Exec();
     }
-    draw->update();
+
 }
 
 void DrawWindow::deleteNode()
@@ -181,7 +181,7 @@ void DrawWindow::deleteNode()
         draw->bst_delete->SetParameter(make_shared<IntParameter>(key));
         draw->bst_delete->Exec();
     }
-    draw->update();
+
 }
 
 void DrawWindow::findNode()
@@ -198,5 +198,10 @@ void DrawWindow::findNode()
         draw->bst_find->SetParameter(make_shared<IntParameter>(key));
         draw->bst_find->Exec();
     }
+
+}
+
+void DrawWindow::DrawUpdate()
+{
     draw->update();
 }

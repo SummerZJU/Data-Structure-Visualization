@@ -37,6 +37,7 @@ public:
     void bind_avl_insert(shared_ptr<CommandBase> cb);
     void bind_avl_delete(shared_ptr<CommandBase> cb);
     void bind_avl_find(shared_ptr<CommandBase> cb);
+    void DrawUpdate();
 private:
     std::shared_ptr<CommandBase> returnCommand;
 

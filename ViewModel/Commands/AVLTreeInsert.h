@@ -1,5 +1,5 @@
-#ifndef BSTINSERT_H_
-#define BSTINSERT_H_
+#ifndef AVLTREEINSERT_H_
+#define AVLTREEINSERT_H_
 
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
@@ -9,46 +9,38 @@
 
 using namespace std;
 
-// typeanme V is ViewModel
-// type parameter not only container/collection
-
 template <typename T, typename V, typename S = less<T>>
-class BSTInsert : public CommandBase {
+class AVLTreeInsert : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    BSTInsert(V *pVM);
-	virtual ~BSTInsert();
+    AVLTreeInsert(V *pVM);
+	virtual ~AVLTreeInsert();
 
 	virtual void Exec() override;
 };
 
-// command bind model
-// viewmodel bind model
-// just couple model in viewmodel
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::BSTInsert(V *pVM):
+AVLTreeInsert<T, V, S>::AVLTreeInsert(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
-	// ctor from primitive pointer to smart pointer	
+
 }
 
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::~BSTInsert()
+AVLTreeInsert<T, V, S>::~AVLTreeInsert()
 {
-	// trival
+
 }
 
 template <typename T, typename V, typename S>
-void BSTInsert<T, V, S>::Exec()
+void AVLTreeInsert<T, V, S>::Exec()
 {
-	// actual T is wonderful
-	// naive here
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandBSTInsert(para);
+		spVM->execCommandAVLTreeInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}
@@ -57,4 +49,4 @@ void BSTInsert<T, V, S>::Exec()
 	return;
 }
 
-#endif // BSTINSERT_H_
+#endif

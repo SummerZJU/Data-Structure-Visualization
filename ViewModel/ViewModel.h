@@ -3,12 +3,7 @@
 
 #include "../Common/TreeBase.h"
 #include "../Common/CommandBase.h"
-#include "../Model/AVLTree.h"
-#include "../Model/BST.h"
-#include "Commands/BSTInsert.h"
-#include "Commands/BSTErase.h"
-#include "Commands/BSTFind.h"
-
+#include "../Common/etlbase.h"
 
 // member all command of viewmodel
 // get mothod for them and attribute
@@ -25,30 +20,54 @@
 // Model & Command is template
 // viewmodel view just class/struct
 
-class ViewModel {
-	shared_ptr<BaseTree<int>> bst;          // ctor is here or using bindBST ???---|||??? 
-	//shared_ptr<BaseTree> AVLTree;
+/*
+	Inherit Proxy_Property and Proxy_Command
+	Emitter!
+*/
 
-    shared_ptr<CommandBase> bstInsert;      // ctor is here
+class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_CommandNotification<ViewModel> {
+	shared_ptr<BaseTree<int>> bst;          // bind from model 
+	shared_ptr<BaseTree<int>> avlTree;
+
+    shared_ptr<CommandBase> bstInsert;      // command-ctor is here
     shared_ptr<CommandBase> bstErase;       //
     shared_ptr<CommandBase> bstFind;        //
+    shared_ptr<CommandBase> bstClear;
+    shared_ptr<CommandBase> avlTreeInsert;
+    shared_ptr<CommandBase> avlTreeErase;
+    shared_ptr<CommandBase> avlTreeFind;
+    shared_ptr<CommandBase> avlTreeClear;
+
+    shared_ptr<IPropertyNotification> psink;       // property-sink-ctor is here
 
 public:
 	ViewModel();
 	virtual ~ViewModel();
-	//void bindBST(BaseTree<int> *pBST);
-	//void bindAVLTree(BaseTree<int> *pAVL);
+	
+	// bind model & bind notification and sinks
+	void bindModelBST(shared_ptr<BaseTree<int>> bst);
+	void bindModelAVLTree(shared_ptr<BaseTree<int>> avlTree);
 
 	shared_ptr<BaseTree<int>> getBST() const;
-	//BaseTree<int> *getAVL();
+	shared_ptr<BaseTree<int>> getAVLTree() const;
 
 	shared_ptr<CommandBase> getCommandBSTInsert() const;
 	shared_ptr<CommandBase> getCommandBSTErase() const;
 	shared_ptr<CommandBase> getCommandBSTFind() const;
+	shared_ptr<CommandBase> getCommandBSTClear() const;
+	shared_ptr<CommandBase> getCommandAVLTreeInsert() const;
+	shared_ptr<CommandBase> getCommandAVLTreeErase() const;
+	shared_ptr<CommandBase> getCommandAVLTreeFind() const;
+	shared_ptr<CommandBase> getCommandAVLTreeClear() const;
 
-	//CommandBase *getCommandAVLTreeInsert() const;
-	//CommandBase *getCommandAVLTreeErase() const;
-	//CommandBase *getCommandAVLTreeFind() const;
+	void execCommandBSTInsert(int key);
+	void execCommandBSTErase(int key);
+	void execCommandBSTFind(int key);
+	void execCommandBSTClear();
+	void execCommandAVLTreeInsert(int key);
+	void execCommandAVLTreeErase(int key);
+	void execCommandAVLTreeFind(int key);
+	void execCommandAVLTreeClear();
 
 };
 

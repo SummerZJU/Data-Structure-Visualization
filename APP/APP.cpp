@@ -2,21 +2,31 @@
 
 APP::APP():
     dsv(new DSView),
-    vm(new ViewModel)
+    vm(new ViewModel),
+    bst(new BST<int>),
+    avlTree(new AVLTree<int>)
 {
-    // exposed attribute bind
-    dsv->getDrawWindow()->bind_bst_Tree(vm->getBST());
+    // viewmodel bind model & notification and sinks
+    vm->bindModelBST(this->bst);
+    vm->bindModelAVLTree(this->avlTree);
 
-    // exposed command bind
-    dsv->getDrawWindow()->bind_bst_insert(
-                shared_ptr<CommandBase>(vm->getCommandBSTInsert())
-                );
-    dsv->getDrawWindow()->bind_bst_delete(
-                shared_ptr<CommandBase>(vm->getCommandBSTErase())
-                );
-    dsv->getDrawWindow()->bind_bst_find(
-                shared_ptr<CommandBase>(vm->getCommandBSTFind())
-                );
+    // viewmodel bind view-sinks by shared_ptr<IC>/<IP>
+    vm->AddPropertyNotification(dsv->getTreePropertyNotification());
+    vm->AddCommandNotification(dsv->getTreeCommandNotification());
+
+    // view bind exposed (modified or not) attribute
+    dsv->getDrawWindow()->bind_bst_Tree(vm->getBST());
+    dsv->getDrawWindow()->bind_avl_Tree(vm->getAVLTree());
+
+    // view bind exposed command
+    dsv->getDrawWindow()->bind_bst_insert(vm->getCommandBSTInsert());
+    dsv->getDrawWindow()->bind_bst_delete(vm->getCommandBSTErase());
+    dsv->getDrawWindow()->bind_bst_find(vm->getCommandBSTFind());
+    //dsv->getDrawWindow()->bind_bst_clear(vm->getCommandBSTClear());
+    dsv->getDrawWindow()->bind_avl_insert(vm->getCommandAVLTreeInsert());
+    dsv->getDrawWindow()->bind_avl_delete(vm->getCommandAVLTreeErase());
+    dsv->getDrawWindow()->bind_avl_find(vm->getCommandAVLTreeFind());
+    //dsv->getDrawWindow()->bind_bst_clear(vm->getCommandBSTClear());
 }
 
 APP::~APP()

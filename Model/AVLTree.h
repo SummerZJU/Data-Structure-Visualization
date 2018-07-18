@@ -4,8 +4,10 @@
 #include <stack>
 #include <queue>
 #include <string>
+#include <exception>
 #include "Common.h"
 #include "../Common/TreeBase.h"
+#include "../Common/Exception/ModelException.h"
 using namespace std;
 
 #define AVL_DEBUG
@@ -147,7 +149,7 @@ BaseNode<T> *AVLTree<T, S>::insert(BaseNode<T> *pos, const T& key)
 					ret = LL(pos);
 				}
 			}
-		} else {
+        } else if(pos->key < key) {
 			pos->right = insert(pos->right, key);
 			if(getHeight(pos->right) - getHeight(pos->left) > 1) {
 				if(key < pos->right->key) {
@@ -156,7 +158,9 @@ BaseNode<T> *AVLTree<T, S>::insert(BaseNode<T> *pos, const T& key)
 					ret = RR(pos);
 				}
 			}
-		}
+        } else {
+            throw ModelException("AVLTree Insert Failed");
+        }
 		dynamic_cast<AVLNode<T> *>(ret)->height = getHeight(ret);
 	} else {
 		AVLNode<T> *cur = new AVLNode<T>(key);
@@ -169,10 +173,13 @@ BaseNode<T> *AVLTree<T, S>::insert(BaseNode<T> *pos, const T& key)
 template <typename T, typename S>
 void AVLTree<T, S>::insert(const T& key)
 {
-	this->root = insert(dynamic_cast<AVLNode<T> *>(this->root), key);
-	int count = 0;
-	this->inorder(this->root, &count);
-	this->levelorder();
+
+    this->root = insert(dynamic_cast<AVLNode<T> *>(this->root), key);
+    int count = 0;
+    this->inorder(this->root, &count);
+    this->levelorder();
+
+    this->Fire_OnPropertyChanged("Property Changed After Insert");
 	return;
 }
 
@@ -212,6 +219,7 @@ void AVLTree<T, S>::erase(BaseNode<T> *pos)
 		if(temp->left == delPos) {
 			temp->left = after;
 			if(getHeight(temp->right) - getHeight(temp->left) > 1) {
+				//int rlHeight = temp->right == nullptr ? -1 : 
 				if(getHeight(temp->right->left) > getHeight(temp->right->right)) {
 					level = RL(temp);
 				} else {
@@ -221,7 +229,7 @@ void AVLTree<T, S>::erase(BaseNode<T> *pos)
 		} else {
 			temp->right = after;
 			if(getHeight(temp->left) - getHeight(temp->right) > 1) {
-				if(getHeight(temp->right->right) > getHeight(temp->right->left)) {
+				if(getHeight(temp->left->right) > getHeight(temp->left->left)) {
 					level = LR(temp);
 				} else {
 					level = LL(temp);
@@ -284,17 +292,25 @@ AVLNode<T> *AVLTree<T, S>::find(const T& key)
 		}
 	}
 	if(ret) ret->state = RES;
+    this->Fire_OnPropertyChanged("Property Changed After Find");
+    if(ret == nullptr) throw ModelException("AVLTree Find Failed");
 	return ret;
 }
 
 template <typename T, typename S>
 void AVLTree<T, S>::erase(const T& key)
 {
-	AVLNode<T> *work = find(key);
-	if(work != nullptr) erase(work);
-	int count = 0;
-	this->inorder(this->root, &count);
-	this->levelorder();
+    bool res = true;
+    try {
+        AVLNode<T> *work = find(key);
+        if(work != nullptr) erase(work);
+        int count = 0;
+        this->inorder(this->root, &count);
+        this->levelorder();
+    } catch(const exception& e) {
+        res = false;
+    }
+    if(!res) throw ModelException("AVLTree Erase Failed");
 }
 
 

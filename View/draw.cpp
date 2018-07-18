@@ -16,7 +16,6 @@ DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
 
 DrawWidget::~DrawWidget()
 {
-
 }
 
 void DrawWidget::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)

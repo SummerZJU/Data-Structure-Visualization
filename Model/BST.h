@@ -7,6 +7,8 @@
 #include "Common.h"
 #include <iostream>
 #include "../Common/TreeBase.h"
+#include "../Common/Exception/ModelException.h"
+#include <exception>
 
 using namespace std;
 
@@ -81,8 +83,10 @@ BaseNode<T> *BST<T, S>::insert(BaseNode<T> *cur, const T& key)
 		ret = work;
 	} else if(cur->key < key) {
 		ret->right = insert(ret->right, key);
-	} else {
+	} else if(cur->key > key) {
 		ret->left = insert(ret->left, key);
+	} else {
+		throw ModelException("BST Insert Failed");
 	}
 	// 
 	// == key -> insert failed!
@@ -97,6 +101,9 @@ void BST<T, S>::insert(const T& key)
 	int count = 0;
 	this->inorder(this->root, &count);
 	this->levelorder();
+
+	// notify to viewModel
+	this->Fire_OnPropertyChanged("Property Changed After Insert");
 }
 
 template <typename T, typename S>
@@ -215,17 +222,29 @@ BSTNode<T> *BST<T, S>::find(const T& key)
 		}
 	}
 	if(ret) ret->state = RES;
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+
+	if(ret == nullptr) throw ModelException("BST Find Failed");
 	return ret;
 }
 
 template <typename T, typename S>
 void BST<T, S>::erase(const T& key)
 {
-	BSTNode<T> *work = find(key);
-	if(work != nullptr) erase(work);
-	int count = 0;
-	this->inorder(this->root, &count);
-	this->levelorder();
+    bool res = true;
+	try {
+		BSTNode<T> *work = find(key);
+		if(work != nullptr) erase(work);
+		int count = 0;
+		this->inorder(this->root, &count);
+		this->levelorder();		
+	} catch(const exception& e) {
+		//throw; // throw go-on
+			     // catch find throw go-on
+        res = false;
+	}
+	this->Fire_OnPropertyChanged("Property Changed After Ensert");
+	if(!res) throw ModelException("BST Erase Failed");
 }
 
 

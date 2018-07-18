@@ -9,6 +9,9 @@ DSView::DSView()
     returnCommand = std::make_shared<ReturnCommand>(this);
     viewDraw.setReturnCommand(returnCommand);
 
+    spTCN = shared_ptr<ICommandNotification>(new TreeCommandNotification(this));
+    spTPN = shared_ptr<IPropertyNotification>(new TreePropertyNotification(this));
+
     state = start;
     viewStart.flashShow(1000);
 }
@@ -25,4 +28,14 @@ StartMenu * DSView::getStartMenu()
 DrawWindow * DSView::getDrawWindow()
 {
     return &viewDraw;
+}
+
+std::shared_ptr<ICommandNotification> DSView::getTreeCommandNotification()
+{
+    return spTCN;
+}
+
+std::shared_ptr<IPropertyNotification> DSView::getTreePropertyNotification()
+{
+    return spTPN;
 }

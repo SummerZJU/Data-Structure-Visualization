@@ -1,5 +1,5 @@
-#ifndef BSTERASE_H_
-#define BSTERASE_H_
+#ifndef AVLTREEERASE_H_
+#define AVLTREEERASE_H_
 
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
@@ -10,50 +10,44 @@
 using namespace std;
 
 template <typename T, typename V, typename S = less<T>>
-class BSTErase : public CommandBase {
+class AVLTreeErase : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    BSTErase(V *pVM);
-	virtual ~BSTErase();
+    AVLTreeErase(V *pVM);
+	virtual ~AVLTreeErase();
 
 	virtual void Exec() override;
 };
 
-// command bind model
-// viewmodel bind model
-// just couple model in viewmodel
 template <typename T, typename V, typename S>
-BSTErase<T, V, S>::BSTErase(V *pVM):
+AVLTreeErase<T, V, S>::AVLTreeErase(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
-	// ctor from primitive pointer to smart pointer	
+
 }
 
 template <typename T, typename V, typename S>
-BSTErase<T, V, S>::~BSTErase()
+AVLTreeErase<T, V, S>::~AVLTreeErase()
 {
-	// trival
+
 }
 
-template <typename T, typename V,typename S>
-void BSTErase<T, V, S>::Exec()
+template <typename T, typename V, typename S>
+void AVLTreeErase<T, V, S>::Exec()
 {
-	// actual T is wonderful
-	// naive here
 	int para = *(this->parameter); // from CommandBase
-	
 	bool res = true;
 	try {
-		spVM->execCommandBSTErase(para);
+		spVM->execCommandAVLTreeErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}
-
 	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
 
 	return;
 }
+
 
 #endif
