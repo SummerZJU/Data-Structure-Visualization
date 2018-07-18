@@ -6,7 +6,7 @@
 #include <queue>
 #include "Common.h"
 #include <iostream>
-#include "../CommonBase/TreeBase.h"
+#include "../Common/TreeBase.h"
 
 using namespace std;
 

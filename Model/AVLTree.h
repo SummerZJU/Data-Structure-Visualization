@@ -5,7 +5,7 @@
 #include <queue>
 #include <string>
 #include "Common.h"
-#include "../CommonBase/TreeBase.h"
+#include "../Common/TreeBase.h"
 using namespace std;
 
 #define AVL_DEBUG

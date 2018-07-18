@@ -1,5 +1,6 @@
-#ifndef BSTINSERT_H_
-#define BSTINSERT_H_
+#ifndef BSTERASE_H_
+#define BSTERASE_H_
+
 
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
@@ -9,16 +10,13 @@
 
 using namespace std;
 
-// typeanme V is ViewModel
-// type parameter not only container/collection
-
 template <typename T, typename V, typename S = less<T>>
-class BSTInsert : public CommandBase {
+class BSTErase : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    BSTInsert(V *pVM);
-	virtual ~BSTInsert();
+    BSTErase(V *pVM);
+	virtual ~BSTErase();
 
 	virtual void Exec() override;
 };
@@ -27,7 +25,7 @@ public:
 // viewmodel bind model
 // just couple model in viewmodel
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::BSTInsert(V *pVM):
+BSTErase<T, V, S>::BSTErase(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
@@ -35,21 +33,21 @@ BSTInsert<T, V, S>::BSTInsert(V *pVM):
 }
 
 template <typename T, typename V, typename S>
-BSTInsert<T, V, S>::~BSTInsert()
+BSTErase<T, V, S>::~BSTErase()
 {
 	// trival
 }
 
-template <typename T, typename V, typename S>
-void BSTInsert<T, V, S>::Exec()
+template <typename T, typename V,typename S>
+void BSTErase<T, V, S>::Exec()
 {
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
     auto work = dynamic_pointer_cast<BST<T, S>>(spVM->getBST());
-	work->insert(para);
+	work->erase(para);
 
 	return;
 }
 
-#endif // BSTINSERT_H_
+#endif

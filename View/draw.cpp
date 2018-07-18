@@ -1,15 +1,61 @@
 #include "draw.h"
 
-State state;
 
 DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
 {
-    avl = new AVLTree<int>;
-    bst = new BST<int>;
+    basetree_avl = shared_ptr<BaseTree<int>>();
+    basetree_bst = shared_ptr<BaseTree<int>>();
+    avl_insert = shared_ptr<CommandBase>();
+    avl_delete = shared_ptr<CommandBase>();
+    avl_find = shared_ptr<CommandBase>();
+    bst_insert = shared_ptr<CommandBase>();
+    bst_delete = shared_ptr<CommandBase>();
+    bst_find = shared_ptr<CommandBase>();
+    this->show();
 }
 
 DrawWidget::~DrawWidget()
 {
+}
+
+void DrawWidget::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)
+{
+    basetree_avl = shared_ptr<BaseTree<int>>(bt);
+}
+
+void DrawWidget::bind_bst_Tree(shared_ptr<BaseTree<int>> bt)
+{
+    basetree_bst = shared_ptr<BaseTree<int>>(bt);
+}
+
+void DrawWidget::bind_bst_insert(shared_ptr<CommandBase> cb)
+{
+    bst_insert = cb;
+}
+
+void DrawWidget::bind_bst_delete(shared_ptr<CommandBase> cb)
+{
+    bst_delete = cb;
+}
+
+void DrawWidget::bind_bst_find(shared_ptr<CommandBase> cb)
+{
+    bst_find = cb;
+}
+
+void DrawWidget::bind_avl_insert(shared_ptr<CommandBase> cb)
+{
+    avl_insert = cb;
+}
+
+void DrawWidget::bind_avl_delete(shared_ptr<CommandBase> cb)
+{
+    avl_delete = cb;
+}
+
+void DrawWidget::bind_avl_find(shared_ptr<CommandBase> cb)
+{
+    avl_find = cb;
 }
 
 void DrawWidget::paintEvent(QPaintEvent *)
@@ -17,10 +63,10 @@ void DrawWidget::paintEvent(QPaintEvent *)
     QPainter painter(this);
     if(state == avlTree)
     {
-        if(avl->getRoot())
+        if(basetree_avl->getRoot())
         {
-            QVector<TNode<int>*> vec;
-            TNode<int>* t = avl->getRoot();
+            QVector<BaseNode<int>*> vec;
+            BaseNode<int>* t = basetree_avl->getRoot();
             vec.push_back(t);
 
             QPen pen;
@@ -43,7 +89,13 @@ void DrawWidget::paintEvent(QPaintEvent *)
                             pen.setColor(Qt::red);
                             painter.setPen(pen);
                         }
-                        painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->left->inorderIndex+40, 40+100*t->left->depth);
+                        double length = sqrt(pow((30*t->left->inorderIndex - 30*t->inorderIndex),2) + pow((100*t->left->depth - 100*t->depth),2));
+                        double sin_theta = (30*t->inorderIndex - 30*t->left->inorderIndex) / length;
+                        double cos_theta = (100*t->left->depth - 100*t->depth) / length;
+                        QPointF A(30*t->inorderIndex+40 - 30*sin_theta, 40+100*t->depth + 30*cos_theta);
+                        QPointF B(30*t->left->inorderIndex+40 + 30*sin_theta, 40+100*t->left->depth - 30*cos_theta);
+                        painter.drawLine(A, B);
+                        //painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->left->inorderIndex+40, 40+100*t->left->depth);
                         pen.setColor(Qt::white);
                         painter.setPen(pen);
                     }
@@ -55,14 +107,20 @@ void DrawWidget::paintEvent(QPaintEvent *)
                             pen.setColor(Qt::red);
                             painter.setPen(pen);
                         }
-                        painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->right->inorderIndex+40, 40+100*t->right->depth);
+                        double length = sqrt(pow((30*t->right->inorderIndex - 30*t->inorderIndex),2) + pow((100*t->right->depth - 100*t->depth),2));
+                        double sin_theta = (30*t->right->inorderIndex - 30*t->inorderIndex) / length;
+                        double cos_theta = (100*t->right->depth - 100*t->depth) / length;
+                        QPointF A(30*t->inorderIndex+40 + 30*sin_theta, 40+100*t->depth + 30*cos_theta);
+                        QPointF B(30*t->right->inorderIndex+40 - 30*sin_theta, 40+100*t->right->depth - 30*cos_theta);
+                        painter.drawLine(A, B);
+                        //painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->right->inorderIndex+40, 40+100*t->right->depth);
                         pen.setColor(Qt::white);
                         painter.setPen(pen);
                     }
                 }
             }
 
-            t = avl->getRoot();
+            t = basetree_avl->getRoot();
             vec.push_back(t);
             QFont font;
             font.setFamily("Microsoft YaHei");
@@ -77,19 +135,24 @@ void DrawWidget::paintEvent(QPaintEvent *)
                 {
                     if(t->state == RES)
                     {
-                        painter.setBrush(Qt::red);
+                        //painter.setBrush(Qt::red);
                         pen.setColor(Qt::red);
                     }
                     else
                     {
-                        painter.setBrush(Qt::white);
+                        //painter.setBrush(Qt::white);
                         pen.setColor(Qt::white);
                     }
                     painter.setPen(pen);
-                    painter.drawEllipse(30*t->inorderIndex+10, 100*t->depth+10, 50, 50);
-                    pen.setColor(Qt::black);
+                    painter.drawEllipse(30*t->inorderIndex+10, 100*t->depth+10, 60, 60);
+                    pen.setColor(Qt::white);
                     painter.setPen(pen);
-                    painter.drawText(30*t->inorderIndex+25, 100*t->depth+50, QString::number(t->key));
+                    if(t->key < 10 && t->key >= 0)
+                        painter.drawText(30*t->inorderIndex+32, 100*t->depth+50, QString::number(t->key));
+                    else if(t->key < 100)
+                        painter.drawText(30*t->inorderIndex+23, 100*t->depth+50, QString::number(t->key));
+                    else
+                        painter.drawText(30*t->inorderIndex+14, 100*t->depth+50, QString::number(t->key));
                     if(t->left) vec.push_back(t->left);
                     if(t->right) vec.push_back(t->right);
                 }
@@ -98,10 +161,10 @@ void DrawWidget::paintEvent(QPaintEvent *)
     }
     else if(state == tree)
     {
-        if(bst->getRoot())
+        if(basetree_bst->getRoot())
         {
-            QVector<BSTNode<int>*> vec;
-            BSTNode<int>* t = bst->getRoot();
+            QVector<BaseNode<int>*> vec;
+            BaseNode<int>* t = basetree_bst->getRoot();
             vec.push_back(t);
 
             QPen pen;
@@ -124,7 +187,13 @@ void DrawWidget::paintEvent(QPaintEvent *)
                             pen.setColor(Qt::red);
                             painter.setPen(pen);
                         }
-                        painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->left->inorderIndex+40, 40+100*t->left->depth);
+                        double length = sqrt(pow((30*t->left->inorderIndex - 30*t->inorderIndex),2) + pow((100*t->left->depth - 100*t->depth),2));
+                        double sin_theta = (30*t->inorderIndex - 30*t->left->inorderIndex) / length;
+                        double cos_theta = (100*t->left->depth - 100*t->depth) / length;
+                        QPointF A(30*t->inorderIndex+40 - 30*sin_theta, 40+100*t->depth + 30*cos_theta);
+                        QPointF B(30*t->left->inorderIndex+40 + 30*sin_theta, 40+100*t->left->depth - 30*cos_theta);
+                        painter.drawLine(A, B);
+                        //painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->left->inorderIndex+40, 40+100*t->left->depth);
                         pen.setColor(Qt::white);
                         painter.setPen(pen);
                     }
@@ -136,14 +205,20 @@ void DrawWidget::paintEvent(QPaintEvent *)
                             pen.setColor(Qt::red);
                             painter.setPen(pen);
                         }
-                        painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->right->inorderIndex+40, 40+100*t->right->depth);
+                        double length = sqrt(pow((30*t->right->inorderIndex - 30*t->inorderIndex),2) + pow((100*t->right->depth - 100*t->depth),2));
+                        double sin_theta = (30*t->right->inorderIndex - 30*t->inorderIndex) / length;
+                        double cos_theta = (100*t->right->depth - 100*t->depth) / length;
+                        QPointF A(30*t->inorderIndex+40 + 30*sin_theta, 40+100*t->depth + 30*cos_theta);
+                        QPointF B(30*t->right->inorderIndex+40 - 30*sin_theta, 40+100*t->right->depth - 30*cos_theta);
+                        painter.drawLine(A, B);
+                        //painter.drawLine(30*t->inorderIndex+40, 40+100*t->depth, 30*t->right->inorderIndex+40, 40+100*t->right->depth);
                         pen.setColor(Qt::white);
                         painter.setPen(pen);
                     }
                 }
             }
 
-            t = bst->getRoot();
+            t = basetree_bst->getRoot();
             vec.push_back(t);
             QFont font;
             font.setFamily("Microsoft YaHei");
@@ -158,19 +233,24 @@ void DrawWidget::paintEvent(QPaintEvent *)
                 {
                     if(t->state == RES)
                     {
-                        painter.setBrush(Qt::red);
+                        //painter.setBrush(Qt::red);
                         pen.setColor(Qt::red);
                     }
                     else
                     {
-                        painter.setBrush(Qt::white);
+                        //painter.setBrush(Qt::white);
                         pen.setColor(Qt::white);
                     }
                     painter.setPen(pen);
-                    painter.drawEllipse(30*t->inorderIndex+10, 100*t->depth+10, 50, 50);
-                    pen.setColor(Qt::black);
+                    painter.drawEllipse(30*t->inorderIndex+10, 100*t->depth+10, 60, 60);
+                    pen.setColor(Qt::white);
                     painter.setPen(pen);
-                    painter.drawText(30*t->inorderIndex+25, 100*t->depth+50, QString::number(t->key));
+                    if(t->key < 10 && t->key >= 0)
+                        painter.drawText(30*t->inorderIndex+32, 100*t->depth+50, QString::number(t->key));
+                    else if(t->key < 100)
+                        painter.drawText(30*t->inorderIndex+23, 100*t->depth+50, QString::number(t->key));
+                    else
+                        painter.drawText(30*t->inorderIndex+14, 100*t->depth+50, QString::number(t->key));
                     if(t->left) vec.push_back(t->left);
                     if(t->right) vec.push_back(t->right);
                 }

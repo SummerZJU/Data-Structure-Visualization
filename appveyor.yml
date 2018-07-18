@@ -30,16 +30,16 @@ before_build:
 # Build the projects
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd View
+  #- cd View
   - '%make%'
   
   
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd View\release
+  - cd release\
   - dir
   - windeployqt DSVision.exe
   
 
 artifacts:
-  - path: View\release\
+  - path: release\
