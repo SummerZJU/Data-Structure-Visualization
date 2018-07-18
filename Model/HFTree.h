@@ -83,12 +83,12 @@ void HFTree<T, S>::insert(const T& value)
 template <typename T, typename S>
 void HFTree<T, S>::erase(const T& value)
 {
-	int size = content.size();
-	while(int i = 0; i < size; i++)
+	int i, size = content.size();
+	for(i = 0; i < size; i++)
 	{
 		if (content[i] == value)
 		{
-			content.erase(conten.begin() + i);
+			content.erase(content.begin() + i);
 			delete this->root;
 			create();
 			break;
