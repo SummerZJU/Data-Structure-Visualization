@@ -11,6 +11,7 @@ DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
     bst_insert = shared_ptr<CommandBase>();
     bst_delete = shared_ptr<CommandBase>();
     bst_find = shared_ptr<CommandBase>();
+    this->show();
 }
 
 DrawWidget::~DrawWidget()
