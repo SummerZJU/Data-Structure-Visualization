@@ -42,9 +42,7 @@ void DrawWindow::initDrawWindow()
 
     QVBoxLayout * imageLay = new QVBoxLayout();
     imageLay->addLayout(buttonLay1);
-    imageLay->addStretch(1);
     imageLay->addLayout(buttonLay3);
-    imageLay->addStretch(1);
     imageLay->addLayout(buttonLay2);
 
     QLabel * backImage;

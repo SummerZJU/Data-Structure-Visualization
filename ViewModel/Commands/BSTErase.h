@@ -1,7 +1,6 @@
 #ifndef BSTERASE_H_
 #define BSTERASE_H_
 
-
 #include "../../Common/CommandBase.h"
 #include "../../Common/TreeBase.h"
 #include "../../Model/BST.h"
