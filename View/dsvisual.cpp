@@ -15,6 +15,7 @@ DSVisual::DSVisual(QObject *parent) :
 
 DSVisual::~DSVisual()
 {
+
 }
 
 void DSVisual::initStartMenu()
