@@ -3,6 +3,8 @@
 APP::APP():
     dsv(new DSView),
     vm(new ViewModel),
+
+    
     bst(new BST<int>),
     avlTree(new AVLTree<int>),
     splayTree(new SplayTree<int>)

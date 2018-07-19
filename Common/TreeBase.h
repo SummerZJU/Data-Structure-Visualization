@@ -16,6 +16,7 @@ struct BaseNode {
 	int depth;
 	int inorderIndex; 
 	NodeType state;
+	NodeColor color;
 
 	BaseNode(const T& key);
 	virtual ~BaseNode(); 
@@ -28,7 +29,8 @@ BaseNode<T>::BaseNode(const T& key):
 	right(nullptr),
 	depth(0),
 	inorderIndex(0),
-	state(OTHER)
+	state(OTHER),
+	color(RED)
 {
 
 }
