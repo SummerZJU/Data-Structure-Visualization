@@ -4,7 +4,8 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
-#include "TreeBase.h"
+#include "../Common/TreeBase.h"
+#include "../Common/Exception/ModelException.h"
 #include "Common.h"
 
 template<typename T>
@@ -27,7 +28,7 @@ HFNode<T>::~HFNode()
 template<typename T, typename S = less<T> >
 class HFTree : public BaseTree<T, S>
 {
- private:
+private:
 	std::vector<T> content;		
 	void create();
 
@@ -53,14 +54,15 @@ HFTree<T, S>::~HFTree()
 template <typename T, typename S>
 HFNode<T> *HFTree<T, S>::find(const T& value)
 {
-	HFNode<T> *ret = nullptr, *work = root;
+	HFNode<T> *ret = nullptr;
+	BaseNode<T> *work = root;
 	// reset to OTHER!
 	levelorder(); 
 	// reset to OTHER!
 	while(work) {
 		work->state = PATH;
 		if(work->key == value) {
-			ret = work;
+			ret = dynamic_cast<HFNode<T> *>(work);
 			break;
 		} else if(work->key > value) {
 			work = work->left;
@@ -69,6 +71,9 @@ HFNode<T> *HFTree<T, S>::find(const T& value)
 		}
 	}
 	if(ret) ret->state = RES;
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+
+	if(ret == nullptr) throw ModelException("HFTree Find Failed");
 	return ret;
 }
 
@@ -78,6 +83,7 @@ void HFTree<T, S>::insert(const T& value)
 	content.push_back(value);
 	delete this->root;
 	create();
+	this->Fire_OnPropertyChanged("Property Changed After Erase");
 }
 
 template <typename T, typename S>
@@ -94,6 +100,8 @@ void HFTree<T, S>::erase(const T& value)
 			break;
 		}
 	}
+	this->Fire_OnPropertyChanged("Property Changed After Erase");
+	if(i == size) throw ModelException("HFTree Erase Failed");
 }
 
 template <typename T, typename S>

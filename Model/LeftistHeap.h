@@ -5,45 +5,19 @@
 #include <queue>
 #include <stack>
 #include <functional>
+#include <string>
+#include "../Common/TreeBase.h"
+#include "../Common/Exception/ModelException.h"
 
 using namespace std;
 
 #define LEFTISTHEAP_DEBUG
 
 template <typename T>
-struct LeftistNode {
-	T key;
-	LeftistNode *left;
-	LeftistNode *right;
+struct LeftistNode : public BaseNode<T> {
 	int NPL;
-
-	int depth;
-	int inorderIndex;
-
 	LeftistNode(const T& key);
 	virtual ~LeftistNode();
-};
-
-template <typename T, typename S = less<T>>
-class LeftistHeap {
-	LeftistNode<T> *root;
-	LeftistNode<T> *merge1(LeftistNode<T> *h1, LeftistNode<T> *h2);
-	void merge2(LeftistNode<T> *h1, LeftistNode<T> *h2);
-	LeftistNode<T> *insert(LeftistNode<T> *root, const T& key);
-	LeftistNode<T> *erase(LeftistNode<T> *root);  // erase minimal internal!
-	void inorder(LeftistNode<T> *cur, int *count);
-	void levelorder();
-public:
-#ifdef LEFTISTHEAP_DEBUG
-	void print(LeftistNode<T> *cur);
-	void print();
-#endif	
-	LeftistHeap();
-	virtual ~LeftistHeap();
-
-	LeftistNode<T> *getRoot() const;  // also is heap-top
-	void insert(const T& key);
-	void erase();                     // erase minimal
 };
 
 //--------------------------------------------------------------------------//
@@ -51,83 +25,65 @@ public:
 
 template <typename T>
 LeftistNode<T>::LeftistNode(const T& key):
-	key(key),
-	left(nullptr),
-	right(nullptr),
-	NPL(0),
-	depth(0),
-	inorderIndex(0)
+	BaseNode<T>(key),
+	NPL(0)
 {
-
+	// trival
 }
 
 template <typename T>
 LeftistNode<T>::~LeftistNode()
 {
-	if(left != nullptr) delete left;
-	if(right != nullptr) delete right;
+	// trival
 }
+
+//---------------------------------------------------------------------------//
+//																			 //
+//																			 //
+//																			 //
+//																	         //
+//																			 //
+//---------------------------------------------------------------------------//
+
+
 
 //----------------------------------------------------------------------------//
 // LeftistHeap declaration
 
+
+template <typename T, typename S = less<T>>
+class LeftistHeap : public BaseTree<T, S> {
+	BaseNode<T> *merge1(BaseNode<T> *h1, BaseNode<T> *h2);
+	void merge2(LeftistNode<T> *h1, LeftistNode<T> *h2);
+	BaseNode<T> *insert(BaseNode<T> *origin, const T& key);
+public:
+#ifdef LEFTISTHEAP_DEBUG
+	void print(LeftistNode<T> *cur);
+	void print();
+#endif	
+	LeftistHeap();
+	virtual ~LeftistHeap();
+	void insert(const T& key);
+	void erase();                     // erase minimal
+};
+
 template <typename T, typename S>
 LeftistHeap<T, S>::LeftistHeap():
-	root(nullptr)
+	BaseTree<T, S>()
 {
-
+	// trival
 }
 
 template <typename T, typename S>
 LeftistHeap<T, S>::~LeftistHeap()
 {
-	if(root != nullptr) delete root;
-}
-
-
-template <typename T, typename S>
-LeftistNode<T> *LeftistHeap<T, S>::getRoot() const
-{
-	return root;
+	// trival
 }
 
 template <typename T, typename S>
-void LeftistHeap<T, S>::inorder(LeftistNode<T> *cur, int *count)
+BaseNode<T> *LeftistHeap<T, S>::merge1(BaseNode<T> *h1, BaseNode<T> *h2)
 {
-	if(cur != nullptr) {
-		inorder(cur->left, count);
-		cur->inorderIndex = (*count)++;
-		inorder(cur->right, count);
-	}
-}
-
-template <typename T, typename S>
-void LeftistHeap<T, S>::levelorder()
-{
-	queue<LeftistNode<T> *> myQueue;
-	if(root) {
-		root->depth = 0;
-		myQueue.push(root);
-		while(!myQueue.empty()) {
-			LeftistNode<T> *cur = myQueue.front();
-			myQueue.pop();
-			if(cur->left) {
-				cur->left->depth = cur->depth + 1;
-				myQueue.push(cur->left);
-			}
-			if(cur->right) {
-				cur->right->depth = cur->depth + 1;
-				myQueue.push(cur->right);
-			}
-		}
-	}
-}
-
-
-template <typename T, typename S>
-LeftistNode<T> *LeftistHeap<T, S>::merge1(LeftistNode<T> *h1, LeftistNode<T> *h2)
-{
-	LeftistNode<T> *ret = nullptr;
+	BaseNode<T> *ret = nullptr;
 	if(h1 == nullptr) {
 		ret = h2;
 	} else if(h2 == nullptr) {
@@ -135,10 +91,10 @@ LeftistNode<T> *LeftistHeap<T, S>::merge1(LeftistNode<T> *h1, LeftistNode<T> *h2
 	} else {
 		// default max-heap -> greater min-heap
 		if(S()(h1->key, h2->key)) { 
-			merge2(h2, h1);
+			merge2(dynamic_cast<LeftistNode<T> *>(h2), dynamic_cast<LeftistNode<T> *>(h1));
 			ret = h2;
 		} else {
-			merge2(h1, h2);
+			merge2(dynamic_cast<LeftistNode<T> *>(h1), dynamic_cast<LeftistNode<T> *>(h2));
 			ret = h1;
 		}
 	}
@@ -153,21 +109,22 @@ void LeftistHeap<T, S>::merge2(LeftistNode<T> *h1, LeftistNode<T> *h2)
 		h1->left = h2;
 	} else {
 		h1->right = merge1(h1->right, h2);
-		if(h1->right->NPL > h1->left->NPL) {
-			LeftistNode<T> *temp = h1->left;
+		if(dynamic_cast<LeftistNode<T> *>(h1->right)->NPL > 
+		   dynamic_cast<LeftistNode<T> *>(h1->left)->NPL) {
+			BaseNode<T> *temp = h1->left;
 			h1->left = h1->right;
 			h1->right = temp;
 		}
-		h1->NPL = h1->right->NPL + 1;  // h2->NPL no change!!!
+		h1->NPL = dynamic_cast<LeftistNode<T> *>(h1->right)->NPL + 1;  // h2->NPL no change!!!
 	}
 }
 
 template <typename T, typename S>
-LeftistNode<T> *LeftistHeap<T, S>::insert(LeftistNode<T> *root, const T& key)
+BaseNode<T> *LeftistHeap<T, S>::insert(BaseNode<T> *origin, const T& key)
 {
-	LeftistNode<T> *ret = root;
-	LeftistNode<T> *temp = new LeftistNode<T>(key);
-	ret = merge1(root, temp);
+	BaseNode<T> *ret = origin;
+	BaseNode<T> *temp = new LeftistNode<T>(key);
+	ret = merge1(this->root, temp);
 
 	return ret;
 }
@@ -175,24 +132,30 @@ LeftistNode<T> *LeftistHeap<T, S>::insert(LeftistNode<T> *root, const T& key)
 template <typename T, typename S>
 void LeftistHeap<T, S>::insert(const T& key)
 {
-	root = insert(root, key);
+	this->root = insert(this->root, key);
 	int count = 0;
-	inorder(root, &count);
-	levelorder();
+	this->inorder(this->root, &count);
+	this->levelorder();
+
+	this->Fire_OnPropertyChanged("Property Changed After Insert");
 	return;
 }
 
 template <typename T, typename S>
 void LeftistHeap<T, S>::erase()
 {
-	if(root != nullptr) {
-		LeftistNode<T> *del = root;
-		root = merge1(root->left, root->right);
+	// here is seem to LeftistHeap::find()
+	if(this->root != nullptr) {
+		BaseNode<T> *del = this->root;
+		this->root = merge1(this->root->left, this->root->right);
 		del->left = del->right = nullptr;
 		delete del;
 		int count = 0;
-		inorder(root, &count);
-		levelorder();
+		this->inorder(this->root, &count);
+		this->levelorder();
+		this->Fire_OnPropertyChanged("Property Changed After Erase");
+	} else {
+		throw ModelException("LeftistHeap Erase Failed");
 	}
 }
 
@@ -201,19 +164,19 @@ template <typename T, typename S>
 void LeftistHeap<T, S>::print(LeftistNode<T> *cur)
 {
 	if(cur) {
-		print(cur->left);
-		cout << "Key = " << cur->key << endl;
+		print(dynamic_cast<LeftistNode<T> *>(cur->left));
+		cout << "Key = " << cur->key << ", NPL = " << cur->NPL << endl;
 		cout << "Depth = " << cur->depth << ", inorderIndex = " << cur->inorderIndex << endl;
 		cout << "left is " << (cur->left ? to_string(cur->left->key) : "nullptr") << endl;
 		cout << "right is " << (cur->right ? to_string(cur->right->key) : "nullptr") << endl;
-		print(cur->right);
+		print(dynamic_cast<LeftistNode<T> *>(cur->right));
 	}
 }
 
 template <typename T, typename S>
 void LeftistHeap<T, S>::print() 
 {
-	print(root);
+	print(dynamic_cast<LeftistNode<T> *>(this->root));
 	return;
 }
 #endif
