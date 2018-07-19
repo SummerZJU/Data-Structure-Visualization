@@ -51,7 +51,8 @@ HEADERS += \
     View/ErrorView/FindError.h \
     View/ErrorView/InsertError.h \
     Common/Exception/ModelException.h \
-    ViewModel/Sinks/VMPropertySink.h
+    ViewModel/Sinks/VMPropertySink.h \
+    View/dswidget.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -80,7 +81,8 @@ SOURCES += \
     View/ErrorView/FindError.cpp \
     View/ErrorView/InsertError.cpp \
     Common/Exception/ModelException.cpp \
-    ViewModel/Sinks/VMPropertySink.cpp
+    ViewModel/Sinks/VMPropertySink.cpp \
+    View/dswidget.cpp
 
 RESOURCES += \
     View/viewqrc.qrc

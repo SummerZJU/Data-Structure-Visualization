@@ -17,26 +17,27 @@
 #include "returncommand.h"
 #include "../Model/Common.h"
 #include "draw.h"
+#include "dswidget.h"
 
 extern State state;
 
-class DrawWindow : public QWidget
+class DrawWindow : public DSWidget
 {
     Q_OBJECT
 public:
-    explicit DrawWindow(QWidget *parent = nullptr);
+    explicit DrawWindow();
     ~DrawWindow();
     void setReturnCommand(std::shared_ptr<CommandBase> ptrCommand);
-    void flashShow(int duration);
-    void flashClose(int duration);
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_insert(shared_ptr<CommandBase> cb);
     void bind_bst_delete(shared_ptr<CommandBase> cb);
     void bind_bst_find(shared_ptr<CommandBase> cb);
+    void bind_bst_clear(shared_ptr<CommandBase> cb);
     void bind_avl_insert(shared_ptr<CommandBase> cb);
     void bind_avl_delete(shared_ptr<CommandBase> cb);
     void bind_avl_find(shared_ptr<CommandBase> cb);
+    void bind_avl_clear(shared_ptr<CommandBase> cb);
     void DrawUpdate();
 private:
     std::shared_ptr<CommandBase> returnCommand;
@@ -53,7 +54,6 @@ private:
 
     DrawWidget * draw;
 
-    void setButton(QPushButton * button);
     void initDrawWindow();
 
 private slots:
@@ -61,7 +61,7 @@ private slots:
     void insertNode();
     void deleteNode();
     void findNode();
-
+    void clearWindow();
 };
 
 #endif // DRAWWINDOW_H

@@ -8,9 +8,11 @@ DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
     avl_insert = shared_ptr<CommandBase>();
     avl_delete = shared_ptr<CommandBase>();
     avl_find = shared_ptr<CommandBase>();
+    avl_clear = shared_ptr<CommandBase>();
     bst_insert = shared_ptr<CommandBase>();
     bst_delete = shared_ptr<CommandBase>();
     bst_find = shared_ptr<CommandBase>();
+    bst_clear = shared_ptr<CommandBase>();
     this->show();
 }
 
@@ -43,6 +45,11 @@ void DrawWidget::bind_bst_find(shared_ptr<CommandBase> cb)
     bst_find = cb;
 }
 
+void DrawWidget::bind_bst_clear(shared_ptr<CommandBase> cb)
+{
+    bst_clear = cb;
+}
+
 void DrawWidget::bind_avl_insert(shared_ptr<CommandBase> cb)
 {
     avl_insert = cb;
@@ -56,6 +63,11 @@ void DrawWidget::bind_avl_delete(shared_ptr<CommandBase> cb)
 void DrawWidget::bind_avl_find(shared_ptr<CommandBase> cb)
 {
     avl_find = cb;
+}
+
+void DrawWidget::bind_avl_clear(shared_ptr<CommandBase> cb)
+{
+    avl_clear = cb;
 }
 
 void DrawWidget::paintEvent(QPaintEvent *)

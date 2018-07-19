@@ -1,7 +1,6 @@
 #include "startmenu.h"
 
-StartMenu::StartMenu(QWidget *parent) :
-    QWidget(parent)
+StartMenu::StartMenu() :  DSWidget()
 {
     initStartMenu();
 }
@@ -13,11 +12,17 @@ StartMenu::~StartMenu()
 void StartMenu::initStartMenu()
 {
     exitButton = new QPushButton("Exit");
-    setButton(exitButton);
+    DSWidget::setButton(exitButton);
     treeButton = new QPushButton("Binary Search Tree");
-    setButton(treeButton);
+    DSWidget::setButton(treeButton);
     avlTreeButton = new QPushButton("AVL Tree");
-    setButton(avlTreeButton);
+    DSWidget::setButton(avlTreeButton);
+    SplayTreeButton = new QPushButton("Splay Tree");
+    DSWidget::setButton(SplayTreeButton);
+    HFTreeButton = new QPushButton("Huffman Tree");
+    DSWidget::setButton(HFTreeButton);
+    LHeapButton = new QPushButton("Leftlist Tree");
+    DSWidget::setButton(LHeapButton);
 
     QFont titleFont("Agency FB", 40);
     QPalette titlePal;
@@ -36,17 +41,22 @@ void StartMenu::initStartMenu()
     titleLay1->addWidget(title1);
     QHBoxLayout * titleLay2 = new QHBoxLayout();
     titleLay2->addWidget(title2);
-    QHBoxLayout * buttonLay = new QHBoxLayout();
-    buttonLay->addWidget(treeButton);
-    buttonLay->addWidget(avlTreeButton);
-    buttonLay->addWidget(exitButton);
+    QHBoxLayout * buttonLay1 = new QHBoxLayout();
+    buttonLay1->addWidget(treeButton);
+    buttonLay1->addWidget(avlTreeButton);
+    buttonLay1->addWidget(SplayTreeButton);
+    QHBoxLayout * buttonLay2 = new QHBoxLayout();
+    buttonLay2->addWidget(LHeapButton);
+    buttonLay2->addWidget(HFTreeButton);
+    buttonLay2->addWidget(exitButton);
 
     QVBoxLayout * imageLay = new QVBoxLayout();
     imageLay->addStretch(2);
     imageLay->addLayout(titleLay1);
     imageLay->addLayout(titleLay2);
     imageLay->addStretch(4);
-    imageLay->addLayout(buttonLay);
+    imageLay->addLayout(buttonLay1);
+    imageLay->addLayout(buttonLay2);
     imageLay->addStretch(1);
 
     QLabel * backImage;
@@ -67,44 +77,14 @@ void StartMenu::initStartMenu()
     connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(exitSystem()));
     connect(treeButton, SIGNAL(clicked(bool)), this, SLOT(initTreeWindow()));
     connect(avlTreeButton, SIGNAL(clicked(bool)), this, SLOT(initAVLTreeWindow()));
-}
-
-void StartMenu::flashShow(int duration)
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(duration);
-    animation->setStartValue(0);
-    animation->setEndValue(1);
-    animation->start();
-    this->show();
-}
-
-void StartMenu::flashClose(int duration)
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(duration);
-    animation->setStartValue(1);
-    animation->setEndValue(0);
-    animation->start();
-    connect(animation, SIGNAL(finished()), this, SLOT(close()));
+    connect(SplayTreeButton, SIGNAL(clicked(bool)), this, SLOT(initSplayTreeWindow()));
+    connect(HFTreeButton, SIGNAL(clicked(bool)), this, SLOT(initHFTreeWindow()));
+    connect(LHeapButton, SIGNAL(clicked(bool)), this, SLOT(initLHeapWindow()));
 }
 
 void StartMenu::setStartCommand(std::shared_ptr<CommandBase> ptrCommand)
 {
     startCommand = ptrCommand;
-}
-
-void StartMenu::setButton(QPushButton * button)
-{
-    QPalette buttonPal;
-    buttonPal.setColor(QPalette::ButtonText,Qt::white);
-    QFont buttonFont("Agency FB", 20);
-
-    button->setFlat(true);
-    button->setPalette(buttonPal);
-    button->setFont(buttonFont);
-
-    button->setStyleSheet("QPushButton{color: white;}" "QPushButton:hover{color: rbg(75, 0, 130);}");
 }
 
 void StartMenu::exitSystem()
@@ -121,5 +101,23 @@ void StartMenu::initTreeWindow()
 void StartMenu::initAVLTreeWindow()
 {
     state = avlTree;
+    startCommand->Exec();
+}
+
+void StartMenu::initSplayTreeWindow()
+{
+    state = splayTree;
+    startCommand->Exec();
+}
+
+void StartMenu::initHFTreeWindow()
+{
+    state = hfTree;
+    startCommand->Exec();
+}
+
+void StartMenu::initLHeapWindow()
+{
+    state = lHeap;
     startCommand->Exec();
 }

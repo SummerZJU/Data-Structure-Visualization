@@ -22,11 +22,11 @@ APP::APP():
     dsv->getDrawWindow()->bind_bst_insert(vm->getCommandBSTInsert());
     dsv->getDrawWindow()->bind_bst_delete(vm->getCommandBSTErase());
     dsv->getDrawWindow()->bind_bst_find(vm->getCommandBSTFind());
-    //dsv->getDrawWindow()->bind_bst_clear(vm->getCommandBSTClear());
+    dsv->getDrawWindow()->bind_bst_clear(vm->getCommandBSTClear());
     dsv->getDrawWindow()->bind_avl_insert(vm->getCommandAVLTreeInsert());
     dsv->getDrawWindow()->bind_avl_delete(vm->getCommandAVLTreeErase());
     dsv->getDrawWindow()->bind_avl_find(vm->getCommandAVLTreeFind());
-    //dsv->getDrawWindow()->bind_bst_clear(vm->getCommandBSTClear());
+    dsv->getDrawWindow()->bind_avl_clear(vm->getCommandAVLTreeClear());
 }
 
 APP::~APP()

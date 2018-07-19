@@ -14,18 +14,17 @@
 #include <QPropertyAnimation>
 #include "../Common/CommandBase.h"
 #include "../Model/Common.h"
+#include "dswidget.h"
 
 extern State state;
 
-class StartMenu  : public QWidget
+class StartMenu  : public DSWidget
 {
     Q_OBJECT
 public:
-    explicit StartMenu(QWidget *parent = nullptr);
+    explicit StartMenu();
     ~StartMenu();
      void setStartCommand(std::shared_ptr<CommandBase> ptrCommand);
-     void flashShow(int duration);
-     void flashClose(int duration);
 
 private:
     std::shared_ptr<CommandBase> startCommand;
@@ -33,14 +32,19 @@ private:
     QPushButton * exitButton;
     QPushButton * treeButton;
     QPushButton * avlTreeButton;
+    QPushButton * SplayTreeButton;
+    QPushButton * HFTreeButton;
+    QPushButton * LHeapButton;
 
     void initStartMenu();
-    void setButton(QPushButton * button);
 
 private slots:
     void exitSystem();
     void initTreeWindow();
     void initAVLTreeWindow();
+    void initSplayTreeWindow();
+    void initHFTreeWindow();
+    void initLHeapWindow();
 };
 
 

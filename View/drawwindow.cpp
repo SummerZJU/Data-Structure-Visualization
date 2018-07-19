@@ -1,6 +1,6 @@
 #include "drawwindow.h"
 
-DrawWindow::DrawWindow(QWidget *parent) : QWidget(parent)
+DrawWindow::DrawWindow() : DSWidget()
 {
      initDrawWindow();
 }
@@ -12,15 +12,15 @@ DrawWindow::~DrawWindow()
 void DrawWindow::initDrawWindow()
 {
     addButton = new QPushButton("Add");
-    setButton(addButton);
+    DSWidget::setButton(addButton);
     deleteButton = new QPushButton("Delete");
-    setButton(deleteButton);
+    DSWidget::setButton(deleteButton);
     findButton = new QPushButton("Find");
-    setButton(findButton);
+    DSWidget::setButton(findButton);
     clearButton = new QPushButton("Clear");
-    setButton(clearButton);
+    DSWidget::setButton(clearButton);
     returnButton = new QPushButton("Return");
-    setButton(returnButton);
+    DSWidget::setButton(returnButton);
 
     addText = new QLineEdit();
     findText = new QLineEdit();
@@ -35,6 +35,7 @@ void DrawWindow::initDrawWindow()
     buttonLay1->addWidget(findButton);
     buttonLay1->addWidget(findText);
     QHBoxLayout * buttonLay2 = new QHBoxLayout();
+    buttonLay2->addWidget(clearButton);
     buttonLay2->addStretch(1);
     buttonLay2->addWidget(returnButton);
     QHBoxLayout * buttonLay3 = new QHBoxLayout();
@@ -64,6 +65,7 @@ void DrawWindow::initDrawWindow()
     connect(addButton, SIGNAL(clicked(bool)), this, SLOT(insertNode()));
     connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteNode()));
     connect(findButton, SIGNAL(clicked(bool)), this, SLOT(findNode()));
+    connect(clearButton, SIGNAL(clicked(bool)), this, SLOT(clearWindow()));
 }
 
 void DrawWindow::returnStartMenu()
@@ -75,26 +77,6 @@ void DrawWindow::returnStartMenu()
 void DrawWindow::setReturnCommand(std::shared_ptr<CommandBase> ptrCommand)
 {
     returnCommand = ptrCommand;
-}
-
-void DrawWindow::flashShow(int duration)
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(duration);
-    animation->setStartValue(0);
-    animation->setEndValue(1);
-    animation->start();
-    this->show();
-}
-
-void DrawWindow::flashClose(int duration)
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(duration);
-    animation->setStartValue(1);
-    animation->setEndValue(0);
-    animation->start();
-    connect(animation, SIGNAL(finished()), this, SLOT(close()));
 }
 
 void DrawWindow::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)
@@ -122,6 +104,11 @@ void DrawWindow::bind_bst_find(shared_ptr<CommandBase> cb)
     draw->bind_bst_find(cb);
 }
 
+void DrawWindow::bind_bst_clear(shared_ptr<CommandBase> cb)
+{
+    draw->bind_bst_clear(cb);
+}
+
 void DrawWindow::bind_avl_insert(shared_ptr<CommandBase> cb)
 {
     draw->bind_avl_insert(cb);
@@ -137,17 +124,9 @@ void DrawWindow::bind_avl_find(shared_ptr<CommandBase> cb)
     draw->bind_avl_find(cb);
 }
 
-void DrawWindow::setButton(QPushButton * button)
+void DrawWindow::bind_avl_clear(shared_ptr<CommandBase> cb)
 {
-    QPalette buttonPal;
-    buttonPal.setColor(QPalette::ButtonText,Qt::white);
-    QFont buttonFont("Agency FB", 20);
-
-    button->setFlat(true);
-    button->setPalette(buttonPal);
-    button->setFont(buttonFont);
-
-    button->setStyleSheet("QPushButton{color: white;}" "QPushButton:hover{color: rbg(75, 0, 130);}");
+    draw->bind_avl_clear(cb);
 }
 
 void DrawWindow::insertNode()
@@ -164,7 +143,7 @@ void DrawWindow::insertNode()
         draw->bst_insert->SetParameter(make_shared<IntParameter>(key));
         draw->bst_insert->Exec();
     }
-
+    addText->clear();
 }
 
 void DrawWindow::deleteNode()
@@ -181,7 +160,7 @@ void DrawWindow::deleteNode()
         draw->bst_delete->SetParameter(make_shared<IntParameter>(key));
         draw->bst_delete->Exec();
     }
-
+    deleteText->clear();
 }
 
 void DrawWindow::findNode()
@@ -198,7 +177,21 @@ void DrawWindow::findNode()
         draw->bst_find->SetParameter(make_shared<IntParameter>(key));
         draw->bst_find->Exec();
     }
+    findText->clear();
+}
 
+void DrawWindow::clearWindow()
+{
+    if(state == avlTree)
+    {
+        draw->avl_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->avl_clear->Exec();
+    }
+    else if(state == tree)
+    {
+        draw->bst_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->bst_clear->Exec();
+    }
 }
 
 void DrawWindow::DrawUpdate()

@@ -16,6 +16,6 @@ void ReturnCommand::SetParameter(std::shared_ptr<IntParameter> param)
 
 void ReturnCommand::Exec()
 {
-    (view->getDrawWindow())->flashClose(100);
-    (view->getStartMenu())->flashShow(10);
+    (view->getDrawWindow())->DSWidget::flashClose(100);
+    (view->getStartMenu())->DSWidget::flashShow(10);
 }
