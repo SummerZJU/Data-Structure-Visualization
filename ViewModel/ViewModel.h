@@ -29,6 +29,8 @@ class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_Com
 	shared_ptr<BaseTree<int>> bst;          // bind from model 
 	shared_ptr<BaseTree<int>> avlTree;
     shared_ptr<BaseTree<int>> splayTree;
+    shared_ptr<BaseTree<int>> leftistHeap;
+    shared_ptr<BaseTree<int>> hfTree;
 
     shared_ptr<CommandBase> bstInsert;      // command-ctor is here
     shared_ptr<CommandBase> bstErase;       //
@@ -42,6 +44,13 @@ class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_Com
     shared_ptr<CommandBase> splayTreeErase;
     shared_ptr<CommandBase> splayTreeFind;
     shared_ptr<CommandBase> splayTreeClear;
+    shared_ptr<CommandBase> hfTreeInsert;
+    shared_ptr<CommandBase> hfTreeErase;
+    shared_ptr<CommandBase> hfTreeFind;
+    shared_ptr<CommandBase> hfTreeClear;
+    shared_ptr<CommandBase> leftistHeapInsert;
+    shared_ptr<CommandBase> leftistHeapErase;
+    shared_ptr<CommandBase> leftistHeapClear;
 
     shared_ptr<IPropertyNotification> psink;       // property-sink-ctor is here
 
@@ -53,10 +62,14 @@ public:
 	void bindModelBST(shared_ptr<BaseTree<int>> bst);
 	void bindModelAVLTree(shared_ptr<BaseTree<int>> avlTree);
     void bindModelSplayTree(shared_ptr<BaseTree<int>> splayTree);
+    void bindModelLeftistHeap(shared_ptr<BaseTree<int>> leftistHeap);
+    void bindModelHFTree(shared_ptr<BaseTree<int>> hfTree);
 
 	shared_ptr<BaseTree<int>> getBST() const;
 	shared_ptr<BaseTree<int>> getAVLTree() const;
     shared_ptr<BaseTree<int>> getSplayTree() const;
+    shared_ptr<BaseTree<int>> getLeftistHeap() const;
+    shared_ptr<BaseTree<int>> getHFTree() const;
 
 	shared_ptr<CommandBase> getCommandBSTInsert() const;
 	shared_ptr<CommandBase> getCommandBSTErase() const;
@@ -70,6 +83,13 @@ public:
     shared_ptr<CommandBase> getCommandSplayTreeErase() const;
     shared_ptr<CommandBase> getCommandSplayTreeFind() const;
     shared_ptr<CommandBase> getCommandSplayTreeClear() const;
+    shared_ptr<CommandBase> getCommandLeftistHeapInsert() const;
+    shared_ptr<CommandBase> getCommandLeftistHeapErase() const;
+    shared_ptr<CommandBase> getCommandLeftistHeapClear() const;
+    shared_ptr<CommandBase> getCommandHFTreeInsert() const;
+    shared_ptr<CommandBase> getCommandHFTreeErase() const;
+    shared_ptr<CommandBase> getCommandHFTreeFind() const;
+    shared_ptr<CommandBase> getCommandHFTreeClear() const;
 
 	void execCommandBSTInsert(int key);
 	void execCommandBSTErase(int key);
@@ -83,6 +103,13 @@ public:
     void execCommandSplayTreeErase(int key);
     void execCommandSplayTreeFind(int key);
     void execCommandSplayTreeClear();
+    void execCommandLeftistHeapInsert(int key);
+    void execCommandLeftistHeapErase(int key);
+    void execCommandLeftistHeapClear();
+    void execCommandHFTreeInsert(int key);
+    void execCommandHFTreeErase(int key);
+    void execCommandHFTreeFind(int key);
+    void execCommandHFTreeClear();
 
 };
 

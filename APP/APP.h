@@ -6,6 +6,8 @@
 #include "../Model/BST.h"
 #include "../Model/AVLTree.h"
 #include "../Model/SplayTree.h"
+#include "../Model/LeftistHeap.h"
+#include "../Model/HFTree.h"
 #include <memory>
 
 class APP {
@@ -16,6 +18,9 @@ class APP {
     shared_ptr<BST<int>> bst;
     shared_ptr<AVLTree<int>> avlTree;
     shared_ptr<SplayTree<int>> splayTree;
+    shared_ptr<LeftistHeap<int>> leftistHeap;
+    shared_ptr<HFTree<int>> hfTree;
+
 public:
     APP();
     virtual ~APP();

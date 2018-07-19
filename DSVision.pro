@@ -64,7 +64,15 @@ HEADERS += \
     ViewModel/Commands/SplayTreeClear.h \
     ViewModel/Commands/SplayTreeErase.h \
     ViewModel/Commands/SplayTreeFind.h \
-    ViewModel/Commands/SplayTreeInsert.h
+    ViewModel/Commands/SplayTreeInsert.h \
+    ViewModel/Commands/HFTreeClear.h \
+    ViewModel/Commands/HFTreeErase.h \
+    ViewModel/Commands/HFTreeFind.h \
+    ViewModel/Commands/HFTreeInsert.h \
+    ViewModel/Commands/LeftistHeapClear.h \
+    ViewModel/Commands/LeftistHeapErase.h \
+    ViewModel/Commands/LeftistHeapInsert.h \
+    Model/HFTree.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -105,7 +113,15 @@ SOURCES += \
     ViewModel/Commands/SplayTreeClear.cpp \
     ViewModel/Commands/SplayTreeErase.cpp \
     ViewModel/Commands/SplayTreeFind.cpp \
-    ViewModel/Commands/SplayTreeInsert.cpp
+    ViewModel/Commands/SplayTreeInsert.cpp \
+    ViewModel/Commands/HFTreeClear.cpp \
+    ViewModel/Commands/HFTreeErase.cpp \
+    ViewModel/Commands/HFTreeFind.cpp \
+    ViewModel/Commands/HFTreeInsert.cpp \
+    ViewModel/Commands/LeftistHeapErase.cpp \
+    ViewModel/Commands/LeftistHeapInsert.cpp \
+    Model/HFTree.cpp \
+    ViewModel/Commands/LeftistHeapClear.cpp
 
 RESOURCES += \
     View/viewqrc.qrc

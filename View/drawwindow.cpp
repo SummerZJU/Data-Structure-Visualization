@@ -79,6 +79,7 @@ void DrawWindow::setReturnCommand(std::shared_ptr<CommandBase> ptrCommand)
     returnCommand = ptrCommand;
 }
 
+//bind trees
 void DrawWindow::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)
 {
     draw->bind_avl_Tree(bt);
@@ -94,6 +95,19 @@ void DrawWindow::bind_splay_Tree(shared_ptr<BaseTree<int>> bt)
     draw->bind_splay_Tree(bt);
 }
 
+void DrawWindow::bind_leftist_Heap(shared_ptr<BaseTree<int> > bt)
+{
+    draw->bind_leftist_Tree(bt);
+}
+
+void DrawWindow::bind_hf_Tree(shared_ptr<BaseTree<int> > bt)
+{
+    draw->bind_hf_Tree(bt);
+}
+
+
+//bind commands
+//bst
 void DrawWindow::bind_bst_insert(shared_ptr<CommandBase> cb)
 {
     draw->bind_bst_insert(cb);
@@ -114,6 +128,7 @@ void DrawWindow::bind_bst_clear(shared_ptr<CommandBase> cb)
     draw->bind_bst_clear(cb);
 }
 
+//avl
 void DrawWindow::bind_avl_insert(shared_ptr<CommandBase> cb)
 {
     draw->bind_avl_insert(cb);
@@ -134,6 +149,7 @@ void DrawWindow::bind_avl_clear(shared_ptr<CommandBase> cb)
     draw->bind_avl_clear(cb);
 }
 
+//splay tree
 void DrawWindow::bind_splay_insert(shared_ptr<CommandBase> cb)
 {
     draw->bind_splay_insert(cb);
@@ -154,10 +170,45 @@ void DrawWindow::bind_splay_clear(shared_ptr<CommandBase> cb)
     draw->bind_splay_clear(cb);
 }
 
+//leftist heap
+void DrawWindow::bind_leftist_insert(shared_ptr<CommandBase> cb)
+{
+    draw->bind_leftist_insert(cb);
+}
+
+void DrawWindow::bind_leftist_delete(shared_ptr<CommandBase> cb)
+{
+    draw->bind_leftist_delete(cb);
+}
+
+void DrawWindow::bind_leftist_clear(shared_ptr<CommandBase> cb)
+{
+    draw->bind_leftist_clear(cb);
+}
+
+//hf tree
+void DrawWindow::bind_hf_insert(shared_ptr<CommandBase> cb)
+{
+    draw->bind_hf_insert(cb);
+}
+
+void DrawWindow::bind_hf_delete(shared_ptr<CommandBase> cb)
+{
+    draw->bind_hf_delete(cb);
+}
+
+void DrawWindow::bind_hf_find(shared_ptr<CommandBase> cb)
+{
+    draw->bind_hf_find(cb);
+}
+
+void DrawWindow::bind_hf_clear(shared_ptr<CommandBase> cb)
+{
+    draw->bind_hf_clear(cb);
+}
+
 void DrawWindow::insertNode()
 {
-    if(addText->text().isEmpty()) return;
-
     QString num = addText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -175,13 +226,21 @@ void DrawWindow::insertNode()
         draw->splay_insert->SetParameter(make_shared<IntParameter>(key));
         draw->splay_insert->Exec();
     }
+    //else if(state == hfTree)
+    //{
+    //    draw->hf_insert->SetParameter(make_shared<IntParameter>(key));
+    //    draw->hf_insert->Exec();
+    //}
+    else if(state == lHeap || state == hfTree)
+    {
+        draw->leftist_insert->SetParameter(make_shared<IntParameter>(key));
+        draw->leftist_insert->Exec();
+    }
     addText->clear();
 }
 
 void DrawWindow::deleteNode()
 {
-    if(deleteText->text().isEmpty()) return;
-
     QString num = deleteText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -199,13 +258,21 @@ void DrawWindow::deleteNode()
         draw->splay_delete->SetParameter(make_shared<IntParameter>(key));
         draw->splay_delete->Exec();
     }
+    else if(state == hfTree)
+    {
+        draw->hf_delete->SetParameter(make_shared<IntParameter>(key));
+       draw->hf_delete->Exec();
+    }
+    else if(state == lHeap)
+    {
+        draw->leftist_delete->SetParameter(make_shared<IntParameter>(key));
+        draw->leftist_delete->Exec();
+    }
     deleteText->clear();
 }
 
 void DrawWindow::findNode()
 {
-    if(findText->text().isEmpty()) return;
-
     QString num = findText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -222,6 +289,11 @@ void DrawWindow::findNode()
     {
         draw->splay_find->SetParameter(make_shared<IntParameter>(key));
         draw->splay_find->Exec();
+    }
+    else if(state == hfTree)
+    {
+        draw->hf_find->SetParameter(make_shared<IntParameter>(key));
+        draw->hf_find->Exec();
     }
     findText->clear();
 }
@@ -242,6 +314,16 @@ void DrawWindow::clearWindow()
     {
         draw->splay_clear->SetParameter(make_shared<IntParameter>(0));
         draw->splay_clear->Exec();
+    }
+    else if(state == hfTree)
+    {
+        draw->hf_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->hf_clear->Exec();
+    }
+    else if(state == lHeap)
+    {
+        draw->leftist_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->leftist_clear->Exec();
     }
 }
 

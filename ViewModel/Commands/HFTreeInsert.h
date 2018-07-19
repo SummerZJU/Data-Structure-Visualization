@@ -14,12 +14,12 @@ using namespace std;
 // type parameter not only container/collection
 
 template <typename T, typename V, typename S = less<T>>
-class HFTeeInsert : public CommandBase {
+class HFTreeInsert : public CommandBase {
     shared_ptr<V> spVM;
 
 public:
-    HFTeeInsert(V *pVM);
-	virtual ~HFTeeInsert();
+    HFTreeInsert(V *pVM);
+	virtual ~HFTreeInsert();
 
 	virtual void Exec() override;
 };
@@ -28,7 +28,7 @@ public:
 // viewmodel bind model
 // just couple model in viewmodel
 template <typename T, typename V, typename S>
-HFTeeInsert<T, V, S>::HFTeeInsert(V *pVM):
+HFTreeInsert<T, V, S>::HFTreeInsert(V *pVM):
 	CommandBase(),
 	spVM(pVM)
 {
@@ -36,20 +36,20 @@ HFTeeInsert<T, V, S>::HFTeeInsert(V *pVM):
 }
 
 template <typename T, typename V, typename S>
-HFTeeInsert<T, V, S>::~HFTeeInsert()
+HFTreeInsert<T, V, S>::~HFTreeInsert()
 {
 	// trival
 }
 
 template <typename T, typename V, typename S>
-void HFTeeInsert<T, V, S>::Exec()
+void HFTreeInsert<T, V, S>::Exec()
 {
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandHFTeeInsert(para);
+		spVM->execCommandHFTreeInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}

@@ -51,12 +51,12 @@ void HFTreeClear<T, V, S>::Exec()
 
     bool res = true;
 	try {
-		spVM->execCommandHFTreeClear(para);
+		spVM->execCommandHFTreeClear();
 	} catch(const exception& e) {
 		res = false;
 	}
 
-	spVM->Fire_OnCommandComplete("Find Command Complete", res);
+	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
 
 	return;
 }

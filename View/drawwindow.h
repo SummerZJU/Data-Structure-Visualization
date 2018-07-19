@@ -32,6 +32,8 @@ public:
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_splay_Tree(shared_ptr<BaseTree<int>> bt);
+    void bind_leftist_Heap(shared_ptr<BaseTree<int>> bt);
+    void bind_hf_Tree(shared_ptr<BaseTree<int>> bt);
 
     void bind_bst_insert(shared_ptr<CommandBase> cb);
     void bind_bst_delete(shared_ptr<CommandBase> cb);
@@ -47,6 +49,16 @@ public:
     void bind_splay_delete(shared_ptr<CommandBase> cb);
     void bind_splay_find(shared_ptr<CommandBase> cb);
     void bind_splay_clear(shared_ptr<CommandBase> cb);
+
+
+    void bind_leftist_insert(shared_ptr<CommandBase> cb);
+    void bind_leftist_delete(shared_ptr<CommandBase> cb);
+    void bind_leftist_clear(shared_ptr<CommandBase> cb);
+
+    void bind_hf_insert(shared_ptr<CommandBase> cb);
+    void bind_hf_delete(shared_ptr<CommandBase> cb);
+    void bind_hf_find(shared_ptr<CommandBase> cb);
+    void bind_hf_clear(shared_ptr<CommandBase> cb);
 
     void DrawUpdate();
 private:

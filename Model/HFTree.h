@@ -55,9 +55,9 @@ template <typename T, typename S>
 HFNode<T> *HFTree<T, S>::find(const T& value)
 {
 	HFNode<T> *ret = nullptr;
-	BaseNode<T> *work = root;
+        BaseNode<T> *work = this->root;
 	// reset to OTHER!
-	levelorder(); 
+        this->levelorder();
 	// reset to OTHER!
 	while(work) {
 		work->state = PATH;

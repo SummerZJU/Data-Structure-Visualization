@@ -5,9 +5,7 @@
 #include <QDialog>
 #include <QWidget>
 #include <QLabel>
-#include <QPalette>
 #include <QHBoxLayout>
-#include <QPushButton>
 
 class Error : public QDialog
 {
@@ -21,5 +19,6 @@ public:
     QString ErrorTitle;
 private:
     QLabel * ErrorLable;
+
 };
 #endif

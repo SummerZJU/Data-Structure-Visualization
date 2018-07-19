@@ -3,6 +3,8 @@
 #include "../Model/BST.h"
 #include "../Model/AVLTree.h"
 #include "../Model/SplayTree.h"
+#include "../Model/LeftistHeap.h"
+#include "../Model/HFTree.h"
 #include "Commands/BSTInsert.h"
 #include "Commands/BSTErase.h"
 #include "Commands/BSTFind.h"
@@ -15,7 +17,13 @@
 #include "Commands/SplayTreeErase.h"
 #include "Commands/SplayTreeFind.h"
 #include "Commands/SplayTreeClear.h"
-
+#include "Commands/HFTreeClear.h"
+#include "Commands/HFTreeErase.h"
+#include "Commands/HFTreeFind.h"
+#include "Commands/HFTreeInsert.h"
+#include "Commands/LeftistHeapClear.h"
+#include "Commands/LeftistHeapErase.h"
+#include "Commands/LeftistHeapInsert.h"
 
 ViewModel::ViewModel()
     // default ctor of shared_ptr<T>
@@ -36,6 +44,15 @@ ViewModel::ViewModel()
     splayTreeErase = shared_ptr<CommandBase>(new SplayTreeErase<int, ViewModel>(this));
     splayTreeFind = shared_ptr<CommandBase>(new SplayTreeFind<int, ViewModel>(this));
     splayTreeClear = shared_ptr<CommandBase>(new SplayTreeClear<int, ViewModel>(this));
+
+    leftistHeapInsert = shared_ptr<CommandBase>(new LeftistHeapInsert<int, ViewModel>(this));
+    leftistHeapErase = shared_ptr<CommandBase>(new LeftistHeapErase<int, ViewModel>(this));
+    leftistHeapClear = shared_ptr<CommandBase>(new LeftistHeapClear<int, ViewModel>(this));
+
+    hfTreeInsert = shared_ptr<CommandBase>(new HFTreeInsert<int, ViewModel>(this));
+    hfTreeErase = shared_ptr<CommandBase>(new HFTreeErase<int, ViewModel>(this));
+    hfTreeFind = shared_ptr<CommandBase>(new HFTreeFind<int, ViewModel>(this));
+    hfTreeClear = shared_ptr<CommandBase>(new HFTreeClear<int, ViewModel>(this));
 
     psink = shared_ptr<IPropertyNotification>(new VMPropertySink(this));
 }
@@ -66,6 +83,19 @@ void ViewModel::bindModelSplayTree(shared_ptr<BaseTree<int>> splayTree)
     splayTree->AddPropertyNotification(psink);
 }
 
+
+void ViewModel::bindModelLeftistHeap(shared_ptr<BaseTree<int> > leftistHeap)
+{
+    this->leftistHeap = leftistHeap;
+    leftistHeap->AddPropertyNotification(psink);
+}
+
+void ViewModel::bindModelHFTree(shared_ptr<BaseTree<int> > hfTree)
+{
+    this->hfTree = hfTree;
+    hfTree->AddPropertyNotification(psink);
+}
+
 shared_ptr<BaseTree<int>> ViewModel::getBST() const
 {
     return bst;
@@ -79,6 +109,16 @@ shared_ptr<BaseTree<int>> ViewModel::getAVLTree() const
 shared_ptr<BaseTree<int>> ViewModel::getSplayTree() const
 {
     return splayTree;
+}
+
+shared_ptr<BaseTree<int>> ViewModel::getLeftistHeap() const
+{
+    return leftistHeap;
+}
+
+shared_ptr<BaseTree<int>> ViewModel::getHFTree() const
+{
+    return hfTree;
 }
 
 /////////////////////////////////////////////////////
@@ -185,6 +225,53 @@ shared_ptr<CommandBase> ViewModel::getCommandSplayTreeClear() const
 //                                                 //
 /////////////////////////////////////////////////////
 
+shared_ptr<CommandBase> ViewModel::getCommandLeftistHeapInsert() const
+{
+    return leftistHeapInsert;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandLeftistHeapErase() const
+{
+    return leftistHeapErase;
+}
+
+
+shared_ptr<CommandBase> ViewModel::getCommandLeftistHeapClear() const
+{
+    return leftistHeapClear;
+}
+
+/////////////////////////////////////////////////////
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+/////////////////////////////////////////////////////
+
+shared_ptr<CommandBase> ViewModel::getCommandHFTreeInsert() const
+{
+    return hfTreeInsert;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandHFTreeErase() const
+{
+    return hfTreeErase;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandHFTreeFind() const
+{
+    return hfTreeFind;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandHFTreeClear() const
+{
+    return hfTreeClear;
+}
+
 // int correspond int
 void ViewModel::execCommandBSTInsert(int key)
 {
@@ -279,3 +366,68 @@ void ViewModel::execCommandSplayTreeClear()
     auto work = static_pointer_cast<SplayTree<int>>(splayTree);
     work->clear();
 }
+
+/////////////////////////////////////////////////////
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+/////////////////////////////////////////////////////
+
+void ViewModel::execCommandLeftistHeapInsert(int key)
+{
+    auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
+    work->insert(key);
+}
+
+void ViewModel::execCommandLeftistHeapErase(int key)
+{
+    auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
+    work->erase();
+}
+
+void ViewModel::execCommandLeftistHeapClear()
+{
+    auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
+    work->clear();
+}
+
+/////////////////////////////////////////////////////
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+/////////////////////////////////////////////////////
+
+void ViewModel::execCommandHFTreeInsert(int key)
+{
+    auto work = static_pointer_cast<HFTree<int>>(hfTree);
+    work->insert(key);
+}
+
+void ViewModel::execCommandHFTreeErase(int key)
+{
+    auto work = static_pointer_cast<HFTree<int>>(hfTree);
+    work->erase(key);
+}
+
+void ViewModel::execCommandHFTreeFind(int key)
+{
+    auto work = static_pointer_cast<HFTree<int>>(hfTree);
+    work->find(key);
+}
+
+void ViewModel::execCommandHFTreeClear()
+{
+    auto work = static_pointer_cast<HFTree<int>>(hfTree);
+    work->clear();
+}
+
