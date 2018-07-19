@@ -23,7 +23,7 @@ install:
 # Run qmake
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - cd View
+  #- cd View
   - qmake DSVision.pro
 
 
