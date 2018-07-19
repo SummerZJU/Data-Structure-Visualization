@@ -28,6 +28,7 @@
 class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_CommandNotification<ViewModel> {
 	shared_ptr<BaseTree<int>> bst;          // bind from model 
 	shared_ptr<BaseTree<int>> avlTree;
+    shared_ptr<BaseTree<int>> splayTree;
 
     shared_ptr<CommandBase> bstInsert;      // command-ctor is here
     shared_ptr<CommandBase> bstErase;       //
@@ -37,6 +38,10 @@ class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_Com
     shared_ptr<CommandBase> avlTreeErase;
     shared_ptr<CommandBase> avlTreeFind;
     shared_ptr<CommandBase> avlTreeClear;
+    shared_ptr<CommandBase> splayTreeInsert;
+    shared_ptr<CommandBase> splayTreeErase;
+    shared_ptr<CommandBase> splayTreeFind;
+    shared_ptr<CommandBase> splayTreeClear;
 
     shared_ptr<IPropertyNotification> psink;       // property-sink-ctor is here
 
@@ -47,9 +52,11 @@ public:
 	// bind model & bind notification and sinks
 	void bindModelBST(shared_ptr<BaseTree<int>> bst);
 	void bindModelAVLTree(shared_ptr<BaseTree<int>> avlTree);
+    void bindModelSplayTree(shared_ptr<BaseTree<int>> splayTree);
 
 	shared_ptr<BaseTree<int>> getBST() const;
 	shared_ptr<BaseTree<int>> getAVLTree() const;
+    shared_ptr<BaseTree<int>> getSplayTree() const;
 
 	shared_ptr<CommandBase> getCommandBSTInsert() const;
 	shared_ptr<CommandBase> getCommandBSTErase() const;
@@ -59,6 +66,10 @@ public:
 	shared_ptr<CommandBase> getCommandAVLTreeErase() const;
 	shared_ptr<CommandBase> getCommandAVLTreeFind() const;
 	shared_ptr<CommandBase> getCommandAVLTreeClear() const;
+    shared_ptr<CommandBase> getCommandSplayTreeInsert() const;
+    shared_ptr<CommandBase> getCommandSplayTreeErase() const;
+    shared_ptr<CommandBase> getCommandSplayTreeFind() const;
+    shared_ptr<CommandBase> getCommandSplayTreeClear() const;
 
 	void execCommandBSTInsert(int key);
 	void execCommandBSTErase(int key);
@@ -68,6 +79,10 @@ public:
 	void execCommandAVLTreeErase(int key);
 	void execCommandAVLTreeFind(int key);
 	void execCommandAVLTreeClear();
+    void execCommandSplayTreeInsert(int key);
+    void execCommandSplayTreeErase(int key);
+    void execCommandSplayTreeFind(int key);
+    void execCommandSplayTreeClear();
 
 };
 

@@ -89,6 +89,11 @@ void DrawWindow::bind_bst_Tree(shared_ptr<BaseTree<int>> bt)
     draw->bind_bst_Tree(bt);
 }
 
+void DrawWindow::bind_splay_Tree(shared_ptr<BaseTree<int>> bt)
+{
+    draw->bind_splay_Tree(bt);
+}
+
 void DrawWindow::bind_bst_insert(shared_ptr<CommandBase> cb)
 {
     draw->bind_bst_insert(cb);
@@ -129,6 +134,26 @@ void DrawWindow::bind_avl_clear(shared_ptr<CommandBase> cb)
     draw->bind_avl_clear(cb);
 }
 
+void DrawWindow::bind_splay_insert(shared_ptr<CommandBase> cb)
+{
+    draw->bind_splay_insert(cb);
+}
+
+void DrawWindow::bind_splay_delete(shared_ptr<CommandBase> cb)
+{
+    draw->bind_splay_delete(cb);
+}
+
+void DrawWindow::bind_splay_find(shared_ptr<CommandBase> cb)
+{
+    draw->bind_splay_find(cb);
+}
+
+void DrawWindow::bind_splay_clear(shared_ptr<CommandBase> cb)
+{
+    draw->bind_splay_clear(cb);
+}
+
 void DrawWindow::insertNode()
 {
     QString num = addText->text();
@@ -142,6 +167,11 @@ void DrawWindow::insertNode()
     {
         draw->bst_insert->SetParameter(make_shared<IntParameter>(key));
         draw->bst_insert->Exec();
+    }
+    else if(state == splayTree)
+    {
+        draw->splay_insert->SetParameter(make_shared<IntParameter>(key));
+        draw->splay_insert->Exec();
     }
     addText->clear();
 }
@@ -160,6 +190,11 @@ void DrawWindow::deleteNode()
         draw->bst_delete->SetParameter(make_shared<IntParameter>(key));
         draw->bst_delete->Exec();
     }
+    else if(state == splayTree)
+    {
+        draw->splay_delete->SetParameter(make_shared<IntParameter>(key));
+        draw->splay_delete->Exec();
+    }
     deleteText->clear();
 }
 
@@ -177,6 +212,11 @@ void DrawWindow::findNode()
         draw->bst_find->SetParameter(make_shared<IntParameter>(key));
         draw->bst_find->Exec();
     }
+    else if(state == splayTree)
+    {
+        draw->splay_find->SetParameter(make_shared<IntParameter>(key));
+        draw->splay_find->Exec();
+    }
     findText->clear();
 }
 
@@ -191,6 +231,11 @@ void DrawWindow::clearWindow()
     {
         draw->bst_clear->SetParameter(make_shared<IntParameter>(0));
         draw->bst_clear->Exec();
+    }
+    else if(state == splayTree)
+    {
+        draw->splay_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->splay_clear->Exec();
     }
 }
 

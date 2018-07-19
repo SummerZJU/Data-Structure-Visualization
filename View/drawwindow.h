@@ -28,16 +28,26 @@ public:
     explicit DrawWindow();
     ~DrawWindow();
     void setReturnCommand(std::shared_ptr<CommandBase> ptrCommand);
+
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);
+    void bind_splay_Tree(shared_ptr<BaseTree<int>> bt);
+
     void bind_bst_insert(shared_ptr<CommandBase> cb);
     void bind_bst_delete(shared_ptr<CommandBase> cb);
     void bind_bst_find(shared_ptr<CommandBase> cb);
     void bind_bst_clear(shared_ptr<CommandBase> cb);
+
     void bind_avl_insert(shared_ptr<CommandBase> cb);
     void bind_avl_delete(shared_ptr<CommandBase> cb);
     void bind_avl_find(shared_ptr<CommandBase> cb);
     void bind_avl_clear(shared_ptr<CommandBase> cb);
+
+    void bind_splay_insert(shared_ptr<CommandBase> cb);
+    void bind_splay_delete(shared_ptr<CommandBase> cb);
+    void bind_splay_find(shared_ptr<CommandBase> cb);
+    void bind_splay_clear(shared_ptr<CommandBase> cb);
+
     void DrawUpdate();
 private:
     std::shared_ptr<CommandBase> returnCommand;
