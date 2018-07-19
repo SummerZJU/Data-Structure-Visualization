@@ -156,6 +156,8 @@ void DrawWindow::bind_splay_clear(shared_ptr<CommandBase> cb)
 
 void DrawWindow::insertNode()
 {
+    if(addText->text().isEmpty()) return;
+
     QString num = addText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -178,6 +180,8 @@ void DrawWindow::insertNode()
 
 void DrawWindow::deleteNode()
 {
+    if(deleteText->text().isEmpty()) return;
+
     QString num = deleteText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -200,6 +204,8 @@ void DrawWindow::deleteNode()
 
 void DrawWindow::findNode()
 {
+    if(findText->text().isEmpty()) return;
+
     QString num = findText->text();
     int key = num.toInt();
     if(state == avlTree)

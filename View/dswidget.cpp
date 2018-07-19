@@ -38,5 +38,5 @@ void DSWidget::setButton(QPushButton * button)
     button->setPalette(buttonPal);
     button->setFont(buttonFont);
 
-    button->setStyleSheet("QPushButton{color: white;}" "QPushButton:hover{color: rbg(75, 0, 130);}");
+    button->setStyleSheet("QPushButton:hover{color: rbg(75, 0, 130);}" "QPushButton:pressed{backgroud-color: transparent;}");
 }
