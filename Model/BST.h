@@ -63,7 +63,7 @@ public:
 
 template <typename T, typename S>
 BST<T, S>::BST():
-	BaseTree<T>()
+	BaseTree<T, S>()
 {
 	// trival
 }
@@ -243,7 +243,7 @@ void BST<T, S>::erase(const T& key)
 			     // catch find throw go-on
         res = false;
 	}
-	this->Fire_OnPropertyChanged("Property Changed After Ensert");
+	this->Fire_OnPropertyChanged("Property Changed After Erase");
 	if(!res) throw ModelException("BST Erase Failed");
 }
 

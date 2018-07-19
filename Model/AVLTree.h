@@ -310,6 +310,7 @@ void AVLTree<T, S>::erase(const T& key)
     } catch(const exception& e) {
         res = false;
     }
+    this->Fire_OnPropertyChanged("Property Changed After Erase");
     if(!res) throw ModelException("AVLTree Erase Failed");
 }
 
