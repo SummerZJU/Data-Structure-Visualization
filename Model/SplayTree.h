@@ -211,6 +211,10 @@ SPTNode<T> *SplayTree<T, S>::find(const T& key)
 	if(ret) {
 		ret->state = RES;
 		fixup(ret);
+        int count = 0;
+        this->inorder(this->root, &count);
+        this->levelorder();
+        ret->state = RES;  // reset by levelorder()
 	}
 	this->Fire_OnPropertyChanged("Property Changed After Find");
 	if(ret == nullptr) throw ModelException("SplayTree Find Failed");

@@ -60,7 +60,11 @@ HEADERS += \
     ViewModel/Commands/BSTErase.h \
     ViewModel/Commands/BSTFind.h \
     ViewModel/Commands/BSTInsert.h \
-    View/dswidget.h
+    View/dswidget.h \
+    ViewModel/Commands/SplayTreeClear.h \
+    ViewModel/Commands/SplayTreeErase.h \
+    ViewModel/Commands/SplayTreeFind.h \
+    ViewModel/Commands/SplayTreeInsert.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -97,7 +101,11 @@ SOURCES += \
     ViewModel/Commands/BSTErase.cpp \
     ViewModel/Commands/BSTFind.cpp \
     ViewModel/Commands/BSTInsert.cpp \
-    View/dswidget.cpp
+    View/dswidget.cpp \
+    ViewModel/Commands/SplayTreeClear.cpp \
+    ViewModel/Commands/SplayTreeErase.cpp \
+    ViewModel/Commands/SplayTreeFind.cpp \
+    ViewModel/Commands/SplayTreeInsert.cpp
 
 RESOURCES += \
     View/viewqrc.qrc
