@@ -5,6 +5,7 @@
 #include "../Model/SplayTree.h"
 #include "../Model/LeftistHeap.h"
 #include "../Model/HFTree.h"
+#include "../Model/RBT.h"
 #include "Commands/BSTInsert.h"
 #include "Commands/BSTErase.h"
 #include "Commands/BSTFind.h"
@@ -24,6 +25,10 @@
 #include "Commands/LeftistHeapClear.h"
 #include "Commands/LeftistHeapErase.h"
 #include "Commands/LeftistHeapInsert.h"
+#include "Commands/RBTClear.h"
+#include "Commands/RBTErase.h"
+#include "Commands/RBTFind.h"
+#include "Commands/RBTInsert.h"
 
 ViewModel::ViewModel()
     // default ctor of shared_ptr<T>
@@ -53,6 +58,11 @@ ViewModel::ViewModel()
     hfTreeErase = shared_ptr<CommandBase>(new HFTreeErase<int, ViewModel>(this));
     hfTreeFind = shared_ptr<CommandBase>(new HFTreeFind<int, ViewModel>(this));
     hfTreeClear = shared_ptr<CommandBase>(new HFTreeClear<int, ViewModel>(this));
+
+    rbtInsert = shared_ptr<CommandBase>(new RBTInsert<int, ViewModel>(this));
+    rbtErase = shared_ptr<CommandBase>(new RBTErase<int, ViewModel>(this));
+    rbtFind = shared_ptr<CommandBase>(new RBTFind<int, ViewModel>(this));
+    rbtClear = shared_ptr<CommandBase>(new RBTClear<int, ViewModel>(this));
 
     psink = shared_ptr<IPropertyNotification>(new VMPropertySink(this));
 }
@@ -96,6 +106,12 @@ void ViewModel::bindModelHFTree(shared_ptr<BaseTree<int> > hfTree)
     hfTree->AddPropertyNotification(psink);
 }
 
+void ViewModel::bindModelRBT(shared_ptr<BaseTree<int> > rbt)
+{
+    this->rbt = rbt;
+    rbt->AddPropertyNotification(psink);
+}
+
 shared_ptr<BaseTree<int>> ViewModel::getBST() const
 {
     return bst;
@@ -119,6 +135,11 @@ shared_ptr<BaseTree<int>> ViewModel::getLeftistHeap() const
 shared_ptr<BaseTree<int>> ViewModel::getHFTree() const
 {
     return hfTree;
+}
+
+shared_ptr<BaseTree<int>> ViewModel::getRBT() const
+{
+    return rbt;
 }
 
 /////////////////////////////////////////////////////
@@ -271,6 +292,39 @@ shared_ptr<CommandBase> ViewModel::getCommandHFTreeClear() const
 {
     return hfTreeClear;
 }
+
+/////////////////////////////////////////////////////
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+/////////////////////////////////////////////////////
+
+shared_ptr<CommandBase> ViewModel::getCommandRBTInsert() const
+{
+    return rbtInsert;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandRBTErase() const
+{
+    return rbtErase;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandRBTFind() const
+{
+    return rbtFind;
+}
+
+shared_ptr<CommandBase> ViewModel::getCommandRBTClear() const
+{
+    return rbtClear;
+}
+
+
 
 // int correspond int
 void ViewModel::execCommandBSTInsert(int key)
@@ -431,3 +485,38 @@ void ViewModel::execCommandHFTreeClear()
     work->clear();
 }
 
+/////////////////////////////////////////////////////
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+//                                                 //
+/////////////////////////////////////////////////////
+
+
+void ViewModel::execCommandRBTInsert(int key)
+{
+    auto work = static_pointer_cast<RBT<int>>(rbt);
+    work->insert(key);
+}
+
+void ViewModel::execCommandRBTErase(int key)
+{
+    auto work = static_pointer_cast<RBT<int>>(rbt);
+    work->erase(key);
+}
+
+void ViewModel::execCommandRBTFind(int key)
+{
+    auto work = static_pointer_cast<RBT<int>>(rbt);
+    work->find(key);
+}
+
+void ViewModel::execCommandRBTClear()
+{
+    auto work = static_pointer_cast<RBT<int>>(rbt);
+    work->clear();
+}

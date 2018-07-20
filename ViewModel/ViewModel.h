@@ -31,6 +31,7 @@ class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_Com
     shared_ptr<BaseTree<int>> splayTree;
     shared_ptr<BaseTree<int>> leftistHeap;
     shared_ptr<BaseTree<int>> hfTree;
+    shared_ptr<BaseTree<int>> rbt;
 
     shared_ptr<CommandBase> bstInsert;      // command-ctor is here
     shared_ptr<CommandBase> bstErase;       //
@@ -51,6 +52,11 @@ class ViewModel : public Proxy_PropertyNotification<ViewModel>, public Proxy_Com
     shared_ptr<CommandBase> leftistHeapInsert;
     shared_ptr<CommandBase> leftistHeapErase;
     shared_ptr<CommandBase> leftistHeapClear;
+    shared_ptr<CommandBase> rbtInsert;
+    shared_ptr<CommandBase> rbtErase;
+    shared_ptr<CommandBase> rbtFind;
+    shared_ptr<CommandBase> rbtClear;
+
 
     shared_ptr<IPropertyNotification> psink;       // property-sink-ctor is here
 
@@ -64,12 +70,14 @@ public:
     void bindModelSplayTree(shared_ptr<BaseTree<int>> splayTree);
     void bindModelLeftistHeap(shared_ptr<BaseTree<int>> leftistHeap);
     void bindModelHFTree(shared_ptr<BaseTree<int>> hfTree);
+    void bindModelRBT(shared_ptr<BaseTree<int>> rbt);
 
 	shared_ptr<BaseTree<int>> getBST() const;
 	shared_ptr<BaseTree<int>> getAVLTree() const;
     shared_ptr<BaseTree<int>> getSplayTree() const;
     shared_ptr<BaseTree<int>> getLeftistHeap() const;
     shared_ptr<BaseTree<int>> getHFTree() const;
+    shared_ptr<BaseTree<int>> getRBT() const;
 
 	shared_ptr<CommandBase> getCommandBSTInsert() const;
 	shared_ptr<CommandBase> getCommandBSTErase() const;
@@ -90,6 +98,10 @@ public:
     shared_ptr<CommandBase> getCommandHFTreeErase() const;
     shared_ptr<CommandBase> getCommandHFTreeFind() const;
     shared_ptr<CommandBase> getCommandHFTreeClear() const;
+    shared_ptr<CommandBase> getCommandRBTInsert() const;
+    shared_ptr<CommandBase> getCommandRBTErase() const;
+    shared_ptr<CommandBase> getCommandRBTFind() const;
+    shared_ptr<CommandBase> getCommandRBTClear() const;
 
 	void execCommandBSTInsert(int key);
 	void execCommandBSTErase(int key);
@@ -110,6 +122,10 @@ public:
     void execCommandHFTreeErase(int key);
     void execCommandHFTreeFind(int key);
     void execCommandHFTreeClear();
+    void execCommandRBTInsert(int key);
+    void execCommandRBTErase(int key);
+    void execCommandRBTFind(int key);
+    void execCommandRBTClear();
 
 };
 
