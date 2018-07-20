@@ -4,8 +4,8 @@
 #include "../Model/Common.h"
 #include "startmenu.h"
 #include "drawwindow.h"
-#include "startcommand.h"
-#include "returncommand.h"
+#include "Commands/startcommand.h"
+#include "Commands/returncommand.h"
 #include "Sinks/TreeCommandNotification.h"
 #include "Sinks/TreePropertyNotification.h"
 
