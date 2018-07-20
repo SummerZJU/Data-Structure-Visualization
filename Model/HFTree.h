@@ -38,6 +38,7 @@ public:
 
     void insert(const T& value);
     void erase(const T& value);
+    void clear();
     HFNode<T> *find(const T& value);
 };
 
@@ -84,6 +85,15 @@ void HFTree<T, S>::insert(const T& value)
     delete this->root;
     create();
     this->Fire_OnPropertyChanged("Property Changed After Erase");
+}
+
+template <typename T, typename S>
+void HFTree<T, S>::clear()
+{
+    content.clear();
+    delete this->root;
+    this->root = nullptr;
+    this->Fire_OnPropertyChanged("Property Changed After Clear");
 }
 
 template <typename T, typename S>
