@@ -98,7 +98,6 @@ RBT<T, S>::~RBT()
 	this->root = nullptr;               // make base-dtor trival
 	NIL->left = NIL->right = nullptr;
 	delete NIL;							// prevent recurrsion!
-
 }
 
 template <typename T, typename S>
@@ -534,6 +533,7 @@ void RBT<T, S>::clear()
 	clear(this->root, NIL);
 	NIL->parent = NIL->left = NIL->right = nullptr;
 	NIL->parent = NIL;                  // empty RB-Tree & leave out a NIL
+    this->Fire_OnPropertyChanged("Property Changed After Clear");
 }
 
 #ifdef RBT_DEBUG

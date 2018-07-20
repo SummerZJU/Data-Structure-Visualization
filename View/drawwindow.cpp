@@ -226,12 +226,12 @@ void DrawWindow::insertNode()
         draw->splay_insert->SetParameter(make_shared<IntParameter>(key));
         draw->splay_insert->Exec();
     }
-    //else if(state == hfTree)
-    //{
-    //    draw->hf_insert->SetParameter(make_shared<IntParameter>(key));
-    //    draw->hf_insert->Exec();
-    //}
-    else if(state == lHeap || state == hfTree)
+    else if(state == hfTree)
+    {
+       draw->hf_insert->SetParameter(make_shared<IntParameter>(key));
+       draw->hf_insert->Exec();
+    }
+    else if(state == lHeap)
     {
         draw->leftist_insert->SetParameter(make_shared<IntParameter>(key));
         draw->leftist_insert->Exec();

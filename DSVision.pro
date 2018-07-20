@@ -72,7 +72,12 @@ HEADERS += \
     ViewModel/Commands/LeftistHeapClear.h \
     ViewModel/Commands/LeftistHeapErase.h \
     ViewModel/Commands/LeftistHeapInsert.h \
-    Model/HFTree.h
+    Model/HFTree.h \
+    ViewModel/Commands/RBTClear.h \
+    ViewModel/Commands/RBTErase.h \
+    ViewModel/Commands/RBTFind.h \
+    ViewModel/Commands/RBTInsert.h \
+    Model/RBT.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -121,7 +126,12 @@ SOURCES += \
     ViewModel/Commands/LeftistHeapErase.cpp \
     ViewModel/Commands/LeftistHeapInsert.cpp \
     Model/HFTree.cpp \
-    ViewModel/Commands/LeftistHeapClear.cpp
+    ViewModel/Commands/LeftistHeapClear.cpp \
+    ViewModel/Commands/RBTClear.cpp \
+    ViewModel/Commands/RBTErase.cpp \
+    ViewModel/Commands/RBTFind.cpp \
+    ViewModel/Commands/RBTInsert.cpp \
+    Model/RBT.cpp
 
 RESOURCES += \
     View/viewqrc.qrc
