@@ -27,6 +27,7 @@ public:
     void bind_splay_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_leftist_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_hf_Tree(shared_ptr<BaseTree<int>> bt);
+    void bind_rb_Tree(shared_ptr<BaseTree<int>> bt);
 
     void bind_bst_insert(shared_ptr<CommandBase> cb);
     void bind_bst_delete(shared_ptr<CommandBase> cb);
@@ -52,11 +53,17 @@ public:
     void bind_hf_find(shared_ptr<CommandBase> cb);
     void bind_hf_clear(shared_ptr<CommandBase> cb);
 
+    void bind_rb_insert(shared_ptr<CommandBase> cb);
+    void bind_rb_delete(shared_ptr<CommandBase> cb);
+    void bind_rb_find(shared_ptr<CommandBase> cb);
+    void bind_rb_clear(shared_ptr<CommandBase> cb);
+
     std::shared_ptr<BaseTree<int>> basetree_avl;
     std::shared_ptr<BaseTree<int>> basetree_bst;
     std::shared_ptr<BaseTree<int>> basetree_splay;
     std::shared_ptr<BaseTree<int>> basetree_leftist;
     std::shared_ptr<BaseTree<int>> basetree_hf;
+    std::shared_ptr<BaseTree<int>> basetree_rb;
 
     std::shared_ptr<CommandBase> avl_insert;
     std::shared_ptr<CommandBase> avl_delete;
@@ -82,6 +89,9 @@ public:
     std::shared_ptr<CommandBase> hf_find;
     std::shared_ptr<CommandBase> hf_clear;
 
-
+    std::shared_ptr<CommandBase> rb_insert;
+    std::shared_ptr<CommandBase> rb_delete;
+    std::shared_ptr<CommandBase> rb_find;
+    std::shared_ptr<CommandBase> rb_clear;
 };
 #endif // DRAW_H

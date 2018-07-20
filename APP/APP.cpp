@@ -7,7 +7,8 @@ APP::APP():
     avlTree(new AVLTree<int>),
     splayTree(new SplayTree<int>),
     leftistHeap(new LeftistHeap<int>),
-    hfTree(new HFTree<int>)
+    hfTree(new HFTree<int>),
+    rbTree(new RBT<int>)
 {
     // viewmodel bind model & notification and sinks
     vm->bindModelBST(this->bst);
@@ -15,6 +16,7 @@ APP::APP():
     vm->bindModelSplayTree(this->splayTree);
     vm->bindModelLeftistHeap(this->leftistHeap);
     vm->bindModelHFTree(this->hfTree);
+    vm->bindModelRBT(this->rbTree);
 
     // viewmodel bind view-sinks by shared_ptr<IC>/<IP>
     vm->AddPropertyNotification(dsv->getTreePropertyNotification());
@@ -26,6 +28,7 @@ APP::APP():
     dsv->getDrawWindow()->bind_splay_Tree(vm->getSplayTree());
     dsv->getDrawWindow()->bind_leftist_Heap(vm->getLeftistHeap());
     dsv->getDrawWindow()->bind_hf_Tree(vm->getHFTree());
+    dsv->getDrawWindow()->bind_rb_Tree(vm->getRBT());
 
     // view bind exposed command
     dsv->getDrawWindow()->bind_bst_insert(vm->getCommandBSTInsert());
@@ -51,6 +54,11 @@ APP::APP():
     dsv->getDrawWindow()->bind_hf_delete(vm->getCommandHFTreeErase());
     dsv->getDrawWindow()->bind_hf_find(vm->getCommandHFTreeFind());
     dsv->getDrawWindow()->bind_hf_clear(vm->getCommandHFTreeClear());
+
+    dsv->getDrawWindow()->bind_rb_insert(vm->getCommandRBTInsert());
+    dsv->getDrawWindow()->bind_rb_delete(vm->getCommandRBTErase());
+    dsv->getDrawWindow()->bind_rb_find(vm->getCommandRBTFind());
+    dsv->getDrawWindow()->bind_rb_clear(vm->getCommandRBTClear());
 
 }
 

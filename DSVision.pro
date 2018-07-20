@@ -61,10 +61,6 @@ HEADERS += \
     ViewModel/Commands/BSTFind.h \
     ViewModel/Commands/BSTInsert.h \
     View/dswidget.h \
-    ViewModel/Commands/SplayTreeClear.h \
-    ViewModel/Commands/SplayTreeErase.h \
-    ViewModel/Commands/SplayTreeFind.h \
-    ViewModel/Commands/SplayTreeInsert.h \
     ViewModel/Commands/HFTreeClear.h \
     ViewModel/Commands/HFTreeErase.h \
     ViewModel/Commands/HFTreeFind.h \
@@ -73,6 +69,7 @@ HEADERS += \
     ViewModel/Commands/LeftistHeapErase.h \
     ViewModel/Commands/LeftistHeapInsert.h \
     Model/HFTree.h \
+    Model/LeftistHeap.h \
     ViewModel/Commands/RBTClear.h \
     ViewModel/Commands/RBTErase.h \
     ViewModel/Commands/RBTFind.h \
@@ -115,10 +112,6 @@ SOURCES += \
     ViewModel/Commands/BSTFind.cpp \
     ViewModel/Commands/BSTInsert.cpp \
     View/dswidget.cpp \
-    ViewModel/Commands/SplayTreeClear.cpp \
-    ViewModel/Commands/SplayTreeErase.cpp \
-    ViewModel/Commands/SplayTreeFind.cpp \
-    ViewModel/Commands/SplayTreeInsert.cpp \
     ViewModel/Commands/HFTreeClear.cpp \
     ViewModel/Commands/HFTreeErase.cpp \
     ViewModel/Commands/HFTreeFind.cpp \
@@ -126,7 +119,7 @@ SOURCES += \
     ViewModel/Commands/LeftistHeapErase.cpp \
     ViewModel/Commands/LeftistHeapInsert.cpp \
     Model/HFTree.cpp \
-    ViewModel/Commands/LeftistHeapClear.cpp \
+    Model/LeftistHeap.cpp \
     ViewModel/Commands/RBTClear.cpp \
     ViewModel/Commands/RBTErase.cpp \
     ViewModel/Commands/RBTFind.cpp \

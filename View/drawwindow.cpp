@@ -105,6 +105,10 @@ void DrawWindow::bind_hf_Tree(shared_ptr<BaseTree<int> > bt)
     draw->bind_hf_Tree(bt);
 }
 
+void DrawWindow::bind_rb_Tree(shared_ptr<BaseTree<int> > bt)
+{
+    draw->bind_rb_Tree(bt);
+}
 
 //bind commands
 //bst
@@ -206,6 +210,29 @@ void DrawWindow::bind_hf_clear(shared_ptr<CommandBase> cb)
 {
     draw->bind_hf_clear(cb);
 }
+
+
+//rb Tree
+void DrawWindow::bind_rb_insert(shared_ptr<CommandBase> cb)
+{
+    draw->bind_rb_insert(cb);
+}
+
+void DrawWindow::bind_rb_delete(shared_ptr<CommandBase> cb)
+{
+    draw->bind_rb_delete(cb);
+}
+
+void DrawWindow::bind_rb_find(shared_ptr<CommandBase> cb)
+{
+    draw->bind_rb_find(cb);
+}
+
+void DrawWindow::bind_rb_clear(shared_ptr<CommandBase> cb)
+{
+    draw->bind_rb_clear(cb);
+}
+
 
 void DrawWindow::insertNode()
 {

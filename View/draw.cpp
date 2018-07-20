@@ -8,6 +8,7 @@ DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
     basetree_splay = shared_ptr<BaseTree<int>>();
     basetree_leftist = shared_ptr<BaseTree<int>>();
     basetree_hf = shared_ptr<BaseTree<int>>();
+    basetree_rb = shared_ptr<BaseTree<int>>();
 
     avl_insert = shared_ptr<CommandBase>();
     avl_delete = shared_ptr<CommandBase>();
@@ -33,6 +34,10 @@ DrawWidget::DrawWidget(QWidget *parent):QWidget(parent)
     hf_find = shared_ptr<CommandBase>();
     hf_clear = shared_ptr<CommandBase>();
 
+    rb_insert = shared_ptr<CommandBase>();
+    rb_delete = shared_ptr<CommandBase>();
+    rb_find = shared_ptr<CommandBase>();
+    rb_clear = shared_ptr<CommandBase>();
 }
 
 DrawWidget::~DrawWidget()
@@ -62,6 +67,11 @@ void DrawWidget::bind_leftist_Tree(shared_ptr<BaseTree<int>> bt)
 void DrawWidget::bind_hf_Tree(shared_ptr<BaseTree<int>> bt)
 {
     basetree_hf = shared_ptr<BaseTree<int>>(bt);
+}
+
+void DrawWidget::bind_rb_Tree(shared_ptr<BaseTree<int> > bt)
+{
+    basetree_rb = shared_ptr<BaseTree<int>>(bt);
 }
 
 void DrawWidget::bind_bst_insert(shared_ptr<CommandBase> cb)
@@ -159,30 +169,55 @@ void DrawWidget::bind_hf_clear(shared_ptr<CommandBase> cb)
     hf_clear = cb;
 }
 
+void DrawWidget::bind_rb_insert(shared_ptr<CommandBase> cb)
+{
+    rb_insert = cb;
+}
+
+void DrawWidget::bind_rb_delete(shared_ptr<CommandBase> cb)
+{
+    rb_delete = cb;
+}
+
+void DrawWidget::bind_rb_find(shared_ptr<CommandBase> cb)
+{
+    rb_find = cb;
+}
+
+void DrawWidget::bind_rb_clear(shared_ptr<CommandBase> cb)
+{
+    rb_clear = cb;
+}
+
 void DrawWidget::paintEvent(QPaintEvent *)
 {
     shared_ptr<BaseTree<int>> treeType;
     if(state == avlTree)
     {
         treeType = basetree_avl;
+        paintTree(treeType);
     }
     else if(state == tree)
     {
         treeType = basetree_bst;
+        paintTree(treeType);
     }
     else if(state == splayTree)
     {
         treeType = basetree_splay;
+        paintTree(treeType);
     }
     else if(state == lHeap)
     {
         treeType = basetree_leftist;
+        paintTree(treeType);
     }
     else if(state == hfTree)
     {
         treeType = basetree_hf;
+        paintTree(treeType);
     }
-    paintTree(treeType);
+
 }
 
 

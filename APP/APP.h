@@ -8,6 +8,7 @@
 #include "../Model/SplayTree.h"
 #include "../Model/LeftistHeap.h"
 #include "../Model/HFTree.h"
+#include "../Model/RBT.h"
 #include <memory>
 
 class APP {
@@ -20,6 +21,7 @@ class APP {
     shared_ptr<SplayTree<int>> splayTree;
     shared_ptr<LeftistHeap<int>> leftistHeap;
     shared_ptr<HFTree<int>> hfTree;
+    shared_ptr<RBT<int>> rbTree;
 
 public:
     APP();
