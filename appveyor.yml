@@ -46,9 +46,9 @@ artifacts:
   - path: ./*-release.zip
 
 deploy:
-  provider: GitHub
-  auth_token:
-    secure: 1675703995cd5951162435e28570e951931a1e47
+  #provider: GitHub
+  #auth_token:
+  #  secure: 1675703995cd5951162435e28570e951931a1e47
   artifact: /.*\.zip/
   force_update: false
   on:
