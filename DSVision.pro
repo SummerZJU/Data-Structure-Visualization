@@ -37,8 +37,6 @@ HEADERS += \
     View/draw.h \
     View/drawwindow.h \
     View/dsview.h \
-    View/returncommand.h \
-    View/startcommand.h \
     View/startmenu.h \
     ViewModel/ViewModel.h \
     ViewModel/Commands/BSTErase.h \
@@ -74,7 +72,20 @@ HEADERS += \
     ViewModel/Commands/RBTErase.h \
     ViewModel/Commands/RBTFind.h \
     ViewModel/Commands/RBTInsert.h \
-    Model/RBT.h
+    Model/RBT.h \
+    View/Commands/returncommand.h \
+    View/Commands/startcommand.h \
+    View/ErrorView/DeleteError.h \
+    View/ErrorView/Error.h \
+    View/ErrorView/FindError.h \
+    View/ErrorView/InsertError.h \
+    View/Sinks/TreeCommandNotification.h \
+    View/Sinks/TreePropertyNotification.h \
+    View/draw.h \
+    View/drawwindow.h \
+    View/dsview.h \
+    View/dswidget.h \
+    View/startmenu.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -89,8 +100,6 @@ SOURCES += \
     View/drawwindow.cpp \
     View/dsview.cpp \
     View/main.cpp \
-    View/returncommand.cpp \
-    View/startcommand.cpp \
     View/startmenu.cpp \
     ViewModel/ViewModel.cpp \
     ViewModel/Commands/BSTErase.cpp \
@@ -124,7 +133,21 @@ SOURCES += \
     ViewModel/Commands/RBTErase.cpp \
     ViewModel/Commands/RBTFind.cpp \
     ViewModel/Commands/RBTInsert.cpp \
-    Model/RBT.cpp
+    Model/RBT.cpp \
+    View/Commands/returncommand.cpp \
+    View/Commands/startcommand.cpp \
+    View/ErrorView/DeleteError.cpp \
+    View/ErrorView/Error.cpp \
+    View/ErrorView/FindError.cpp \
+    View/ErrorView/InsertError.cpp \
+    View/Sinks/TreeCommandNotification.cpp \
+    View/Sinks/TreePropertyNotification.cpp \
+    View/draw.cpp \
+    View/drawwindow.cpp \
+    View/dsview.cpp \
+    View/dswidget.cpp \
+    View/main.cpp \
+    View/startmenu.cpp
 
 RESOURCES += \
     View/viewqrc.qrc

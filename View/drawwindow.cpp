@@ -275,7 +275,7 @@ void DrawWindow::insertNode()
 
 void DrawWindow::deleteNode()
 {
-    if(deleteText->text().isEmpty()) return;
+    if(deleteText->text().isEmpty() && state != lHeap) return;
 
     QString num = deleteText->text();
     int key = num.toInt();
@@ -332,11 +332,6 @@ void DrawWindow::findNode()
     {
         draw->splay_find->SetParameter(make_shared<IntParameter>(key));
         draw->splay_find->Exec();
-    }
-    else if(state == hfTree)
-    {
-        draw->hf_find->SetParameter(make_shared<IntParameter>(key));
-        draw->hf_find->Exec();
     }
     else if(state == rbTree)
     {
