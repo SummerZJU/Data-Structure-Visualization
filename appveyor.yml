@@ -47,8 +47,8 @@ artifacts:
 
 deploy:
   provider: GitHub
-  #auth_token:
-  #  secure: 1675703995cd5951162435e28570e951931a1e47
+  auth_token:
+    secure: QJ8SP69Uqa0s83PkpPgR04Jha6F+PsOgDCjqx6pRyB2209RoIE418829mjmehbz+
   artifact: /.*\.zip/
   force_update: false
   on:
