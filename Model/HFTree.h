@@ -106,13 +106,17 @@ void HFTree<T, S>::erase(const T& value)
         {
             content.erase(content.begin() + i);
             delete this->root;
-            create();
+            if(size > 1) create();
+            else this->root = nullptr;
             break;
         }
     }
-    this->Fire_OnPropertyChanged("Property Changed After Erase");
+    if(content.size() > 0) this->Fire_OnPropertyChanged("Property Changed After Erase");
+    else this->Fire_OnPropertyChanged("Property Changed After Clear");
+
     if(i == size) throw ModelException("HFTree Erase Failed");
 }
+
 
 template <typename T, typename S>
 void HFTree<T, S>::create()
