@@ -20,6 +20,7 @@ public:
     DrawWidget(QWidget *parent = 0);
     virtual ~DrawWidget();
     void paintEvent(QPaintEvent *);
+    void paintTree(shared_ptr<BaseTree<int>> treeType);
 
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);

@@ -209,6 +209,8 @@ void DrawWindow::bind_hf_clear(shared_ptr<CommandBase> cb)
 
 void DrawWindow::insertNode()
 {
+    if(addText->text().isEmpty()) return;
+
     QString num = addText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -228,8 +230,8 @@ void DrawWindow::insertNode()
     }
     else if(state == hfTree)
     {
-       draw->hf_insert->SetParameter(make_shared<IntParameter>(key));
-       draw->hf_insert->Exec();
+        draw->hf_insert->SetParameter(make_shared<IntParameter>(key));
+        draw->hf_insert->Exec();
     }
     else if(state == lHeap)
     {
@@ -241,6 +243,8 @@ void DrawWindow::insertNode()
 
 void DrawWindow::deleteNode()
 {
+    if(deleteText->text().isEmpty()) return;
+
     QString num = deleteText->text();
     int key = num.toInt();
     if(state == avlTree)
@@ -273,6 +277,8 @@ void DrawWindow::deleteNode()
 
 void DrawWindow::findNode()
 {
+    if(findText->text().isEmpty()) return;
+
     QString num = findText->text();
     int key = num.toInt();
     if(state == avlTree)

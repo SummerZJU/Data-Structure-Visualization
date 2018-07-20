@@ -21,7 +21,7 @@ void StartMenu::initStartMenu()
     DSWidget::setButton(SplayTreeButton);
     HFTreeButton = new QPushButton("Huffman Tree");
     DSWidget::setButton(HFTreeButton);
-    LHeapButton = new QPushButton("Leftlist Tree");
+    LHeapButton = new QPushButton("Leftlist Heap");
     DSWidget::setButton(LHeapButton);
 
     QFont titleFont("Agency FB", 40);
