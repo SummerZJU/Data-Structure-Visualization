@@ -87,8 +87,11 @@ RBT<T, S>::RBT():
 	// 
 	//
 	// bad/dirty design //
-	this->root = new RBTNode<T>(0);
+	RBTNode<T> *work = new RBTNode<T>(0);
+	this->root = work;
 	this->root->color = BLACK;
+	// left = right = parent = nullptr
+	work->parent = work;
 }
 
 template <typename T, typename S>
@@ -144,7 +147,7 @@ BaseNode<T> *RBT<T, S>::insert(BaseNode<T> *oRoot, const T& key)
 	RBTNode<T> *current = new RBTNode<T>(key);
 	// default RED
 
-	if(dynamic_cast<RBTNode<T> *>(oRoot)->parent == nullptr) { // oRoot == dummy
+	if(dynamic_cast<RBTNode<T> *>(oRoot)->parent == oRoot) { // oRoot == dummy
 		ret = current;
 		current->parent = oRoot; // dummy
 		current->left = current->right = oRoot;
@@ -531,10 +534,14 @@ void RBT<T, S>::clear(BaseNode<T> *cur, BaseNode<T> *NIL)
 template <typename T, typename S>
 void RBT<T, S>::clear()
 {
-	RBTNode<T> *NIL = dynamic_cast<RBTNode<T> *>(dynamic_cast<RBTNode<T> *>(this->root)->parent);
-	clear(this->root, NIL);
-	NIL->parent = NIL->left = NIL->right = nullptr;
-	NIL->parent = NIL;                  // empty RB-Tree & leave out a NIL
+    if(this->root != getNIL()) {
+        RBTNode<T> *NIL = dynamic_cast<RBTNode<T> *>(dynamic_cast<RBTNode<T> *>(this->root)->parent);
+        clear(this->root, NIL);
+        NIL->parent = NIL->left = NIL->right = nullptr;
+        NIL->parent = NIL;                  // empty RB-Tree & leave out a NIL
+		this->root = NIL;
+    }
+    this->Fire_OnPropertyChanged("Property Changed After Clear");
 }
 
 template <typename T, typename S>
