@@ -265,6 +265,11 @@ void DrawWindow::insertNode()
         draw->leftist_insert->SetParameter(make_shared<IntParameter>(key));
         draw->leftist_insert->Exec();
     }
+    else if(state == rbTree)
+    {
+        draw->rb_insert->SetParameter(make_shared<IntParameter>(key));
+        draw->rb_insert->Exec();
+    }
     addText->clear();
 }
 
@@ -299,6 +304,11 @@ void DrawWindow::deleteNode()
         draw->leftist_delete->SetParameter(make_shared<IntParameter>(key));
         draw->leftist_delete->Exec();
     }
+    else if(state == rbTree)
+    {
+        draw->rb_delete->SetParameter(make_shared<IntParameter>(key));
+        draw->rb_delete->Exec();
+    }
     deleteText->clear();
 }
 
@@ -327,6 +337,11 @@ void DrawWindow::findNode()
     {
         draw->hf_find->SetParameter(make_shared<IntParameter>(key));
         draw->hf_find->Exec();
+    }
+    else if(state == rbTree)
+    {
+        draw->rb_find->SetParameter(make_shared<IntParameter>(key));
+        draw->rb_find->Exec();
     }
     findText->clear();
 }
@@ -357,6 +372,11 @@ void DrawWindow::clearWindow()
     {
         draw->leftist_clear->SetParameter(make_shared<IntParameter>(0));
         draw->leftist_clear->Exec();
+    }
+    else if(state == rbTree)
+    {
+        draw->rb_clear->SetParameter(make_shared<IntParameter>(0));
+        draw->rb_clear->Exec();
     }
 }
 

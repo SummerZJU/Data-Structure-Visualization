@@ -23,6 +23,8 @@ void StartMenu::initStartMenu()
     DSWidget::setButton(HFTreeButton);
     LHeapButton = new QPushButton("Leftlist Heap");
     DSWidget::setButton(LHeapButton);
+    RBTreeButton = new QPushButton("Red Black Tree");
+    DSWidget::setButton(RBTreeButton);
 
     QFont titleFont("Agency FB", 40);
     QPalette titlePal;
@@ -48,7 +50,9 @@ void StartMenu::initStartMenu()
     QHBoxLayout * buttonLay2 = new QHBoxLayout();
     buttonLay2->addWidget(LHeapButton);
     buttonLay2->addWidget(HFTreeButton);
-    buttonLay2->addWidget(exitButton);
+    buttonLay2->addWidget(RBTreeButton);
+    QHBoxLayout * buttonLay3 = new QHBoxLayout();
+    buttonLay3->addWidget(exitButton);
 
     QVBoxLayout * imageLay = new QVBoxLayout();
     imageLay->addStretch(2);
@@ -57,6 +61,7 @@ void StartMenu::initStartMenu()
     imageLay->addStretch(4);
     imageLay->addLayout(buttonLay1);
     imageLay->addLayout(buttonLay2);
+    imageLay->addLayout(buttonLay3);
     imageLay->addStretch(1);
 
     QLabel * backImage;
@@ -80,6 +85,7 @@ void StartMenu::initStartMenu()
     connect(SplayTreeButton, SIGNAL(clicked(bool)), this, SLOT(initSplayTreeWindow()));
     connect(HFTreeButton, SIGNAL(clicked(bool)), this, SLOT(initHFTreeWindow()));
     connect(LHeapButton, SIGNAL(clicked(bool)), this, SLOT(initLHeapWindow()));
+    connect(RBTreeButton, SIGNAL(clicked(bool)), this, SLOT(initRBTreeWindow()));
 }
 
 void StartMenu::setStartCommand(std::shared_ptr<CommandBase> ptrCommand)
@@ -119,5 +125,11 @@ void StartMenu::initHFTreeWindow()
 void StartMenu::initLHeapWindow()
 {
     state = lHeap;
+    startCommand->Exec();
+}
+
+void StartMenu::initRBTreeWindow()
+{
+    state = rbTree;
     startCommand->Exec();
 }

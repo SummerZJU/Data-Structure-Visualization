@@ -35,6 +35,7 @@ private:
     QPushButton * SplayTreeButton;
     QPushButton * HFTreeButton;
     QPushButton * LHeapButton;
+    QPushButton * RBTreeButton;
 
     void initStartMenu();
 
@@ -45,6 +46,7 @@ private slots:
     void initSplayTreeWindow();
     void initHFTreeWindow();
     void initLHeapWindow();
+    void initRBTreeWindow();
 };
 
 
