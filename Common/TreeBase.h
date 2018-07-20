@@ -5,6 +5,7 @@
 #include "../Model/Common.h"
 #include "etlbase.h"
 #include <queue>
+#include <exception>
 using namespace std;
 
 template <typename T>
@@ -55,6 +56,7 @@ public:
 	BaseTree();
 	virtual ~BaseTree();
 	BaseNode<T> *getRoot();
+	virtual BaseNode<T> *getNIL();
 	void clear();
 };
 
@@ -74,7 +76,18 @@ BaseTree<T, S>::~BaseTree()
 template <typename T, typename S>
 BaseNode<T> *BaseTree<T, S>::getRoot()
 {
-	return root;
+    try {
+        return root;
+    } catch(...) {
+        return nullptr;
+    }
+}
+
+template <typename T, typename S>
+BaseNode<T> *BaseTree<T, S>::getNIL()
+{
+	return nullptr;
+	// reimplement by RB-Tree
 }
 
 template <typename T, typename S>

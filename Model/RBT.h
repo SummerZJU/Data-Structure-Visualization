@@ -72,6 +72,7 @@ public:
 	RBTNode<T> *find(const T& key);
 	void erase(const T& key);
 	void clear();
+	virtual BaseNode<T> *getNIL() override;
 };
 
 template <typename T, typename S>
@@ -534,6 +535,12 @@ void RBT<T, S>::clear()
 	clear(this->root, NIL);
 	NIL->parent = NIL->left = NIL->right = nullptr;
 	NIL->parent = NIL;                  // empty RB-Tree & leave out a NIL
+}
+
+template <typename T, typename S>
+BaseNode<T> *RBT<T, S>::getNIL()
+{
+	return dynamic_cast<RBTNode<T> *>(this->root)->parent;
 }
 
 #ifdef RBT_DEBUG

@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "*.h": "cpp",
-        "memory": "cpp"
-    }
-}
