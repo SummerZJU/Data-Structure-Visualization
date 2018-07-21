@@ -13,7 +13,7 @@
 #include <QImage>
 #include <QPropertyAnimation>
 #include "../Common/CommandBase.h"
-#include "../Model/Common.h"
+#include "../Common/Common.h"
 #include "dswidget.h"
 
 extern State state;

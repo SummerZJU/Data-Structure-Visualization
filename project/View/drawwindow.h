@@ -15,7 +15,7 @@
 #include <QString>
 #include <QPropertyAnimation>
 #include "Commands/returncommand.h"
-#include "../Model/Common.h"
+#include "../Common/Common.h"
 #include "draw.h"
 #include "dswidget.h"
 

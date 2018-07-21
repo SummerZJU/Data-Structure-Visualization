@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "../APP/APP.h"
+#include "APP.h"
 
 int main(int argc, char *argv[])
 {

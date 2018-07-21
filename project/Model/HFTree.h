@@ -6,7 +6,7 @@
 #include <algorithm>
 #include "../Common/TreeBase.h"
 #include "../Common/Exception/ModelException.h"
-#include "Common.h"
+#include "../Common/Common.h"
 
 template<typename T>
 struct HFNode : public BaseNode<T>

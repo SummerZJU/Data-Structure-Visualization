@@ -4,7 +4,7 @@
 #include <cassert>
 #include <stack>
 #include <queue>
-#include "Common.h"
+#include "../Common/Common.h"
 #include <iostream>
 #include "../Common/TreeBase.h"
 #include "../Common/Exception/ModelException.h"

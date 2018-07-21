@@ -3,7 +3,7 @@
 
 #include "../Common/TreeBase.h"
 #include "../Common/CommandBase.h"
-#include "../Model/Common.h"
+#include "../Common/Common.h"
 #include <QWidget>
 #include <QPaintEvent>
 #include <QPainter>

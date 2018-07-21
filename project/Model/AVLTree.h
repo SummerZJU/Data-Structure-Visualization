@@ -5,7 +5,7 @@
 #include <queue>
 #include <string>
 #include <exception>
-#include "Common.h"
+#include "../Common/Common.h"
 #include "../Common/TreeBase.h"
 #include "../Common/Exception/ModelException.h"
 using namespace std;

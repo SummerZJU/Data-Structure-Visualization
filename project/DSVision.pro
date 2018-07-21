@@ -33,7 +33,7 @@ HEADERS += \
     Common/Parameter/Parameter.h \
     Model/AVLTree.h \
     Model/BST.h \
-    Model/Common.h \
+    Common/Common.h \
     Model/LeftistHeap.h \
     Model/SplayTree.h \
     View/draw.h \
@@ -101,7 +101,6 @@ SOURCES += \
     View/draw.cpp \
     View/drawwindow.cpp \
     View/dsview.cpp \
-    View/main.cpp \
     View/startmenu.cpp \
     ViewModel/ViewModel.cpp \
     ViewModel/Commands/BSTErase.cpp \
@@ -148,7 +147,7 @@ SOURCES += \
     View/drawwindow.cpp \
     View/dsview.cpp \
     View/dswidget.cpp \
-    View/main.cpp \
+    APP/main.cpp \
     View/startmenu.cpp
 
 RESOURCES += \

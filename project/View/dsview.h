@@ -1,7 +1,7 @@
 #ifndef DSVIEW_H
 #define DSVIEW_H
 
-#include "../Model/Common.h"
+#include "../Common/Common.h"
 #include "startmenu.h"
 #include "drawwindow.h"
 #include "Commands/startcommand.h"
