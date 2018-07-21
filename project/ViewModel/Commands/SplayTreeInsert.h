@@ -15,7 +15,7 @@ using namespace std;
 
 template <typename T, typename V, typename S = less<T>>
 class SplayTreeInsert : public CommandBase {
-    shared_ptr<V> spVM;
+    V *spVM;
 
 public:
     SplayTreeInsert(V *pVM);

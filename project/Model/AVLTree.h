@@ -40,9 +40,9 @@ public:
 #endif
 	AVLTree();
 	virtual ~AVLTree();
-	void insert(const T& key);	
-	void erase(const T& key);
-	AVLNode<T> *find(const T& key);
+	bool insert(const T& key);	
+	bool erase(const T& key);
+	bool find(const T& key);
 };
 
 //------------------------------------------------------------------------------//
@@ -171,16 +171,20 @@ BaseNode<T> *AVLTree<T, S>::insert(BaseNode<T> *pos, const T& key)
 }
 
 template <typename T, typename S>
-void AVLTree<T, S>::insert(const T& key)
+bool AVLTree<T, S>::insert(const T& key)
 {
-
-    this->root = insert(dynamic_cast<AVLNode<T> *>(this->root), key);
-    int count = 0;
-    this->inorder(this->root, &count);
-    this->levelorder();
+	bool ret = true;
+	try {
+		this->root = insert(dynamic_cast<AVLNode<T> *>(this->root), key);
+    	int count = 0;
+    	this->inorder(this->root, &count);
+    	this->levelorder();
+	} catch(const exception& e) {
+		ret = false;
+	}
 
     this->Fire_OnPropertyChanged("Property Changed After Insert");
-	return;
+	return ret;
 }
 
 // assume pos != nullptr

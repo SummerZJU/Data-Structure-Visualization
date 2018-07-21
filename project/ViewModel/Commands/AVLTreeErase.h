@@ -6,12 +6,12 @@
 #include <functional>
 #include <exception>
 #include <memory>
-
+ 
 using namespace std;
 
 template <typename T, typename V, typename S = less<T>>
 class AVLTreeErase : public CommandBase {
-    shared_ptr<V> spVM;
+    V *spVM;
 
 public:
     AVLTreeErase(V *pVM);

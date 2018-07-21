@@ -13,7 +13,7 @@ using namespace std;
 
 template <typename T, typename V, typename S = less<T>>
 class LeftistHeapFind : public CommandBase {
-    shared_ptr<V> spVM;
+    V *spVM;
 
 public:
     LeftistHeapFind(V *pVM);

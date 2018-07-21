@@ -11,7 +11,7 @@ using namespace std;
 
 template <typename T, typename V, typename S = less<T>>
 class BSTErase : public CommandBase {
-    shared_ptr<V> spVM;
+    V *spVM;
 
 public:
     BSTErase(V *pVM);
