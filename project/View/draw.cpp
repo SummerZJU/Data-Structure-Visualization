@@ -300,11 +300,12 @@ void DrawWidget::paintTree(shared_ptr<BaseTree<int> > treeType)
             {
                 if(t->state == RES)
                 {
-                    //painter.setBrush(Qt::red);
+                    painter.setBrush(Qt::red);
                     pen.setColor(Qt::red);
                 }
                 else
                 {
+                    painter.setBrush(Qt::NoBrush);
                     //painter.setBrush(Qt::white);
                     pen.setColor(Qt::white);
                 }
@@ -401,16 +402,18 @@ void DrawWidget::paintRBT()
             {
                 if(t->state == RES)
                 {
-                    //painter.setBrush(Qt::red);
+                    painter.setBrush(Qt::yellow);
                     pen.setColor(Qt::yellow);
                 }
                 else if(t->color == RED)
                 {
+                    painter.setBrush(Qt::NoBrush);
                     //painter.setBrush(Qt::white);
                     pen.setColor(Qt::red);
                 }
                 else
                 {
+                    painter.setBrush(Qt::NoBrush);
                     pen.setColor(Qt::black);
                 }
                 painter.setPen(pen);

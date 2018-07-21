@@ -6,12 +6,12 @@
 
 QT       += core gui
 
+RC_FILE = proj.rc
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = DSVision
 TEMPLATE = app
-
-RC_FILE = proj.rc
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -33,7 +33,7 @@ HEADERS += \
     Common/Parameter/Parameter.h \
     Model/AVLTree.h \
     Model/BST.h \
-    Common/Common.h \
+    Model/Common.h \
     Model/LeftistHeap.h \
     Model/SplayTree.h \
     View/draw.h \
@@ -76,18 +76,7 @@ HEADERS += \
     ViewModel/Commands/RBTInsert.h \
     Model/RBT.h \
     View/Commands/returncommand.h \
-    View/Commands/startcommand.h \
-    View/ErrorView/DeleteError.h \
-    View/ErrorView/Error.h \
-    View/ErrorView/FindError.h \
-    View/ErrorView/InsertError.h \
-    View/Sinks/TreeCommandNotification.h \
-    View/Sinks/TreePropertyNotification.h \
-    View/draw.h \
-    View/drawwindow.h \
-    View/dsview.h \
-    View/dswidget.h \
-    View/startmenu.h
+    View/Commands/startcommand.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -101,6 +90,7 @@ SOURCES += \
     View/draw.cpp \
     View/drawwindow.cpp \
     View/dsview.cpp \
+    APP/main.cpp \
     View/startmenu.cpp \
     ViewModel/ViewModel.cpp \
     ViewModel/Commands/BSTErase.cpp \
@@ -136,20 +126,9 @@ SOURCES += \
     ViewModel/Commands/RBTInsert.cpp \
     Model/RBT.cpp \
     View/Commands/returncommand.cpp \
-    View/Commands/startcommand.cpp \
-    View/ErrorView/DeleteError.cpp \
-    View/ErrorView/Error.cpp \
-    View/ErrorView/FindError.cpp \
-    View/ErrorView/InsertError.cpp \
-    View/Sinks/TreeCommandNotification.cpp \
-    View/Sinks/TreePropertyNotification.cpp \
-    View/draw.cpp \
-    View/drawwindow.cpp \
-    View/dsview.cpp \
-    View/dswidget.cpp \
-    APP/main.cpp \
-    View/startmenu.cpp
+    View/Commands/startcommand.cpp
 
 RESOURCES += \
     View/viewqrc.qrc
+
 
