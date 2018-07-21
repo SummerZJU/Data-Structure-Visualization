@@ -51,7 +51,7 @@ void HFTreeClear<T, V, S>::Exec()
 
     bool res = true;
 	try {
-		spVM->execCommandHFTreeClear();
+        spVM->DSVHFTreeClear();
 	} catch(const exception& e) {
 		res = false;
 	}

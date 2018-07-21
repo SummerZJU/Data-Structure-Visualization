@@ -52,7 +52,7 @@ void AVLTreeClear<T, V, S>::Exec()
 	// smart pointer of base template/class
 	bool res = true;
 
-	spVM->execCommandAVLTreeClear(); // no exception !!!
+    spVM->DSVAVLTreeClear(); // no exception !!!
 	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
 	
 	return;

@@ -51,7 +51,7 @@ void HFTreeFind<T, V, S>::Exec()
 
     bool res = true;
 	try {
-		spVM->execCommandHFTreeFind(para);
+        spVM->DSVHFTreeFind(para);
 	} catch(const exception& e) {
 		res = false;
 	}

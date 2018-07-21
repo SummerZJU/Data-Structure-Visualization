@@ -49,7 +49,7 @@ void RBTInsert<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandRBTInsert(para);
+        spVM->DSVRBTInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}

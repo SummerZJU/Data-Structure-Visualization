@@ -51,7 +51,7 @@ void RBTFind<T, V, S>::Exec()
 
     bool res = true;
 	try {
-		spVM->execCommandRBTFind(para);
+        spVM->DSVRBTFind(para);
 	} catch(const exception& e) {
 		res = false;
 	}

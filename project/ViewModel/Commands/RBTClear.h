@@ -52,7 +52,7 @@ void RBTClear<T, V, S>::Exec()
 	// smart pointer of base template/class
 	bool res = true;
 
-	spVM->execCommandRBTClear(); // no exception !!!
+    spVM->DSVRBTClear(); // no exception !!!
 	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
 	
 	return;

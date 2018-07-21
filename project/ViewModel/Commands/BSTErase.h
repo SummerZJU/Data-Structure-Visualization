@@ -46,7 +46,7 @@ void BSTErase<T, V, S>::Exec()
 	
 	bool res = true;
 	try {
-		spVM->execCommandBSTErase(para);
+        spVM->DSVBSTErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}

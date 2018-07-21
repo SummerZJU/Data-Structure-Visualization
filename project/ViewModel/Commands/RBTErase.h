@@ -47,7 +47,7 @@ void RBTErase<T, V, S>::Exec()
 	
 	bool res = true;
 	try {
-		spVM->execCommandRBTErase(para);
+        spVM->DSVRBTErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}

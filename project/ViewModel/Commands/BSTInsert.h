@@ -48,7 +48,7 @@ void BSTInsert<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandBSTInsert(para);
+        spVM->DSVBSTInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}

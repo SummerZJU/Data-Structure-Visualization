@@ -52,7 +52,7 @@ void LeftistHeapClear<T, V, S>::Exec()
 	// smart pointer of base template/class
 	bool res = true;
 
-	spVM->execCommandLeftistHeapClear(); // no exception !!!
+    spVM->DSVLeftistHeapClear(); // no exception !!!
 	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
 	
 	return;
