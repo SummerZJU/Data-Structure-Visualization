@@ -14,12 +14,13 @@
 #include <QImage>
 #include <QString>
 #include <QPropertyAnimation>
-#include "Commands/returncommand.h"
 #include "../Common/Common.h"
 #include "draw.h"
 #include "dswidget.h"
 
 extern State state;
+
+class DSView;
 
 class DrawWindow : public DSWidget
 {
@@ -27,7 +28,8 @@ class DrawWindow : public DSWidget
 public:
     explicit DrawWindow();
     ~DrawWindow();
-    void setReturnCommand(std::shared_ptr<CommandBase> ptrCommand);
+    void setView(DSView * newView);
+    //void setReturnCommand(std::shared_ptr<CommandBase> ptrCommand);
 
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);
@@ -67,8 +69,10 @@ public:
     void bind_rb_clear(shared_ptr<CommandBase> cb);
 
     void DrawUpdate();
+
 private:
-    std::shared_ptr<CommandBase> returnCommand;
+    //std::shared_ptr<CommandBase> returnCommand;
+    DSView * view;
 
     QPushButton * addButton;
     QPushButton * deleteButton;

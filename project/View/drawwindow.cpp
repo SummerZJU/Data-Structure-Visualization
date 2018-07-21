@@ -1,8 +1,10 @@
 #include "drawwindow.h"
+#include "dsview.h"
 
 DrawWindow::DrawWindow() : DSWidget()
 {
-     initDrawWindow();
+    view = nullptr;
+    initDrawWindow();
 }
 
 DrawWindow::~DrawWindow()
@@ -71,18 +73,27 @@ void DrawWindow::initDrawWindow()
 void DrawWindow::returnStartMenu()
 {
     state = start;
-    returnCommand->Exec();
+    flashClose(10);
+    //returnCommand->Exec();
+    (view->getStartMenu())->flashShow(100);
 }
 
+/*
 void DrawWindow::setReturnCommand(std::shared_ptr<CommandBase> ptrCommand)
 {
     returnCommand = ptrCommand;
 }
+*/
 
 //bind trees
 void DrawWindow::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)
 {
     draw->bind_avl_Tree(bt);
+}
+
+void DrawWindow::setView(DSView * newView)
+{
+    view = newView;
 }
 
 void DrawWindow::bind_bst_Tree(shared_ptr<BaseTree<int>> bt)

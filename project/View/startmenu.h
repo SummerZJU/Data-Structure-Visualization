@@ -18,16 +18,21 @@
 
 extern State state;
 
+class DSView;
+
 class StartMenu  : public DSWidget
 {
     Q_OBJECT
 public:
     explicit StartMenu();
     ~StartMenu();
-     void setStartCommand(std::shared_ptr<CommandBase> ptrCommand);
+    void setView(DSView * newView);
+     //void setStartCommand(std::shared_ptr<CommandBase> ptrCommand);
 
 private:
-    std::shared_ptr<CommandBase> startCommand;
+    //std::shared_ptr<CommandBase> startCommand;
+
+    DSView * view;
 
     QPushButton * exitButton;
     QPushButton * treeButton;

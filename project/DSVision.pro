@@ -33,7 +33,7 @@ HEADERS += \
     Common/Parameter/Parameter.h \
     Model/AVLTree.h \
     Model/BST.h \
-    Model/Common.h \
+    Common/Common.h \
     Model/LeftistHeap.h \
     Model/SplayTree.h \
     View/draw.h \
@@ -75,8 +75,6 @@ HEADERS += \
     ViewModel/Commands/RBTFind.h \
     ViewModel/Commands/RBTInsert.h \
     Model/RBT.h \
-    View/Commands/returncommand.h \
-    View/Commands/startcommand.h
 
 SOURCES += \
     APP/APP.cpp \
@@ -124,9 +122,7 @@ SOURCES += \
     ViewModel/Commands/RBTErase.cpp \
     ViewModel/Commands/RBTFind.cpp \
     ViewModel/Commands/RBTInsert.cpp \
-    Model/RBT.cpp \
-    View/Commands/returncommand.cpp \
-    View/Commands/startcommand.cpp
+    Model/RBT.cpp
 
 RESOURCES += \
     View/viewqrc.qrc
