@@ -292,14 +292,79 @@
     	virtual ~HFNode();
    };
    ```
+   - 哈夫曼树 . 树模板声明
+   ```C++
+   template<typename T, typename S = less<T> >
+   class HFTree : public BaseTree<T, S>{
+   private:
+    	std::vector<T> content;
+    	void create();
 
+   public:
+    	HFTree();
+    	virtual ~HFTree();
+
+    	void insert(const T& value);
+    	void erase(const T& value);
+    	void clear();
+    	HFNode<T> *find(const T& value);
+   };
+   ```
 - **红黑树实现**
+   - 红黑树 . 树节点模板声明
+   ```C++
+   template <typename T>
+   struct RBTNode : public BaseNode<T> {
+		BaseNode<T> *parent;
+		RBTNode(const T& key);
+		virtual ~RBTNode();
+   };
+   ```
+   - 红黑树 . 树模板声明
+   ```C++
+   
+   template <typename T, typename S = less<T>>
+   class RBT : public BaseTree<T, S> {
+		BaseNode<T> *LL(BaseNode<T> *NIL, BaseNode<T> *pivot);
+		BaseNode<T> *RR(BaseNode<T> *NIL, BaseNode<T> *pivot); // pivot is povit
 
-   - 
+		BaseNode<T> *insert(BaseNode<T> *oRoot, const T& key);
+		RBTNode<T> *insertFixup(RBTNode<T> *newRoot, RBTNode<T> *current);
+
+		RBTNode<T> *find(const T& key, BaseNode<T> *NIL);
+
+		BaseNode<T> *erase(BaseNode<T> *oRoot, BaseNode<T> *pos);
+		RBTNode<T> *eraseFixup(RBTNode<T> *newRoot, RBTNode<T> *x);
+
+		void inorder(BaseNode<T> *cur, int *count, BaseNode<T> *NIL);
+		void levelorder(BaseNode<T> *NIL);
+		void clear(BaseNode<T> *cur, BaseNode<T> *NIL);
+   public:	
+   #ifdef RBT_DEBUG
+		void print(BaseNode<T> *cur, BaseNode<T> *NIL);
+		void print();
+   #endif	
+		RBT();
+		virtual ~RBT();
+		void insert(const T& key);
+		RBTNode<T> *find(const T& key);
+		void erase(const T& key);
+		void clear();
+		virtual BaseNode<T> *getNIL() override;
+   };
+   ```
 
 ---
 ### 单元测试
+- 查找树单元测试
+
 ---
 ### 图表说明
+- UML类图
+
 ---
 ### 本课程心得体会
+- 个人CPP工程技能收获
+- 个人合作精神收获
+
+---
