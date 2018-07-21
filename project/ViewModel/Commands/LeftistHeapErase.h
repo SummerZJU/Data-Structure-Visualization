@@ -47,7 +47,7 @@ void LeftistHeapErase<T, V, S>::Exec()
 	
 	bool res = true;
 	try {
-		spVM->execCommandLeftistHeapErase(para);
+        spVM->DSVLeftistHeapErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}

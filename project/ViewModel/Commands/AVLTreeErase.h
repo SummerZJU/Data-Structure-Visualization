@@ -40,7 +40,7 @@ void AVLTreeErase<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandAVLTreeErase(para);
+        spVM->DSVAVLTreeErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}

@@ -327,25 +327,25 @@ shared_ptr<CommandBase> ViewModel::getCommandRBTClear() const
 
 
 // int correspond int
-void ViewModel::execCommandBSTInsert(int key)
+void ViewModel::DSVBSTInsert(int key)
 {
     auto work = static_pointer_cast<BST<int>>(bst);
     work->insert(key);
 }
 
-void ViewModel::execCommandBSTErase(int key)
+void ViewModel::DSVBSTErase(int key)
 {
     auto work = static_pointer_cast<BST<int>>(bst);
     work->erase(key);
 }
 
-void ViewModel::execCommandBSTFind(int key)
+void ViewModel::DSVBSTFind(int key)
 {
     auto work = static_pointer_cast<BST<int>>(bst);
     work->find(key);
 }
 
-void ViewModel::execCommandBSTClear()
+void ViewModel::DSVBSTClear()
 {
     auto work = static_pointer_cast<BST<int>>(bst);
     work->clear();
@@ -362,25 +362,25 @@ void ViewModel::execCommandBSTClear()
 //                                                 //
 /////////////////////////////////////////////////////
 
-void ViewModel::execCommandAVLTreeInsert(int key)
+void ViewModel::DSVAVLTreeInsert(int key)
 {
     auto work = static_pointer_cast<AVLTree<int>>(avlTree);
     work->insert(key);
 }
 
-void ViewModel::execCommandAVLTreeErase(int key)
+void ViewModel::DSVAVLTreeErase(int key)
 {
     auto work = static_pointer_cast<AVLTree<int>>(avlTree);
     work->erase(key);
 }
 
-void ViewModel::execCommandAVLTreeFind(int key)
+void ViewModel::DSVAVLTreeFind(int key)
 {
     auto work = static_pointer_cast<AVLTree<int>>(avlTree);
     work->find(key);
 }
 
-void ViewModel::execCommandAVLTreeClear()
+void ViewModel::DSVAVLTreeClear()
 {
     auto work = static_pointer_cast<AVLTree<int>>(avlTree);
     work->clear();
@@ -397,25 +397,25 @@ void ViewModel::execCommandAVLTreeClear()
 //                                                 //
 /////////////////////////////////////////////////////
 
-void ViewModel::execCommandSplayTreeInsert(int key)
+void ViewModel::DSVSplayTreeInsert(int key)
 {
     auto work = static_pointer_cast<SplayTree<int>>(splayTree);
     work->insert(key);
 }
 
-void ViewModel::execCommandSplayTreeErase(int key)
+void ViewModel::DSVSplayTreeErase(int key)
 {
     auto work = static_pointer_cast<SplayTree<int>>(splayTree);
     work->erase(key);
 }
 
-void ViewModel::execCommandSplayTreeFind(int key)
+void ViewModel::DSVSplayTreeFind(int key)
 {
     auto work = static_pointer_cast<SplayTree<int>>(splayTree);
     work->find(key);
 }
 
-void ViewModel::execCommandSplayTreeClear()
+void ViewModel::DSVSplayTreeClear()
 {
     auto work = static_pointer_cast<SplayTree<int>>(splayTree);
     work->clear();
@@ -432,19 +432,19 @@ void ViewModel::execCommandSplayTreeClear()
 //                                                 //
 /////////////////////////////////////////////////////
 
-void ViewModel::execCommandLeftistHeapInsert(int key)
+void ViewModel::DSVLeftistHeapInsert(int key)
 {
     auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
     work->insert(key);
 }
 
-void ViewModel::execCommandLeftistHeapErase(int key)
+void ViewModel::DSVLeftistHeapErase(int key)
 {
     auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
     work->erase();
 }
 
-void ViewModel::execCommandLeftistHeapClear()
+void ViewModel::DSVLeftistHeapClear()
 {
     auto work = static_pointer_cast<LeftistHeap<int>>(leftistHeap);
     work->clear();
@@ -461,25 +461,25 @@ void ViewModel::execCommandLeftistHeapClear()
 //                                                 //
 /////////////////////////////////////////////////////
 
-void ViewModel::execCommandHFTreeInsert(int key)
+void ViewModel::DSVHFTreeInsert(int key)
 {
     auto work = static_pointer_cast<HFTree<int>>(hfTree);
     work->insert(key);
 }
 
-void ViewModel::execCommandHFTreeErase(int key)
+void ViewModel::DSVHFTreeErase(int key)
 {
     auto work = static_pointer_cast<HFTree<int>>(hfTree);
     work->erase(key);
 }
 
-void ViewModel::execCommandHFTreeFind(int key)
+void ViewModel::DSVHFTreeFind(int key)
 {
     auto work = static_pointer_cast<HFTree<int>>(hfTree);
     work->find(key);
 }
 
-void ViewModel::execCommandHFTreeClear()
+void ViewModel::DSVHFTreeClear()
 {
     auto work = static_pointer_cast<HFTree<int>>(hfTree);
     work->clear();
@@ -497,25 +497,25 @@ void ViewModel::execCommandHFTreeClear()
 /////////////////////////////////////////////////////
 
 
-void ViewModel::execCommandRBTInsert(int key)
+void ViewModel::DSVRBTInsert(int key)
 {
     auto work = static_pointer_cast<RBT<int>>(rbt);
     work->insert(key);
 }
 
-void ViewModel::execCommandRBTErase(int key)
+void ViewModel::DSVRBTErase(int key)
 {
     auto work = static_pointer_cast<RBT<int>>(rbt);
     work->erase(key);
 }
 
-void ViewModel::execCommandRBTFind(int key)
+void ViewModel::DSVRBTFind(int key)
 {
     auto work = static_pointer_cast<RBT<int>>(rbt);
     work->find(key);
 }
 
-void ViewModel::execCommandRBTClear()
+void ViewModel::DSVRBTClear()
 {
     auto work = static_pointer_cast<RBT<int>>(rbt);
     work->clear();

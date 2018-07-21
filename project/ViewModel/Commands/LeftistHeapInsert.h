@@ -49,7 +49,7 @@ void LeftistHeapInsert<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandLeftistHeapInsert(para);
+        spVM->DSVLeftistHeapInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}

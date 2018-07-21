@@ -40,7 +40,7 @@ void AVLTreeFind<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandAVLTreeFind(para);
+        spVM->DSVAVLTreeFind(para);
 	} catch(const exception& e) {
 		res = false;
 	}

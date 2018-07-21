@@ -47,7 +47,7 @@ void HFTreeErase<T, V, S>::Exec()
 	
 	bool res = true;
 	try {
-		spVM->execCommandHFTreeErase(para);
+        spVM->DSVHFTreeErase(para);
 	} catch(const exception& e) {
 		res = false;
 	}

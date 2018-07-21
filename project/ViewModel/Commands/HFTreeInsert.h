@@ -49,7 +49,7 @@ void HFTreeInsert<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandHFTreeInsert(para);
+        spVM->DSVHFTreeInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}

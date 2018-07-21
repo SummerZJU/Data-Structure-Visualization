@@ -50,7 +50,7 @@ void BSTFind<T, V, S>::Exec()
 
     bool res = true;
 	try {
-		spVM->execCommandBSTFind(para);
+        spVM->DSVBSTFind(para);
 	} catch(const exception& e) {
 		res = false;
 	}

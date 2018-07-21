@@ -40,7 +40,7 @@ void AVLTreeInsert<T, V, S>::Exec()
 	int para = *(this->parameter); // from CommandBase
 	bool res = true;
 	try {
-		spVM->execCommandAVLTreeInsert(para);
+        spVM->DSVAVLTreeInsert(para);
 	} catch(const exception& e) {
 		res = false;
 	}
