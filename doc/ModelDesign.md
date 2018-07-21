@@ -108,7 +108,7 @@
 
 - **模型基类实现**
 
-   - 模板声明
+   - 模型基类树节点模板声明
    ```C++
    template <typename T>
    struct BaseNode {
@@ -125,34 +125,246 @@
         virtual ~BaseNode(); 
     };
    ```
+   - 模型基类树模板声明
+   ```C++
+   template <typename T, typename S = std::less<T>>
+   class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>>, 
+				 public Proxy_CommandNotification<BaseTree<T, S>> {
+   protected:
+        BaseNode<T> *root;
+   protected:
+        void inorder(BaseNode<T> *cur, int *count);
+        void levelorder();
+   public:
+        BaseTree();
+        virtual ~BaseTree();
+        BaseNode<T> *getRoot();
+        virtual BaseNode<T> *getNIL();
+        void clear();
+   };
+   ```
 
 - **二叉查找树实现**
 
-   - 
+   - 二叉查找树 . 树节点模板声明
+   ```C++
+   template<typename T>
+   struct BSTNode : public BaseNode<T>{
+		BSTNode(const T& key);
+		virtual ~BSTNode(); // auto-recursion freeTree! hahah ==!
+   };
+   ```
+   - 二叉查找树 . 树模板声明
+   ```C++
+   template <typename T, typename S = less<T>>
+   class BST : public BaseTree<T, S> {
+		BaseNode<T> *insert(BaseNode<T> *cur, const T& key);
+		void erase(BSTNode<T> *pos, BSTNode<T> *parent); // deprecated
+		void erase(BaseNode<T> *pos);
+   public:
+   #ifdef BST_DEBUG
+		void print(BaseNode<T> *cur);
+		void print();
+   #endif
+		BST();
+		virtual ~BST();
+		void insert(const T& key);
+		BSTNode<T> *find(const T& key);
+		void erase(const T& key);
+   };
+   ```
 
 - **平衡二叉树实现**
 
-   - 
+   - 平衡二叉树 . 树节点模板声明
+   ```C++
+   template<typename T>
+   struct AVLNode : public BaseNode<T>{
+		int height;
+
+		AVLNode(const T& key);
+		~AVLNode(); // auto-recursion freeTree! hahah ==!
+   };
+   ```
+   - 平衡二叉树 . 树模板声明
+   ```C++
+   template<typename T, typename S = less<T>>
+   class AVLTree : public BaseTree<T, S> {	
+		// root is a BaseNode 
+		// pointer is a member of BaseTree
+		int getHeight(BaseNode<T> *_pos);
+		BaseNode<T> *RR(BaseNode<T> *pos);
+		BaseNode<T> *LL(BaseNode<T> *pos);
+		BaseNode<T> *RL(BaseNode<T> *pos);
+		BaseNode<T> *LR(BaseNode<T> *pos);
+		void erase(BaseNode<T> *pos);
+		BaseNode<T> *insert(BaseNode<T> *pos, const T& key); //recurson for implementation
+   public:
+   #ifdef AVL_DEBUG
+		void print(BaseNode<T> *cur);
+		void print();
+   #endif
+		AVLTree();
+		virtual ~AVLTree();
+		void insert(const T& key);	
+		void erase(const T& key);
+		AVLNode<T> *find(const T& key);
+   };
+   ```
 
 - **伸展树实现**
 
-   - 
+   - 伸展树 . 树节点模板声明
+   ```C++
+   template <typename T>
+   struct SPTNode : BaseNode<T> {
+		BaseNode<T> *parent;
+		
+		SPTNode(const T& key, BaseNode<T> *parent);
+		virtual ~SPTNode();
 
+		// this == parent
+		SPTNode *RR();
+		SPTNode *LL();
+
+		// this == grandfa + grandma
+		SPTNode *zig_zig(SPTNode *pos); // this->root -> new this->root
+        SPTNode *zig_zag(SPTNode *pos); // grand is this; pos is child!
+   };
+   ```
+   - 伸展树 . 树模板声明
+   ```C++
+   template <typename T, typename S = less<T>>
+   class SplayTree : public BaseTree<T, S>{
+		void fixup(SPTNode<T> *pos);     // after finding or inserting
+		BaseNode<T> *
+		insert(const T& key, BaseNode<T> *father, BaseNode<T> *pos); // for recurssion
+		void erase(BaseNode<T> *pos);
+   public:
+   #ifdef SPT_DEBUG
+		void print() const;
+   #endif
+		SplayTree();
+		virtual ~SplayTree();
+		SPTNode<T> *find(const T& key); // return this->root; const member func is naive!!!
+		void insert(const T& key);
+		void insert_recursion(const T& key);
+		void erase(const T& key);
+   };
+   ```
 - **左式堆实现**
 
-   - 
-
+   - 左式堆 . 树节点模板声明
+   ```C++
+   template <typename T>
+   struct LeftistNode : public BaseNode<T> {
+		int NPL;
+		LeftistNode(const T& key);
+		virtual ~LeftistNode();
+   };
+   ```
+   - 左式堆 . 树模板声明
+   ```C++
+   template <typename T, typename S = less<T>>
+   class LeftistHeap : public BaseTree<T, S> {
+		BaseNode<T> *merge1(BaseNode<T> *h1, BaseNode<T> *h2);
+		void merge2(LeftistNode<T> *h1, LeftistNode<T> *h2);
+		BaseNode<T> *insert(BaseNode<T> *origin, const T& key);
+   public:
+   #ifdef LEFTISTHEAP_DEBUG
+		void print(LeftistNode<T> *cur);
+		void print();
+   #endif	
+		LeftistHeap();
+		virtual ~LeftistHeap();
+		void insert(const T& key);
+		void erase();                     // erase minimal
+   };
+   ```
 - **哈夫曼树实现**
 
-   - 
+   - 哈夫曼树 . 树节点模板声明
+   ```C++
+   template<typename T>
+   struct HFNode : public BaseNode<T>
+   {
+    	HFNode(const T& value);
+    	virtual ~HFNode();
+   };
+   ```
+   - 哈夫曼树 . 树模板声明
+   ```C++
+   template<typename T, typename S = less<T> >
+   class HFTree : public BaseTree<T, S>{
+   private:
+    	std::vector<T> content;
+    	void create();
 
+   public:
+    	HFTree();
+    	virtual ~HFTree();
+
+    	void insert(const T& value);
+    	void erase(const T& value);
+    	void clear();
+    	HFNode<T> *find(const T& value);
+   };
+   ```
 - **红黑树实现**
+   - 红黑树 . 树节点模板声明
+   ```C++
+   template <typename T>
+   struct RBTNode : public BaseNode<T> {
+		BaseNode<T> *parent;
+		RBTNode(const T& key);
+		virtual ~RBTNode();
+   };
+   ```
+   - 红黑树 . 树模板声明
+   ```C++
+   
+   template <typename T, typename S = less<T>>
+   class RBT : public BaseTree<T, S> {
+		BaseNode<T> *LL(BaseNode<T> *NIL, BaseNode<T> *pivot);
+		BaseNode<T> *RR(BaseNode<T> *NIL, BaseNode<T> *pivot); // pivot is povit
 
-   - 
+		BaseNode<T> *insert(BaseNode<T> *oRoot, const T& key);
+		RBTNode<T> *insertFixup(RBTNode<T> *newRoot, RBTNode<T> *current);
+
+		RBTNode<T> *find(const T& key, BaseNode<T> *NIL);
+
+		BaseNode<T> *erase(BaseNode<T> *oRoot, BaseNode<T> *pos);
+		RBTNode<T> *eraseFixup(RBTNode<T> *newRoot, RBTNode<T> *x);
+
+		void inorder(BaseNode<T> *cur, int *count, BaseNode<T> *NIL);
+		void levelorder(BaseNode<T> *NIL);
+		void clear(BaseNode<T> *cur, BaseNode<T> *NIL);
+   public:	
+   #ifdef RBT_DEBUG
+		void print(BaseNode<T> *cur, BaseNode<T> *NIL);
+		void print();
+   #endif	
+		RBT();
+		virtual ~RBT();
+		void insert(const T& key);
+		RBTNode<T> *find(const T& key);
+		void erase(const T& key);
+		void clear();
+		virtual BaseNode<T> *getNIL() override;
+   };
+   ```
 
 ---
 ### 单元测试
+- 查找树单元测试
+
 ---
 ### 图表说明
+- UML类图
+
 ---
 ### 本课程心得体会
+- 个人CPP工程技能收获
+- 个人合作精神收获
+
+---
