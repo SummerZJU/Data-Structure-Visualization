@@ -1,7 +1,9 @@
 #include "startmenu.h"
+#include "dsview.h"
 
 StartMenu::StartMenu() :  DSWidget()
 {
+    view = nullptr;
     initStartMenu();
 }
 
@@ -88,48 +90,67 @@ void StartMenu::initStartMenu()
     connect(RBTreeButton, SIGNAL(clicked(bool)), this, SLOT(initRBTreeWindow()));
 }
 
+/*
 void StartMenu::setStartCommand(std::shared_ptr<CommandBase> ptrCommand)
 {
     startCommand = ptrCommand;
 }
+*/
 
 void StartMenu::exitSystem()
 {
     flashClose(1000);
 }
 
+void StartMenu::setView(DSView * newView)
+{
+    view = newView;
+}
+
 void StartMenu::initTreeWindow()
 {
     state = tree;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
 
 void StartMenu::initAVLTreeWindow()
 {
     state = avlTree;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
 
 void StartMenu::initSplayTreeWindow()
 {
     state = splayTree;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
 
 void StartMenu::initHFTreeWindow()
 {
     state = hfTree;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
 
 void StartMenu::initLHeapWindow()
 {
     state = lHeap;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
 
 void StartMenu::initRBTreeWindow()
 {
     state = rbTree;
-    startCommand->Exec();
+    //startCommand->Exec();
+    flashClose(10);
+    (view->getDrawWindow())->flashShow(100);
 }
