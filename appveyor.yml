@@ -23,23 +23,26 @@ install:
 # Run qmake
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
+  - cd project
   - qmake DSVision.pro
 
 
 # Build the projects
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
+  - cd project
   - nmake
   
   
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
+  - cd project\
   - mkdir OurRelease\
-  - xcopy %APPVEYOR_BUILD_FOLDER%\release\DSVision.exe %APPVEYOR_BUILD_FOLDER%\OurRelease\
-  - cd OurRelease
+  - xcopy %APPVEYOR_BUILD_FOLDER%\project\release\DSVision.exe %APPVEYOR_BUILD_FOLDER%\project\OurRelease\
+  - cd project\OurRelease
   - windeployqt DSVision.exe
-  - cd ../
-  - 7z a %MSVC_PLATFORM%-release.zip %APPVEYOR_BUILD_FOLDER%\OurRelease\*
+  - cd ../../
+  - 7z a %MSVC_PLATFORM%-release.zip %APPVEYOR_BUILD_FOLDER%\project\OurRelease\*
 
 # just repo root-directory
 artifacts:
