@@ -52,7 +52,7 @@ void SplayTreeClear<T, V, S>::Exec()
 	// smart pointer of base template/class
 	bool res = true;
 
-	spVM->execCommandSplayTreeClear(); // no exception !!!
+        spVM->DSVSplayTreeClear(); // no exception !!!
 	spVM->Fire_OnCommandComplete("Clear Command Complete", res);
 	
 	return;

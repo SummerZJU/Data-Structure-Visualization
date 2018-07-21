@@ -47,7 +47,7 @@ class BST : public BaseTree<T, S> {
 	BaseNode<T> *insert(BaseNode<T> *cur, const T& key);
 
 	void erase(BSTNode<T> *pos, BSTNode<T> *parent); // deprecated
-	
+	BSTNode<T> *findNode(const T& key);
 	void erase(BaseNode<T> *pos);
 public:
 #ifdef BST_DEBUG
@@ -56,9 +56,9 @@ public:
 #endif
 	BST();
 	virtual ~BST();
-	void insert(const T& key);
-	BSTNode<T> *find(const T& key);
-	void erase(const T& key);
+	bool insert(const T& key);
+	bool find(const T& key);
+	bool erase(const T& key);
 };
 
 template <typename T, typename S>
@@ -95,15 +95,20 @@ BaseNode<T> *BST<T, S>::insert(BaseNode<T> *cur, const T& key)
 }
 
 template <typename T, typename S>
-void BST<T, S>::insert(const T& key)
+bool BST<T, S>::insert(const T& key)
 {
-	this->root = insert(this->root, key);
-	int count = 0;
-	this->inorder(this->root, &count);
-	this->levelorder();
-
+	bool ret = true;
+	try {
+		this->root = insert(this->root, key);
+		int count = 0;
+		this->inorder(this->root, &count);
+		this->levelorder();
+	} catch(const exception& e) {
+		ret = false;
+	}
 	// notify to viewModel
 	this->Fire_OnPropertyChanged("Property Changed After Insert");
+	return ret;
 }
 
 template <typename T, typename S>
@@ -203,8 +208,9 @@ void BST<T, S>::erase(BaseNode<T> *pos)
 }
 
 template <typename T, typename S>
-BSTNode<T> *BST<T, S>::find(const T& key)
+bool BST<T, S>::find(const T& key)
 {
+	bool rret = false;
 	BSTNode<T> *ret = nullptr;
 	BaseNode<T> *work = this->root;
 	// reset to OTHER!
@@ -214,6 +220,7 @@ BSTNode<T> *BST<T, S>::find(const T& key)
 		work->state = PATH;
 		if(work->key == key) {
 			ret = dynamic_cast<BSTNode<T> *>(work);
+			rret = true;
 			break;
 		} else if(work->key > key) {
 			work = work->left;
@@ -223,17 +230,43 @@ BSTNode<T> *BST<T, S>::find(const T& key)
 	}
 	if(ret) ret->state = RES;
 	this->Fire_OnPropertyChanged("Property Changed After Find");
-
-	if(ret == nullptr) throw ModelException("BST Find Failed");
-	return ret;
+	return rret;
 }
 
 template <typename T, typename S>
-void BST<T, S>::erase(const T& key)
+BSTNode<T> *BST<T, S>::findNode(const T& key)
+{
+	bool rret = false;
+	BSTNode<T> *ret = nullptr;
+	BaseNode<T> *work = this->root;
+	// reset to OTHER!
+	this->levelorder(); 
+	// reset to OTHER!
+	while(work) {
+		work->state = PATH;
+		if(work->key == key) {
+			ret = dynamic_cast<BSTNode<T> *>(work);
+			rret = true;
+			break;
+		} else if(work->key > key) {
+			work = work->left;
+		} else {
+			work = work->right;
+		}
+	}
+	if(ret) ret->state = RES;
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+	if(ret == nullptr) throw ModelException("Failed");
+	return ret;
+}
+
+
+template <typename T, typename S>
+bool BST<T, S>::erase(const T& key)
 {
     bool res = true;
 	try {
-		BSTNode<T> *work = find(key);
+        BSTNode<T> *work = findNode(key);
 		if(work != nullptr) erase(work);
 		int count = 0;
 		this->inorder(this->root, &count);
@@ -244,7 +277,7 @@ void BST<T, S>::erase(const T& key)
         res = false;
 	}
 	this->Fire_OnPropertyChanged("Property Changed After Erase");
-	if(!res) throw ModelException("BST Erase Failed");
+	return res;
 }
 
 

@@ -47,12 +47,8 @@ void HFTreeInsert<T, V, S>::Exec()
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
-	bool res = true;
-	try {
-        spVM->DSVHFTreeInsert(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = spVM->DSVHFTreeInsert(para);
+
 	spVM->Fire_OnCommandComplete("Insert Command Complete", res);
 
 	return;

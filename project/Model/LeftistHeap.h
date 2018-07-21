@@ -63,8 +63,8 @@ public:
 #endif	
 	LeftistHeap();
 	virtual ~LeftistHeap();
-	void insert(const T& key);
-	void erase();                     // erase minimal
+	bool insert(const T& key);
+	bool erase();                     // erase minimal
 };
 
 template <typename T, typename S>
@@ -130,21 +130,23 @@ BaseNode<T> *LeftistHeap<T, S>::insert(BaseNode<T> *origin, const T& key)
 }
 
 template <typename T, typename S>
-void LeftistHeap<T, S>::insert(const T& key)
+bool LeftistHeap<T, S>::insert(const T& key)
 {
+	bool ret = true;
 	this->root = insert(this->root, key);
 	int count = 0;
 	this->inorder(this->root, &count);
 	this->levelorder();
 
 	this->Fire_OnPropertyChanged("Property Changed After Insert");
-	return;
+	return ret;
 }
 
 template <typename T, typename S>
-void LeftistHeap<T, S>::erase()
+bool LeftistHeap<T, S>::erase()
 {
 	// here is seem to LeftistHeap::find()
+	bool ret = true;
 	if(this->root != nullptr) {
 		BaseNode<T> *del = this->root;
 		this->root = merge1(this->root->left, this->root->right);
@@ -155,8 +157,9 @@ void LeftistHeap<T, S>::erase()
 		this->levelorder();
 		this->Fire_OnPropertyChanged("Property Changed After Erase");
 	} else {
-		throw ModelException("LeftistHeap Erase Failed");
+		ret = false;
 	}
+	return ret;
 }
 
 #ifdef LEFTISTHEAP_DEBUG

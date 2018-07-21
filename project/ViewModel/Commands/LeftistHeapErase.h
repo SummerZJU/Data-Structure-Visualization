@@ -45,12 +45,9 @@ void LeftistHeapErase<T, V, S>::Exec()
 	// naive here
 	int para = *(this->parameter); // from CommandBase
 	
-	bool res = true;
-	try {
+	bool res =
         spVM->DSVLeftistHeapErase(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+
 
 	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
 

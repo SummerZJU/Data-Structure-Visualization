@@ -38,12 +38,8 @@ template <typename T, typename V, typename S>
 void AVLTreeInsert<T, V, S>::Exec()
 {
 	int para = *(this->parameter); // from CommandBase
-	bool res = true;
-	try {
-        spVM->DSVAVLTreeInsert(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = spVM->DSVAVLTreeInsert(para);
+
 	spVM->Fire_OnCommandComplete("Insert Command Complete", res);
 
 	return;

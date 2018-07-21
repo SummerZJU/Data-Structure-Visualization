@@ -45,12 +45,7 @@ void HFTreeErase<T, V, S>::Exec()
 	// naive here
 	int para = *(this->parameter); // from CommandBase
 	
-	bool res = true;
-	try {
-        spVM->DSVHFTreeErase(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = spVM->DSVHFTreeErase(para);
 
 	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
 

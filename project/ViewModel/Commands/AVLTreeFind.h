@@ -38,12 +38,7 @@ template <typename T, typename V, typename S>
 void AVLTreeFind<T, V, S>::Exec()
 {
 	int para = *(this->parameter); // from CommandBase
-	bool res = true;
-	try {
-        spVM->DSVAVLTreeFind(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = spVM->DSVAVLTreeFind(para);
 	spVM->Fire_OnCommandComplete("Find Command Complete", res);
 
 	return;

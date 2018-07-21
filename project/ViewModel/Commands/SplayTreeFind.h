@@ -48,12 +48,10 @@ void SplayTreeFind<T, V, S>::Exec()
     // here is primitive pointer !!!
     // isn't smart pointer       !!!
 
-    bool res = true;
-	try {
-		spVM->execCommandSplayTreeFind(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+    bool res = 
+
+                spVM->DSVSplayTreeFind(para);
+
 
 	spVM->Fire_OnCommandComplete("Find Command Complete", res);
 

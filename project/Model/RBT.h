@@ -54,6 +54,7 @@ class RBT : public BaseTree<T, S> {
 	RBTNode<T> *insertFixup(RBTNode<T> *newRoot, RBTNode<T> *current);
 
 	RBTNode<T> *find(const T& key, BaseNode<T> *NIL);
+	RBTNode<T> *findNode(const T& key);
 
 	BaseNode<T> *erase(BaseNode<T> *oRoot, BaseNode<T> *pos);
 	RBTNode<T> *eraseFixup(RBTNode<T> *newRoot, RBTNode<T> *x);
@@ -68,9 +69,9 @@ public:
 #endif	
 	RBT();
 	virtual ~RBT();
-	void insert(const T& key);
-	RBTNode<T> *find(const T& key);
-	void erase(const T& key);
+	bool insert(const T& key);
+	bool find(const T& key);
+	bool erase(const T& key);
 	void clear();
 	virtual BaseNode<T> *getNIL() override;
 };
@@ -446,33 +447,58 @@ RBTNode<T> *RBT<T, S>::eraseFixup(RBTNode<T> *newRoot, RBTNode<T> *x)
 }
 
 template <typename T, typename S>
-void RBT<T, S>::insert(const T& key)
+bool RBT<T, S>::insert(const T& key)
 {
-	this->root = insert(this->root, key);
-	int count = 0;
-	this->inorder(this->root, &count, dynamic_cast<RBTNode<T> *>(this->root)->parent);
-	this->levelorder(dynamic_cast<RBTNode<T> *>(this->root)->parent);
-
+	bool ret = true;
+	try {
+		this->root = insert(this->root, key);
+		int count = 0;
+		this->inorder(this->root, &count, dynamic_cast<RBTNode<T> *>(this->root)->parent);
+		this->levelorder(dynamic_cast<RBTNode<T> *>(this->root)->parent);
+	} catch(const exception& e){
+		ret = false;
+	}
 	this->Fire_OnPropertyChanged("Property Changed After Insert");
-	return;
-}
-
-template <typename T, typename S>
-RBTNode<T> *RBT<T, S>::find(const T& key)
-{
-	RBTNode<T> *ret = find(key, dynamic_cast<RBTNode<T> *>(this->root)->parent);
-	this->Fire_OnPropertyChanged("Property Changed After Find");
-
-	if(ret == nullptr) throw ModelException("RBT Find Failed");
 	return ret;
 }
 
 template <typename T, typename S>
-void RBT<T, S>::erase(const T& key)
+bool RBT<T, S>::find(const T& key)
+{
+	bool rret = false;
+	RBTNode<T> *ret = find(key, dynamic_cast<RBTNode<T> *>(this->root)->parent);
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+
+	if(ret == nullptr) {
+		rret = false;
+	} else {
+		rret = true;
+	}
+	return rret;
+}
+
+template <typename T, typename S>
+RBTNode<T> *RBT<T, S>::findNode(const T& key)
+{
+	bool rret = false;
+	RBTNode<T> *ret = find(key, dynamic_cast<RBTNode<T> *>(this->root)->parent);
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+
+	if(ret == nullptr) {
+		rret = false;
+		throw ModelException("Failed");
+	} else {
+		rret = true;
+	}
+    return ret;
+}
+
+template <typename T, typename S>
+bool RBT<T, S>::erase(const T& key)
 {
 	bool res = true;
 	try {
-		auto work = find(key);
+        auto work = findNode(key);
 		if(work != nullptr) this->root = erase(this->root, work);
 		int count = 0;
 		this->inorder(this->root, &count, dynamic_cast<RBTNode<T> *>(this->root)->parent);
@@ -483,8 +509,7 @@ void RBT<T, S>::erase(const T& key)
 	}
 
 	this->Fire_OnPropertyChanged("Property Changed After Erase");
-	if(!res) throw ModelException("RBT Erase Failed");
-	return;
+	return res;
 }
 
 template <typename T, typename S>

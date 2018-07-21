@@ -36,8 +36,8 @@ public:
     HFTree();
     virtual ~HFTree();
 
-    void insert(const T& value);
-    void erase(const T& value);
+    bool insert(const T& value);
+    bool erase(const T& value);
     void clear();
     HFNode<T> *find(const T& value);
 };
@@ -79,12 +79,14 @@ HFNode<T> *HFTree<T, S>::find(const T& value)
 }
 
 template <typename T, typename S>
-void HFTree<T, S>::insert(const T& value)
+bool HFTree<T, S>::insert(const T& value)
 {
+    bool ret = true;
     content.push_back(value);
     delete this->root;
     create();
     this->Fire_OnPropertyChanged("Property Changed After Erase");
+    return ret;
 }
 
 template <typename T, typename S>
@@ -97,8 +99,9 @@ void HFTree<T, S>::clear()
 }
 
 template <typename T, typename S>
-void HFTree<T, S>::erase(const T& value)
+bool HFTree<T, S>::erase(const T& value)
 {
+    bool ret = true;
     int i, size = content.size();
     for(i = 0; i < size; i++)
     {
@@ -114,7 +117,8 @@ void HFTree<T, S>::erase(const T& value)
     if(content.size() > 0) this->Fire_OnPropertyChanged("Property Changed After Erase");
     else this->Fire_OnPropertyChanged("Property Changed After Clear");
 
-    if(i == size) throw ModelException("HFTree Erase Failed");
+    if(i == size) ret = false;
+    return ret;
 }
 
 

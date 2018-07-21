@@ -31,6 +31,7 @@ class AVLTree : public BaseTree<T, S> {
 	BaseNode<T> *LL(BaseNode<T> *pos);
 	BaseNode<T> *RL(BaseNode<T> *pos);
 	BaseNode<T> *LR(BaseNode<T> *pos);
+    AVLNode<T>  *findNode(const T& key);
 	void erase(BaseNode<T> *pos);
 	BaseNode<T> *insert(BaseNode<T> *pos, const T& key); //recurson for implementation
 public:
@@ -277,8 +278,9 @@ void AVLTree<T, S>::erase(BaseNode<T> *pos)
 }
 
 template <typename T, typename S>
-AVLNode<T> *AVLTree<T, S>::find(const T& key)
+bool AVLTree<T, S>::find(const T& key)
 {
+	bool rret = false;
 	AVLNode<T> *ret = nullptr;
 	BaseNode<T> *work = this->root;
 	// reset to OTHER!
@@ -288,6 +290,7 @@ AVLNode<T> *AVLTree<T, S>::find(const T& key)
 		work->state = PATH;
 		if(work->key == key) {
 			ret = dynamic_cast<AVLNode<T> *>(work);
+			rret = true;
 			break;
 		} else if(work->key > key) {
 			work = work->left;
@@ -297,16 +300,44 @@ AVLNode<T> *AVLTree<T, S>::find(const T& key)
 	}
 	if(ret) ret->state = RES;
     this->Fire_OnPropertyChanged("Property Changed After Find");
-    if(ret == nullptr) throw ModelException("AVLTree Find Failed");
+	return rret;
+}
+
+
+template <typename T, typename S>
+AVLNode<T> *AVLTree<T, S>::findNode(const T& key)
+{
+	bool rret = false;
+	AVLNode<T> *ret = nullptr;
+	BaseNode<T> *work = this->root;
+	// reset to OTHER!
+	this->levelorder(); 
+	// reset to OTHER!
+	while(work) {
+		work->state = PATH;
+		if(work->key == key) {
+			ret = dynamic_cast<AVLNode<T> *>(work);
+			rret = true;
+			break;
+		} else if(work->key > key) {
+			work = work->left;
+		} else {
+			work = work->right;
+		}
+	}
+	if(ret) ret->state = RES;
+    this->Fire_OnPropertyChanged("Property Changed After Find");
+    if(ret == nullptr) throw ModelException("Failed");
 	return ret;
 }
 
+
 template <typename T, typename S>
-void AVLTree<T, S>::erase(const T& key)
+bool AVLTree<T, S>::erase(const T& key)
 {
     bool res = true;
     try {
-        AVLNode<T> *work = find(key);
+        AVLNode<T> *work = findNode(key);
         if(work != nullptr) erase(work);
         int count = 0;
         this->inorder(this->root, &count);
@@ -315,7 +346,7 @@ void AVLTree<T, S>::erase(const T& key)
         res = false;
     }
     this->Fire_OnPropertyChanged("Property Changed After Erase");
-    if(!res) throw ModelException("AVLTree Erase Failed");
+    return res;
 }
 
 

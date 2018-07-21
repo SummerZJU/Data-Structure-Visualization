@@ -45,12 +45,10 @@ void SplayTreeErase<T, V, S>::Exec()
 	// naive here
 	int para = *(this->parameter); // from CommandBase
 	
-	bool res = true;
-	try {
-		spVM->execCommandSplayTreeErase(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = 
+
+                spVM->DSVSplayTreeErase(para);
+
 
 	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
 

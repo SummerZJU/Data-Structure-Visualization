@@ -38,12 +38,7 @@ template <typename T, typename V, typename S>
 void AVLTreeErase<T, V, S>::Exec()
 {
 	int para = *(this->parameter); // from CommandBase
-	bool res = true;
-	try {
-        spVM->DSVAVLTreeErase(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = spVM->DSVAVLTreeErase(para);
 	spVM->Fire_OnCommandComplete("Erase Command Complete", res);
 
 	return;

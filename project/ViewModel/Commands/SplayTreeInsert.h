@@ -47,12 +47,10 @@ void SplayTreeInsert<T, V, S>::Exec()
 	// actual T is wonderful
 	// naive here
 	int para = *(this->parameter); // from CommandBase
-	bool res = true;
-	try {
-		spVM->execCommandSplayTreeInsert(para);
-	} catch(const exception& e) {
-		res = false;
-	}
+	bool res = 
+
+                spVM->DSVSplayTreeInsert(para);
+
 	spVM->Fire_OnCommandComplete("Insert Command Complete", res);
 
 	return;

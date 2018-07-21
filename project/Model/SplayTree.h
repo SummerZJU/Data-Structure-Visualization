@@ -119,16 +119,17 @@ class SplayTree : public BaseTree<T, S>{
 	void fixup(SPTNode<T> *pos);           // after finding or inserting
 	BaseNode<T> *insert(const T& key, BaseNode<T> *father, BaseNode<T> *pos); // for recurssion
 	void erase(BaseNode<T> *pos);
+	SPTNode<T> *findNode(const T& key); 
 public:
 #ifdef SPT_DEBUG
 	void print() const;
 #endif
 	SplayTree();
 	virtual ~SplayTree();
-	SPTNode<T> *find(const T& key);        // return this->root; const member func is naive!!!
-	void insert(const T& key);
+	bool find(const T& key);        // return this->root; const member func is naive!!!
+	bool insert(const T& key);
 	void insert_recursion(const T& key);
-	void erase(const T& key);
+	bool erase(const T& key);
 };
 //--------------------------------------------------------------------------//
 //SplayTree declaration
@@ -189,8 +190,9 @@ void SplayTree<T, S>::fixup(SPTNode<T> *pos)
 }
 
 template <typename T, typename S>
-SPTNode<T> *SplayTree<T, S>::find(const T& key)
+bool SplayTree<T, S>::find(const T& key)
 {
+	bool rret = false;
 	SPTNode<T> *ret = nullptr;
 	BaseNode<T> *work = this->root;
 	// reset to OTHER!
@@ -200,6 +202,7 @@ SPTNode<T> *SplayTree<T, S>::find(const T& key)
 		work->state = PATH;
 		if(work->key == key) {
 			ret = dynamic_cast<SPTNode<T> *>(work);
+			rret = true;
 			break;
 		} else if(work->key > key) {
 			work = work->left;
@@ -217,7 +220,43 @@ SPTNode<T> *SplayTree<T, S>::find(const T& key)
         ret->state = RES;  // reset by levelorder()
 	}
 	this->Fire_OnPropertyChanged("Property Changed After Find");
-	if(ret == nullptr) throw ModelException("SplayTree Find Failed");
+	if(ret == nullptr) rret = false;
+	return rret; // nullptr / has been set this->root
+}
+
+
+template <typename T, typename S>
+SPTNode<T> *SplayTree<T, S>::findNode(const T& key)
+{
+	bool rret = false;
+	SPTNode<T> *ret = nullptr;
+	BaseNode<T> *work = this->root;
+	// reset to OTHER!
+	this->levelorder(); 
+	// reset to OTHER!
+	while(work) {
+		work->state = PATH;
+		if(work->key == key) {
+			ret = dynamic_cast<SPTNode<T> *>(work);
+			rret = true;
+			break;
+		} else if(work->key > key) {
+			work = work->left;
+		} else {
+			work = work->right;
+		}
+	}
+	// this->root->parent == nullptr
+	if(ret) {
+		ret->state = RES;
+		fixup(ret);
+        int count = 0;
+        this->inorder(this->root, &count);
+        this->levelorder();
+        ret->state = RES;  // reset by levelorder()
+	}
+	this->Fire_OnPropertyChanged("Property Changed After Find");
+	if(ret == nullptr) throw ModelException("Failed");
 	return ret; // nullptr / has been set this->root
 }
 
@@ -253,37 +292,43 @@ void SplayTree<T, S>::insert_recursion(const T& key)
 }
 
 template <typename T, typename S>
-void SplayTree<T, S>::insert(const T& key)
+bool SplayTree<T, S>::insert(const T& key)
 {
-	BaseNode<T> *work = this->root;
-	SPTNode<T> *last = nullptr;
-	int isLeft = -1;
-	while(work) {
-		last = dynamic_cast<SPTNode<T> *>(work);
-		if(work->key > key) {
-			work = work->left;
-			isLeft = 1;
-		} else if(work->key < key) {
-			work = work->right;
-			isLeft = 0;
-		} else {
-			throw ModelException("SplayTree Insert Failed");
+	bool res = true;
+	try {
+		BaseNode<T> *work = this->root;
+		SPTNode<T> *last = nullptr;
+		int isLeft = -1;
+		while(work) {
+			last = dynamic_cast<SPTNode<T> *>(work);
+			if(work->key > key) {
+				work = work->left;
+				isLeft = 1;
+			} else if(work->key < key) {
+				work = work->right;
+				isLeft = 0;
+			} else {
+				throw ModelException("SplayTree Insert Failed");
+			}
 		}
-	}
-	if(!last) {
-		this->root = new SPTNode<T>(key, nullptr);
-	} else if(isLeft){
-		last->left = new SPTNode<T>(key, last);
-		fixup(dynamic_cast<SPTNode<T> *>(last->left));
-	} else {
-		last->right = new SPTNode<T>(key, last);
-		fixup(dynamic_cast<SPTNode<T> *>(last->right));
-	}
+		if(!last) {
+			this->root = new SPTNode<T>(key, nullptr);
+		} else if(isLeft){
+			last->left = new SPTNode<T>(key, last);
+			fixup(dynamic_cast<SPTNode<T> *>(last->left));
+		} else {
+			last->right = new SPTNode<T>(key, last);
+			fixup(dynamic_cast<SPTNode<T> *>(last->right));
+		}
 
-	int count = 0;
-	this->inorder(this->root, &count);
-	this->levelorder();
+		int count = 0;
+		this->inorder(this->root, &count);
+		this->levelorder();
+	} catch(const exception& e) {
+		res = false;
+	}
 	this->Fire_OnPropertyChanged("Property Changed After Insert");
+	return res;
 }
 
 template <typename T, typename S>
@@ -328,11 +373,11 @@ void SplayTree<T, S>::erase(BaseNode<T> *pos)
 }
 
 template <typename T, typename S>
-void SplayTree<T, S>::erase(const T& key)
+bool SplayTree<T, S>::erase(const T& key)
 {
 	bool res = true;
 	try {	
-		SPTNode<T> *temp = find(key);
+        SPTNode<T> *temp = findNode(key);
 		if(temp) erase(temp);
 	
 		int count = 0;
@@ -343,8 +388,7 @@ void SplayTree<T, S>::erase(const T& key)
 		res = false;
 	}
 	this->Fire_OnPropertyChanged("Property Changed After Erase");
-	if(!res) throw ModelException("SplayTree Erase Failed");
-	return;
+	return res;
 }
 
 
