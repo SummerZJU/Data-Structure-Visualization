@@ -39,7 +39,7 @@ after_build:
   - cd project\
   - mkdir OurRelease\
   - xcopy %APPVEYOR_BUILD_FOLDER%\project\release\DSVision.exe %APPVEYOR_BUILD_FOLDER%\project\OurRelease\
-  - cd project\OurRelease
+  - cd OurRelease\
   - windeployqt DSVision.exe
   - cd ../../
   - 7z a %MSVC_PLATFORM%-release.zip %APPVEYOR_BUILD_FOLDER%\project\OurRelease\*
