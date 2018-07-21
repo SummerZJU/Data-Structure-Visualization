@@ -6,6 +6,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     // run ?
 
-    APP *ap = new APP;
+    APP ap;
     return a.exec();
 }

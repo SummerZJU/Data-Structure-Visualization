@@ -45,8 +45,7 @@ BaseNode<T>::~BaseNode()
 }
 
 template <typename T, typename S = std::less<T>>
-class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>>, 
-				 public Proxy_CommandNotification<BaseTree<T, S>> {
+class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>>{
 protected:
 	BaseNode<T> *root;
 protected:
