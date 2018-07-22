@@ -12,6 +12,6 @@ public:
     TreePropertyNotification(DSView *pDSV);
     void OnPropertyChanged(const std::string &str);
 private:
-    std::shared_ptr<DSView> spDSV;
+    DSView* pDSV;
 };
 #endif
