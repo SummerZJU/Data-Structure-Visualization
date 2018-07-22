@@ -9,7 +9,7 @@
 class ViewModel;
 
 class VMPropertySink : public IPropertyNotification {
-	std::shared_ptr<ViewModel> spVM;
+	ViewModel *spVM;
 public:
 	VMPropertySink(ViewModel *pVM);
 	virtual void OnPropertyChanged(const std::string& str) override;
