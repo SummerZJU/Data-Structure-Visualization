@@ -1,11 +1,11 @@
 #include "TreeCommandNotification.h"
 #include "../dsview.h"
 
-TreeCommandNotification::TreeCommandNotification(DSView *pDSV) : spDSV(pDSV)
+TreeCommandNotification::TreeCommandNotification(DSView *pDSV) : pDSV(pDSV)
 {
-    ie = std::shared_ptr<InsertError>(new InsertError());
-    de = std::shared_ptr<DeleteError>(new DeleteError());
-    fe = std::shared_ptr<FindError>(new FindError());
+    ie = new InsertError();
+    de = new DeleteError();
+    fe = new FindError();
 }
 
 void TreeCommandNotification::OnCommandComplete(const std::string &str, bool bOK)
