@@ -1,5 +1,4 @@
 # DSV Model Design
----
 ### 设计任务
 
 设计极为基础的数据结构, 以查找树(有序词典)为主要实现模型;
@@ -357,7 +356,183 @@
 ---
 ### 单元测试
 - 查找树单元测试
+   - 二叉查找树
+   ```C++
+   #include "BST.h"
+   int main()
+   {
+			BST<int> *bst = new BST<int>;
+			bst->insert(5);
+			bst->insert(3);
+			bst->insert(4);
+			bst->insert(6);
+			bst->insert(2);
+			bst->insert(1);
+			bst->insert(7);
+			bst->insert(8);
+			bst->insert(9);
+			bst->insert(10);
+			bst->insert(11);
+	
+			bst->erase(5);
+			bst->erase(4);
+			bst->erase(3);
 
+			bst->print();
+
+			delete bst;
+			return 0;
+   }
+   ```
+   - 平衡二叉树
+   ```C++
+   #include "AVLTree.h"
+
+   int main()
+   {
+		AVLTree<int> *atree = new AVLTree<int>;
+	
+        atree->insert(1);
+        atree->insert(2);
+        atree->insert(3);
+        atree->insert(4);
+        atree->insert(5);
+        atree->insert(6);
+        atree->insert(7);
+        atree->insert(8);
+        atree->erase(8);
+        atree->erase(5);
+        atree->erase(7);
+        atree->erase(6);
+        atree->print();
+        delete atree;
+        return 0;
+   }
+   ```
+   - 伸展树
+   ```C++
+   #include "SplayTree.h"
+   #include <iostream>
+   
+   using namespace std;
+   
+   int main()
+   {
+        SplayTree<int> *myTree = new SplayTree<int>();
+        myTree->insert(1);
+        myTree->insert(2);
+        myTree->insert(3);
+        myTree->insert(4);
+        myTree->insert(5);
+        myTree->insert(6);
+        myTree->find(1);	
+        myTree->find(2);	
+        myTree->find(3);	
+        myTree->find(5);	
+
+        myTree->erase(5);
+        cout << "--------------------------------" << endl;
+        myTree->print();	
+        myTree->erase(4);
+        cout << "--------------------------------" << endl;
+        myTree->print();	
+        myTree->erase(3);
+        cout << "--------------------------------" << endl;
+        myTree->print();
+        myTree->erase(2);
+        cout << "--------------------------------" << endl;
+        myTree->print();
+        myTree->erase(1);
+        cout << "--------------------------------" << endl;
+        myTree->print();
+        myTree->erase(6);
+        cout << "--------------------------------" << endl;
+        myTree->print();
+        delete myTree;
+        return 0;
+   }
+   ```
+   - 左式堆
+   ```C++
+   #include "LeftistHeap.h"
+   #include <iostream>
+
+   int main()
+   {
+        LeftistHeap<int> *lh = new LeftistHeap<int>;
+        lh->insert(0);
+        lh->insert(2);
+        lh->insert(4);
+        lh->insert(1);
+        lh->insert(3);
+        lh->insert(9);
+        lh->insert(8);
+        lh->insert(6);
+
+        std::cout << "------------------------------------" << std::endl;
+        lh->print();
+        lh->erase();
+        lh->erase();
+        std::cout << "------------------------------------" << std::endl;
+        lh->print();	
+
+        delete lh;
+        return 0;
+   }
+   ```
+   - 哈夫曼树
+   ```C++
+   #include "HFTree.h"
+
+   int main()
+   {
+        HFTree<int> *hfmt = new HFTree<int>;
+        hfmt->insert(1);
+        hfmt->insert(10);
+        hfmt->insert(11);
+        hfmt->insert(2);
+        hfmt->insert(3);
+        hfmt->insert(9);
+        hfmt->insert(8);
+        hfmt->insert(7);
+        hfmt->insert(4);
+        hfmt->insert(6);
+        hfmt->insert(5);
+        hfmt->find(1);
+        hfmt->erase(1);
+        delete hfmt;
+        return 0;
+   }
+   ```
+   - 红黑树
+   ```C++
+   #include "RBT.h"
+
+   int main()
+   {
+        RBT<int> *rbt = new RBT<int>;
+        rbt->insert(3);
+        rbt->insert(4);
+        rbt->insert(1);
+        rbt->insert(2);
+        rbt->insert(5);
+        rbt->insert(10);
+        rbt->insert(9);
+        rbt->insert(7);
+        rbt->insert(8);
+        rbt->insert(6);
+
+        rbt->erase(4);
+        rbt->erase(1);
+        rbt->erase(2);
+        rbt->erase(3);
+
+        rbt->print();
+        delete rbt;
+        return 0;
+   }
+   ```
+   
 ---
 ### 图表说明
 - UML类图
