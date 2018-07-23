@@ -385,8 +385,7 @@
    ```
 - 程序运行输出
 
-![testBST]
-(https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testBST.png "testBST")
+![testAVL](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testAVL.png "testAVL")
 
    - 平衡二叉树
    ```C++
