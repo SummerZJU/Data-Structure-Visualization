@@ -387,7 +387,7 @@
    - 程序运行输出
 
 ![testBST]
-(https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testBST.png "testBST")
+(https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testBST.png"testBST")
 
    - 平衡二叉树
    ```C++
@@ -416,7 +416,7 @@
    ```
    - 程序运行输出
 
-![testAVL](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testAVL.png "testAVL")
+![testAVL](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testAVL.png"testAVL")
 
    - 伸展树
    ```C++
@@ -463,7 +463,7 @@
    ```
    - 程序运行输出
 
-![testSPT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testSPT.png "testSPT")
+![testSPT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testSPT.png"testSPT")
    
    - 左式堆
    ```C++
@@ -495,7 +495,7 @@
    ```
    - 程序运行输出
 
-![testLeftist](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testLeftist.png "testLeftist")
+![testLeftist](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testLeftist.png"testLeftist")
    
    - 哈夫曼树
    ```C++
@@ -551,7 +551,7 @@
    ```
    - 程序运行输出
 
-![testRBT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testRBT.png "testRBT")
+![testRBT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testRBT.png"testRBT")
 
 ---
 ### 图表说明
