@@ -99,7 +99,7 @@
    - 树节点继承基类树节点, 树继承基类树
    - 实现插入, 删除, 查找算法, `RR`, `LL`,  `LR`, `RL`算法, 删除调整, 插入调整算法
    - 删除分为左右对称共8个`case`, 插入分为左右对称共6个`case`
-   - 节点增加属性`NPL(Null Path Length)`信息, Red, Black信息
+   - 节点增加属性`NPL(Null Path Length)`信息, `Red`, `Black`信息
    - 树增加属性`NIL`节点的信息
 
 ---
@@ -384,6 +384,9 @@
 			return 0;
    }
    ```
+   - 程序运行输出
+   ![testBST]
+(https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testBST.png "testBST")
    - 平衡二叉树
    ```C++
    #include "AVLTree.h"
@@ -409,6 +412,8 @@
         return 0;
    }
    ```
+   - 程序运行输出
+   ![testAVL](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testAVL.png "testAVL")
    - 伸展树
    ```C++
    #include "SplayTree.h"
@@ -452,6 +457,9 @@
         return 0;
    }
    ```
+   - 程序运行输出
+   ![testSPT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testSPT.png "testSPT")
+   
    - 左式堆
    ```C++
    #include "LeftistHeap.h"
@@ -480,6 +488,9 @@
         return 0;
    }
    ```
+   - 程序运行输出
+![testLeftist](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testLeftist.png "testLeftist")
+   
    - 哈夫曼树
    ```C++
    #include "HFTree.h"
@@ -532,7 +543,8 @@
         return 0;
    }
    ```
-   
+   - 程序运行输出
+![testRBT](https://github.com/SummerZJU/CSummerZJU/tree/master/image/TestModel/testRBT.png "testRBT")
 ---
 ### 图表说明
 - UML类图
