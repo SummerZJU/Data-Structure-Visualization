@@ -355,8 +355,7 @@
 
 ---
 ### 单元测试
-- 查找树单元测试
-   - 二叉查找树
+- 二叉查找树
    ```C++
    #include "BST.h"
    int main()
@@ -384,7 +383,7 @@
 			return 0;
    }
    ```
-   - 程序运行输出
+- 程序运行输出
 
 ![testBST]
 (https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testBST.png "testBST")
