@@ -14,10 +14,10 @@ public:
     TreeCommandNotification(DSView * pDSV);
     void OnCommandComplete(const std::string &str, bool bOK);
 private:
-    std::shared_ptr<DSView> spDSV;
-    std::shared_ptr<InsertError> ie;
-    std::shared_ptr<DeleteError> de;
-    std::shared_ptr<FindError> fe;
+    DSView* pDSV;
+    InsertError* ie;
+    DeleteError* de;
+    FindError* fe;
 
 };
 

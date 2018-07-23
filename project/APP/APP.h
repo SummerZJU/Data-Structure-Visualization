@@ -12,8 +12,8 @@
 #include <memory>
 
 class APP {
-    shared_ptr<DSView> dsv;
-    shared_ptr<ViewModel> vm;
+    DSView* dsv;
+    ViewModel* vm;
 
     // models
     shared_ptr<BST<int>> bst;
