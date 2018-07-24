@@ -4,11 +4,6 @@ State state;
 
 DSView::DSView()
 {
-    //startCommand = std::make_shared<StartCommand>(this);
-    //viewStart.setStartCommand(startCommand);
-    //returnCommand = std::make_shared<ReturnCommand>(this);
-    //viewDraw.setReturnCommand(returnCommand);
-
     spTCN = shared_ptr<ICommandNotification>(new TreeCommandNotification(this));
     spTPN = shared_ptr<IPropertyNotification>(new TreePropertyNotification(this));
 
