@@ -27,11 +27,8 @@ public:
     explicit StartMenu();
     ~StartMenu();
     void setView(DSView * newView);
-     //void setStartCommand(std::shared_ptr<CommandBase> ptrCommand);
 
 private:
-    //std::shared_ptr<CommandBase> startCommand;
-
     DSView * view;
 
     QPushButton * exitButton;
