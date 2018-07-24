@@ -90,13 +90,6 @@ void StartMenu::initStartMenu()
     connect(RBTreeButton, SIGNAL(clicked(bool)), this, SLOT(initRBTreeWindow()));
 }
 
-/*
-void StartMenu::setStartCommand(std::shared_ptr<CommandBase> ptrCommand)
-{
-    startCommand = ptrCommand;
-}
-*/
-
 void StartMenu::exitSystem()
 {
     flashClose(1000);
@@ -110,7 +103,6 @@ void StartMenu::setView(DSView * newView)
 void StartMenu::initTreeWindow()
 {
     state = tree;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
@@ -118,7 +110,6 @@ void StartMenu::initTreeWindow()
 void StartMenu::initAVLTreeWindow()
 {
     state = avlTree;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
@@ -126,7 +117,6 @@ void StartMenu::initAVLTreeWindow()
 void StartMenu::initSplayTreeWindow()
 {
     state = splayTree;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
@@ -134,7 +124,6 @@ void StartMenu::initSplayTreeWindow()
 void StartMenu::initHFTreeWindow()
 {
     state = hfTree;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
@@ -142,7 +131,6 @@ void StartMenu::initHFTreeWindow()
 void StartMenu::initLHeapWindow()
 {
     state = lHeap;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
@@ -150,7 +138,6 @@ void StartMenu::initLHeapWindow()
 void StartMenu::initRBTreeWindow()
 {
     state = rbTree;
-    //startCommand->Exec();
     flashClose(10);
     (view->getDrawWindow())->flashShow(100);
 }
