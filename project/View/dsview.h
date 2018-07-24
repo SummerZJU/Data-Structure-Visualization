@@ -12,9 +12,7 @@ class DSView
 private:
     StartMenu viewStart;
     DrawWindow viewDraw;
-    //std::shared_ptr<StartCommand> startCommand;
-    //std::shared_ptr<ReturnCommand> returnCommand;
-
+    
     shared_ptr<ICommandNotification> spTCN;
     shared_ptr<IPropertyNotification> spTPN;
 
