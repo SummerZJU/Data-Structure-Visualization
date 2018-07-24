@@ -78,13 +78,6 @@ void DrawWindow::returnStartMenu()
     (view->getStartMenu())->flashShow(100);
 }
 
-/*
-void DrawWindow::setReturnCommand(std::shared_ptr<CommandBase> ptrCommand)
-{
-    returnCommand = ptrCommand;
-}
-*/
-
 //bind trees
 void DrawWindow::bind_avl_Tree(shared_ptr<BaseTree<int>> bt)
 {
