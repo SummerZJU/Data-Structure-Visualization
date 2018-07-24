@@ -1,3 +1,5 @@
+[TOC]
+
 # DSV Model Design
 ### 设计任务
 
@@ -385,7 +387,7 @@
    ```
 - 程序运行输出
 
-![testBST](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testBST.png "testBST")
+![testBST](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/testBST.png "testBST")
 
    - 平衡二叉树
    ```C++
@@ -414,7 +416,7 @@
    ```
    - 程序运行输出
 
-![testAVL](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testAVL.png "testAVL")
+![testAVL](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/testAVL.png "testAVL")
 
    - 伸展树
    ```C++
@@ -461,8 +463,8 @@
    ```
    - 程序运行输出
 
-![testSPT](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testSPT.png "testSPT")
-   
+![testSPT](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/testSPT.png "testSPT")
+
    - 左式堆
    ```C++
    #include "LeftistHeap.h"
@@ -493,8 +495,8 @@
    ```
    - 程序运行输出
 
-![testLeftist](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testLeftist.png "testLeftist")
-   
+![testLeftist](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/testLeftist.png "testLeftist")
+
    - 哈夫曼树
    ```C++
    #include "HFTree.h"
@@ -549,15 +551,21 @@
    ```
    - 程序运行输出
 
-![testRBT](https://github.com/SummerZJU/CSummerZJU/blob/master/image/TestModel/testRBT.png "testRBT")
+![testRBT](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/testRBT.png "testRBT")
 
 ---
 ### 图表说明
 - UML类图
+![UMLModel](https://github.com/SummerZJU/CSummerZJU/blob/master/image/Model/UMLModel.png
+"UMLModel")
 
 ---
 ### 本课程心得体会
-- 个人CPP工程技能收获
+- 个人`CPP`工程技能收获
+   1. 初步了解大型程序的多人协作开发流程, `MVVM UI`设计模式可以充分解耦`Model`, `ViewModel`, `Model`之间的关联, 通过基类, 通过接口协议, 可以实现高效的同时协作开发, 提高工作效率
+   2. 对模板元编程技术有了新的理解和熟练, 对现代C++特性也有了进一步的了解
 - 个人合作精神收获
+   1. 正确的框架, 高效的设计模式, 产品经理恰当的分工是一个开发团队成功的关键, 也是在平时的课程中, 在校园里很难学到的东西, 短学期让我受益匪浅!
+   2. 分工之后, 并不是完全分割开发者, 开发者之间也要保持有效的沟通, 才能一起提高工作效率, 设计出令人满意的作品, 艺术品!
 
 ---
