@@ -1,12 +1,20 @@
 # 目录
+
 - [DSV Model Design](#dsv-model-design)
    - [设计任务](#设计任务)
+
    - [设计思路与方案](#设计思路与方案)
+
    - [设计实现](#设计实现)
+
    - [单元测试](#单元测试)
+
    - [图表说明](#图表说明)
+
    - [本课程心得体会](#本课程心得体会)
- ---
+
+     
+---
 # DSV Model Design
 ### 设计任务
 
@@ -71,7 +79,6 @@
    - 提供共有的基本成员函数, 如中序, 层序遍历等
    - 提供共有的成员对象`left`, `right`, `key`, `depth`
    - 继承属性通知发生器(`Proxy_PropertyNotification<T>`)
-   - 继承命令通知发生器(`Proxy_CommandNotification<T>`)
    - 设计`virtual`析构函数, `virtual`清空函数(不同模型将使用不同清空动作)
    
 - **二叉查找树设计方案**
@@ -142,8 +149,7 @@
    - 模型基类树模板声明
    ```C++
    template <typename T, typename S = std::less<T>>
-   class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>>, 
-				 public Proxy_CommandNotification<BaseTree<T, S>> {
+   class BaseTree : public Proxy_PropertyNotification<BaseTree<T, S>> {
    protected:
         BaseNode<T> *root;
    protected:
