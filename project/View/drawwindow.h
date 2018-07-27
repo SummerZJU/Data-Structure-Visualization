@@ -29,7 +29,6 @@ public:
     explicit DrawWindow();
     ~DrawWindow();
     void setView(DSView * newView);
-    //void setReturnCommand(std::shared_ptr<CommandBase> ptrCommand);
 
     void bind_avl_Tree(shared_ptr<BaseTree<int>> bt);
     void bind_bst_Tree(shared_ptr<BaseTree<int>> bt);
@@ -71,7 +70,6 @@ public:
     void DrawUpdate();
 
 private:
-    //std::shared_ptr<CommandBase> returnCommand;
     DSView * view;
 
     QPushButton * addButton;
