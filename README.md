@@ -1,5 +1,13 @@
 # CSummerZJU 
 
----
+### 需求分析
 
-![OurLogo](https://github.com/SummerZJU/CSummerZJU/blob/master/image/DSV.png "Data Structure Visualization")
+本项目旨在实现对常见数据结构进行各种操作的可视化演示。以下为本项目需要实现的数据结构类型与操作。
+
+* 数据结构
+
+  二叉搜索树、平衡二叉搜索树、伸展树、左式堆、红黑树、霍夫曼树
+
+* 操作
+
+  插入结点、删除结点、寻找结点、清空树
